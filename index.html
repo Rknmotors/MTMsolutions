@@ -9,7 +9,7 @@
 <!-- Icoontje in het browsertabblad: de doos met MTM uit het logo. -->
 <link rel="icon" href="img/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="img/favicon-180.png">
-<link rel="stylesheet" href="css/style.css?v=25">
+<link rel="stylesheet" href="css/style.css?v=33">
 <!-- Zet een merkteken dat JavaScript werkt. Werkt JavaScript niet, dan blijft
      alle inhoud gewoon zichtbaar en staat het menu open uitgeklapt. -->
 <script>document.documentElement.className += ' js';</script>
@@ -27,15 +27,6 @@
 
 <a class="skip" href="#inhoud">Naar de inhoud</a>
 
-<!-- ============ ACTIEBALK ============ -->
-<!-- TIJDELIJK: verwijder dit hele blok na 31 december, anders blijft de actie staan. -->
-<div class="promo">
-  <p class="wrap">
-    <span class="promo-tag">Eindejaarsactie</span>
-    <span><b>15% korting</b> op heel ons assortiment, nog tot 31 december.</span>
-  </p>
-</div>
-
 <!-- ============ MENU ============ -->
 <header class="nav" id="nav">
   <div class="wrap nav-in">
@@ -51,7 +42,7 @@
     <nav aria-label="Hoofdmenu">
       <ul class="nav-list" id="navList">
         <li><a href="#diensten">Diensten</a></li>
-        <li><a href="#werkwijze">Hoe werkt het?</a></li>
+        <li><a href="#werkwijze">Hoe werkt het</a></li>
         <li><a href="#waarom">Waarom MTM</a></li>
         <li><a href="#werkgebied">Werkgebied</a></li>
         <li><a href="#contact">Contact</a></li>
@@ -79,6 +70,13 @@
          sizes="100vw" width="1536" height="1024"
          fetchpriority="high" decoding="async"
          alt="Twee medewerkers van MTM Solutions dragen samen een verhuisdoos naar een woning, met de open bestelwagen op de achtergrond.">
+    <!-- TIJDELIJK: verwijder deze badge na 31 december, anders blijft de actie staan. -->
+    <p class="actie-badge" role="note">
+      <span class="ab-kop">Eindejaarsactie</span>
+      <span class="ab-cijfer">15%</span>
+      <span class="ab-woord">korting</span>
+      <span class="ab-voet">op alles, t.e.m. 31 dec.</span>
+    </p>
   </div>
   <div class="wrap hero-grid">
     <div class="hero-text">
@@ -100,13 +98,13 @@
       <ul class="ticks">
         <li>Gratis en vrijblijvende offerte</li>
         <li>Persoonlijk contact</li>
-        <li>Heel Vlaanderen en het Brussels Hoofdstedelijk Gewest</li>
+        <li>Actief in Oost-Vlaanderen, West-Vlaanderen, Antwerpen, Limburg, Vlaams-Brabant en het Brussels Hoofdstedelijk Gewest</li>
       </ul>
     </div>
 
     <aside class="help-card" aria-labelledby="helpTitle">
-      <h2 id="helpTitle">Waarmee kunnen we je helpen?</h2>
-      <p class="small">Kies wat bij jou past. We zetten het meteen klaar in het offerteformulier.</p>
+      <h2 id="helpTitle">Waarmee kunnen we jou helpen?</h2>
+      <p class="small">Kies je dienst en ontvang binnen 24 uur een offerte op maat.</p>
       <ul class="help-list">
         <li><a href="#offerte" data-dienst="Verhuizen">
           <span class="ic"><svg viewBox="0 0 48 48" aria-hidden="true"><g><rect x="14" y="13" width="18" height="15.5" rx="2.4" fill="#FFFFFF"/><path d="M32 18h5.6L43 23.6v4.9H32z" fill="#D44122"/><path d="M34.2 20.4h3.2l3 3.2h-6.2z" fill="#FFFFFF"/><circle cx="20" cy="32.5" r="3.8" fill="#FFFFFF"/><circle cx="37" cy="32.5" r="3.8" fill="#FFFFFF"/><rect x="4" y="19.5" width="13.5" height="12" rx="2" fill="#F0A085"/><path d="M10.75 19.5v12"/></g></svg></span>
@@ -143,7 +141,7 @@
     <div class="sec-head reveal">
       <p class="eyebrow">Onze diensten</p>
       <h2>Hulp wanneer je die nodig hebt</h2>
-      <p class="lede">Van een verhuis of ontruiming tot een opkuis, het vervoer van je inboedel, het monteren van je meubels of het inpakken van je spullen: we bekijken samen wat er moet gebeuren.</p>
+      <p class="lede">Verhuizen, ontruimen of opkuisen? Wij nemen het werk uit handen. Van je spullen inpakken en vervoeren tot je meubels monteren: jij vertelt wat je nodig hebt, wij regelen de rest.</p>
     </div>
     <div class="services">
       <article class="service reveal">
@@ -185,7 +183,7 @@
         </div>
         <span class="ic-vlak"><svg viewBox="0 0 48 48" aria-hidden="true"><g><rect x="13" y="6.5" width="3.4" height="15" rx="1.7" fill="#D44122"/><path d="M8 21.5h13.4l1.8 9.4a2.4 2.4 0 0 1-2.4 2.8H8.6a2.4 2.4 0 0 1-2.4-2.8z" fill="#FFFFFF"/><path d="M11.4 22v11.2M14.7 22v11.2M18 22v11.2"/><rect x="36.2" y="13.5" width="3.4" height="9" rx="1.7" fill="#D44122"/><path d="M24.5 22.5h19l-1.7 7.2a2.6 2.6 0 0 1-2.5 2h-10.6a2.6 2.6 0 0 1-2.5-2z" fill="#D44122"/><path d="M27.2 26.4h13.6" stroke="#FFFFFF" stroke-width="2"/></g></svg></span>
         <h3>Opkuis</h3>
-        <p>Het opruimen, leegmaken en opkuisen van onder andere garages, zolders, kelders en andere ruimtes.</p>
+        <p>Van een volle garage tot een overvolle zolder of kelder: wij maken de ruimte leeg en laten alles proper achter.</p>
         <a class="more" href="#offerte" data-dienst="Opkuis">Offerte voor opkuis <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       </article>
       <article class="service reveal" style="--d:360ms">
@@ -198,7 +196,7 @@
         </div>
         <span class="ic-vlak"><svg viewBox="0 0 48 48" aria-hidden="true"><g><rect x="11.5" y="12.5" width="16" height="12.5" rx="4" fill="#D44122"/><rect x="7.5" y="18.5" width="5.2" height="12" rx="2.6" fill="#D44122"/><rect x="26.3" y="18.5" width="5.2" height="12" rx="2.6" fill="#D44122"/><rect x="10.8" y="23.5" width="17.4" height="7.5" rx="2.2" fill="#D44122"/><path d="M12.6 31v3.4M26.4 31v3.4"/><path d="M34 20.6h5.6v-3.4l5.4 5-5.4 5v-3.4H34z" fill="#D44122"/></g></svg></span>
         <h3>Vervoer van inboedel</h3>
-        <p>Het vervoeren van meubels en andere persoonlijke spullen van de ene locatie naar de andere, ook wanneer er geen volledige verhuis nodig is.</p>
+        <p>Wij helpen je bij het vervoeren van jouw meubels en andere persoonlijke spullen. Ook wanneer er geen volledige verhuis nodig is.</p>
         <a class="more" href="#offerte" data-dienst="Vervoer van inboedel">Offerte voor vervoer <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       </article>
       <article class="service reveal" style="--d:480ms">
@@ -211,8 +209,8 @@
         </div>
         <span class="ic-vlak"><svg viewBox="0 0 48 48" aria-hidden="true"><g><rect x="6.5" y="17" width="20" height="16" rx="1.8" fill="#FFFFFF"/><rect x="5" y="12.8" width="23" height="4.4" rx="2.2" fill="#F0A085"/><path d="M16.5 17.4v15.2M13.8 23.2v3.4M19.2 23.2v3.4M9.8 33v3.2M23.2 33v3.2"/><g transform="rotate(34 35 26)"><path d="M33.6 11.8h2.8v13.4h-2.8z" fill="#FFFFFF"/><rect x="31.2" y="25" width="7.6" height="13.4" rx="3.2" fill="#D44122"/></g></g></svg></span>
         <h3>Meubelmontage</h3>
-        <p>Heb je nieuwe meubels gekocht? Wij kunnen je ongemonteerde meubels ophalen en ze bij jou op locatie monteren. Zijn de meubels al ter plaatse? Dan komen we ook graag langs om ze alleen te monteren.</p>
-        <a class="more" href="#offerte" data-dienst="Meubelmontage">Offerte voor montage <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <p>Wij halen jouw meubels op en monteren ze bij jou thuis of op locatie. Staan de meubels al ter plaatse? Geen probleem! We komen ook graag langs om ze vakkundig voor je te monteren.</p>
+        <a class="more" href="#offerte" data-dienst="Meubelmontage">Offerte voor meubelmontage <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       </article>
       <article class="service reveal" style="--d:600ms">
         <div class="service-img">
@@ -224,7 +222,7 @@
         </div>
         <span class="ic-vlak"><svg viewBox="0 0 48 48" aria-hidden="true"><g><path d="M11 23.5h26V36a2.4 2.4 0 0 1-2.4 2.4H13.4A2.4 2.4 0 0 1 11 36z" fill="#F0A085"/><path d="M11 23.5 6.6 17.8l8.4-1.4 4 7.1z" fill="#F0A085"/><path d="M37 23.5l4.4-5.7-8.4-1.4-4 7.1z" fill="#F0A085"/><path d="M14.2 23.4c-.8-3.4 1.6-5.8 4.1-4.5 1-3.1 4.6-3.5 6 -.7 1.7-2.5 5.2-1.6 5.6 1.3 2.5-.5 4 1.7 3.6 3.9z" fill="#FFFFFF"/><rect x="29.4" y="27.4" width="3.6" height="5.2" rx="1" fill="#D44122"/></g></svg></span>
         <h3>Inpakservice</h3>
-        <p>Geen tijd of zin om alles zelf in te pakken? Wij helpen je om je spullen zorgvuldig in te pakken en klaar te maken voor je verhuis of ontruiming.</p>
+        <p>Geen tijd, geen zin of wordt het je even te veel? Wij pakken je spullen met zorg in en maken alles klaar voor je verhuis of ontruiming. Zo heb jij één zorg minder.</p>
         <a class="more" href="#offerte" data-dienst="Inpakservice">Offerte voor inpakservice <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       </article>
     </div>
@@ -241,8 +239,8 @@
     <ol class="steps">
       <li class="reveal"><span class="n">1</span><h3>Je vraagt een offerte aan</h3><p>Vul het formulier in of bel ons. Dat is gratis en vrijblijvend.</p></li>
       <li class="reveal" style="--d:120ms"><span class="n">2</span><h3>We bespreken je opdracht</h3><p>We nemen contact op, overlopen samen wat er moet gebeuren en bezorgen je een prijsschatting.</p></li>
-      <li class="reveal" style="--d:240ms"><span class="n">3</span><h3>We plannen een moment in</h3><p>Ga je akkoord? Dan zoeken we samen een moment dat jou past.</p></li>
-      <li class="reveal" style="--d:360ms"><span class="n">4</span><h3>Wij komen langs</h3><p>Ons team komt op het afgesproken moment en voert de opdracht uit zoals afgesproken.</p></li>
+      <li class="reveal" style="--d:240ms"><span class="n">3</span><h3>We plannen een moment in</h3><p>Ga je akkoord? Dan zoeken we samen naar een moment dat voor jou past.</p></li>
+      <li class="reveal" style="--d:360ms"><span class="n">4</span><h3>Wij komen langs</h3><p>Ons team komt op het afgesproken moment langs en voert de opdracht uit zoals afgesproken.</p></li>
     </ol>
   </div>
 </section>
@@ -253,23 +251,23 @@
     <div class="sec-head reveal">
       <p class="eyebrow">Waarom MTM Solutions?</p>
       <h2>Mensen helpen, daar draait het om</h2>
-      <p class="lede">Een verhuis of ontruiming is vaak meer dan wat dozen en meubels. We nemen de tijd om te begrijpen wat jij nodig hebt.</p>
+      <p class="lede">Een verhuis of ontruiming is vaak meer dan wat dozen en meubels. Bij MTM Solutions nemen we de nodige tijd om te begrijpen wat jij nodig hebt.</p>
     </div>
     <div class="values">
       <div class="value reveal" style="--d:120ms">
         <span class="ic-vlak ic-vlak--licht"><svg viewBox="0 0 48 48" aria-hidden="true"><g><circle cx="7.6" cy="13.6" r="4.8" fill="#FFFFFF"/><path d="M7.6 20c-3 0-5 2.1-5 5v4.4h10V25c0-2.9-2-5-5-5z" fill="#FFFFFF"/><path d="M4.8 29.4V42M10.4 29.4V42"/><circle cx="40.4" cy="13.6" r="4.8" fill="#FFFFFF"/><path d="M40.4 20c3 0 5 2.1 5 5v4.4h-10V25c0-2.9 2-5 5-5z" fill="#FFFFFF"/><path d="M43.2 29.4V42M37.6 29.4V42"/><path d="M12.6 24.4l3.4-3.4M35.4 24.4L32 21"/><rect x="15.4" y="18.6" width="17.2" height="14.2" rx="2" fill="#F0A085"/><path d="M15.4 24h17.2"/><path d="M24 18.6V24"/></g></svg></span>
         <h3>Persoonlijke hulp</h3>
-        <p>Je hebt contact met mensen, niet met een systeem. We luisteren naar je situatie en denken met je mee.</p>
+        <p>Je hebt contact met mensen, niet met een systeem. We luisteren naar jouw situatie en denken met je mee.</p>
       </div>
       <div class="value reveal" style="--d:240ms">
         <span class="ic-vlak ic-vlak--licht"><svg viewBox="0 0 48 48" aria-hidden="true"><g><path d="M24.6 6h16A3.7 3.7 0 0 1 44.3 9.7v9.1a3.7 3.7 0 0 1-3.7 3.7h-2l-5.1 4.8v-4.8h-8.9a3.7 3.7 0 0 1-3.7-3.7V9.7A3.7 3.7 0 0 1 24.6 6z" fill="#D44122"/><path d="M7.4 18h17.8a3.7 3.7 0 0 1 3.7 3.7v9.9a3.7 3.7 0 0 1-3.7 3.7h-8.5L9.8 42v-6.7H7.4a3.7 3.7 0 0 1-3.7-3.7v-9.9A3.7 3.7 0 0 1 7.4 18z" fill="#FFFFFF"/><path d="M9.2 24.4h14.2M9.2 29h9.8"/></g></svg></span>
         <h3>Duidelijke communicatie</h3>
-        <p>Vooraf weet je wat we komen doen en wat je mag verwachten. Heb je een vraag? Dan kun je ons gewoon bellen of mailen.</p>
+        <p>Je staat niet voor verrassingen. Je weet vooraf precies wat we komen doen. Heb je toch een vraag? Dan kan je ons altijd bellen of mailen.</p>
       </div>
       <div class="value reveal" style="--d:360ms">
         <span class="ic-vlak ic-vlak--licht"><svg viewBox="0 0 48 48" aria-hidden="true"><g><path d="M4 42.5v-7.9a5.8 5.8 0 0 1 2.8-4.9l7-4.3a2.6 2.6 0 1 1 2.7 4.4l-3.5 2.1h3.2a2.6 2.6 0 0 1 0 5.1h-2v5.5z" fill="#FFFFFF"/><path d="M7.2 35.1l5.5-3.4"/><g transform="scale(-1,1) translate(-48,0)"><path d="M4 42.5v-7.9a5.8 5.8 0 0 1 2.8-4.9l7-4.3a2.6 2.6 0 1 1 2.7 4.4l-3.5 2.1h3.2a2.6 2.6 0 0 1 0 5.1h-2v5.5z" fill="#FFFFFF"/><path d="M7.2 35.1l5.5-3.4"/></g><path d="M24 27.6s-9.6-5.8-9.6-12.2A5.6 5.6 0 0 1 24 11.6a5.6 5.6 0 0 1 9.6 3.8c0 6.4-9.6 12.2-9.6 12.2z" fill="#D44122"/></g></svg></span>
         <h3>Respectvolle aanpak</h3>
-        <p>We gaan zorgzaam om met je woning en je spullen. Zeker in een moeilijke periode werken we rustig en met respect.</p>
+        <p>We behandelen je woning en je spullen met de grootste zorg. Zeker in een moeilijke periode nemen we de tijd om rustig, respectvol en met begrip te werk te gaan.</p>
       </div>
     </div>
   </div>
@@ -280,7 +278,7 @@
   <div class="wrap area">
     <div class="area-tekst">
       <div class="sec-head reveal">
-        <p class="eyebrow">Werkgebied</p>
+        <p class="eyebrow">Ons werkterrein</p>
         <h2>Hier zijn we actief</h2>
         <p class="lede">We helpen particulieren in deze regio's. Twijfel je of we ook bij jou langskomen? Vraag het ons gerust.</p>
       </div>
@@ -525,7 +523,7 @@
   <div class="wrap quote-grid">
     <div class="quote-side reveal">
       <p class="eyebrow">Offerte aanvragen</p>
-      <h2>Vraag je gratis offerte aan</h2>
+      <h2>Vraag jouw gratis offerte aan</h2>
       <p class="lede">Vertel ons kort wat je nodig hebt en verstuur je aanvraag via WhatsApp. We nemen contact met je op om je opdracht te bespreken. De offerte is gratis en vrijblijvend.</p>
       <div class="side-contact">
         <p>Liever meteen iemand spreken?</p>
@@ -540,8 +538,8 @@
         <div class="notice notice-wa" id="formNotice" role="note">
           <span class="wa-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 20.5l1.3-4.2A8.5 8.5 0 1 1 8 19.4z"/><path d="M9 8.5c0 3.3 3.2 6.5 6.5 6.5l1-1.6-2-1-1 .9a5 5 0 0 1-2.3-2.3l.9-1-1-2z"/></svg></span>
           <div class="notice-tekst">
-            <p class="notice-titel">Je aanvraag via WhatsApp</p>
-            <p>Vul het formulier in en open WhatsApp met je aanvraag. Controleer je bericht en druk op verzenden. Je kunt daar ook eenvoudig foto's toevoegen.</p>
+            <p class="notice-titel">Jouw aanvraag via WhatsApp</p>
+            <p>Vul het formulier in en ga verder naar WhatsApp. Kijk je bericht even na, voeg eventueel foto&rsquo;s toe en druk op verzenden. Zo krijgen wij een duidelijk beeld van wat je nodig hebt.</p>
           </div>
         </div>
 
@@ -685,7 +683,7 @@
           <div class="field">
             <label for="omschrijving">Korte omschrijving van de opdracht <span class="opt">(niet verplicht)</span></label>
             <textarea id="omschrijving" name="omschrijving" rows="5" maxlength="1500" aria-describedby="omschrijving-hint" placeholder="bv. Appartement op de 2de verdieping, geen lift, ongeveer 20 dozen en een zetel."></textarea>
-            <p class="hint" id="omschrijving-hint">Denk aan: hoeveel spullen ongeveer, op welke verdieping, of er een lift is, en andere bijzonderheden.</p>
+            <p class="hint" id="omschrijving-hint">Vertel kort hoeveel spullen of dozen er zijn, op welke verdieping ze staan en of er een lift is. Zijn er nog bijzonderheden? Laat het ons weten, dan houden we daar rekening mee.</p>
           </div>
 
           <div class="photo-tip">
@@ -788,6 +786,6 @@
   <a class="btn btn-accent" href="#offerte">Gratis offerte</a>
 </div>
 
-<script src="js/script.js?v=25"></script>
+<script src="js/script.js?v=33"></script>
 </body>
 </html>

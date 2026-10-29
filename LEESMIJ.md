@@ -13,6 +13,7 @@ database nodig, en er zijn geen externe koppelingen of betaalde diensten.
 | `img/logo.png`     | Het logo, met doorzichtige achtergrond (ook `logo-small.png`)        |
 | `img/favicon-*.png`| Het icoontje in het browsertabblad: de doos uit het logo             |
 | `img/hero-*.webp`  | De foto bovenaan, in drie groottes (760, 1200 en 1536 pixels breed)  |
+| `img/waarom*.webp` | De foto achter de sectie "Waarom MTM Solutions?", in twee groottes   |
 | `img/verhuizen*`, `img/ontruiming*`, `img/opkuis*`, `img/vervoer*`, `img/montage*`, `img/inpakservice*` | De foto's bij de zes diensten, elk in twee groottes |
 
 ## Bekijken op je computer
@@ -78,6 +79,101 @@ Dubbelklik op `index.html`. De website opent dan in je browser.
 - Pas je CSS of JavaScript aan nadat de site online staat? Verhoog dan in `index.html` het
   nummer in `style.css?v=2` en `script.js?v=2` (naar `v=3` enzovoort). Zo krijgen bezoekers
   meteen de nieuwe versie te zien. (Nu staat overal `v=15`.)
+
+## De foto bovenaan
+
+De hero-foto is de **achtergrond van de hele opening** (`.hero-photo` in
+`css/style.css`). Ze loopt over de volledige breedte achter de titel, de tekst,
+de knoppen en het keuzevak door. Er ligt een crèmesluier overheen zodat alles
+leesbaar blijft: stevig links achter de tekst, opklarend naar rechts zodat de
+foto daar goed zichtbaar blijft.
+
+Bovenaan blijft een strook helemaal vrij van die sluier: daar staan de twee
+medewerkers. Hoe hoog die strook is, staat in de variabele `--vrij`, en de
+bovenruimte van de hero wordt daaruit berekend. Zo komt er nooit tekst, een
+keuzevak of de actiebadge voor hun gezichten.
+
+| Scherm                  | Instelling                                              |
+|-------------------------|---------------------------------------------------------|
+| Computer (vanaf 901)    | `--vrij: 23vw`, foto op ware breedte, `margin-top: -2%`  |
+| Tablet en gsm (t.e.m. 900) | `--vrij: 32vw`, foto ingezoomd op `130%` met `margin-left: -12%` |
+
+Let op als je hieraan sleutelt:
+
+- **`--vrij` moet groter blijven dan waar de kinnen eindigen.** Op een computer
+  staan die op ongeveer 22% van de schermbreedte, op gsm op ongeveer 31%.
+  Verklein je `--vrij`, dan komt de sluier over de gezichten te liggen.
+- De bovenruimte is `--vrij + --overgang + wat lucht`. Begint de tekst hoger,
+  dan staat ze in de overgang van de sluier en wordt ze slecht leesbaar.
+- Op tablet en gsm hoort `width: 130%` bij `margin-left: -12%`. Verander het ene
+  getal niet zonder het andere: samen bepalen ze dat de twee medewerkers rechts
+  van de actiebadge en volledig binnen het scherm staan.
+- De sluier (`.hero-photo::after`) loopt via `inset: 0 0 -7vw 0` nog een stuk
+  door onder de foto, en het masker dooft hem daar uit. Zo is er geen zichtbare
+  rand waar de foto stopt. Haal dat niet weg.
+
+## De foto achter "Waarom MTM Solutions?"
+
+Die sectie heeft de foto als achtergrond. Ze is opgebouwd uit drie lagen die
+los van elkaar staan (zie `#waarom` in `css/style.css`):
+
+1. `#waarom::before` — de foto zelf, onbewerkt ingeladen uit `img/`;
+2. `#waarom::after` — de donkere sluier;
+3. `.wrap` — de tekst en de drie kaarten.
+
+Omdat de sluier een aparte laag is, wordt alleen de foto donkerder gemaakt. Het
+beeldbestand blijft ongewijzigd; je kunt het dus altijd opnieuw gebruiken.
+
+Twee variabelen sturen alles aan:
+
+- `--zoom`: hoe groot de foto staat (de hoogte staat op `auto`, dus de foto
+  wordt nooit uitgerekt).
+- `--fh`: de hoogte die de foto daardoor inneemt. De foto is 2,5 keer zo breed
+  als hoog, dus `--fh` is altijd `--zoom / 2,5`. **Pas je de ene aan, pas dan
+  ook de andere aan**, anders klopt de sluier niet meer.
+
+| Scherm                 | `--zoom` | uitsnede | bovenruimte |
+|------------------------|----------|----------|-------------|
+| Computer (vanaf 901)   | 118%     | `70% 0`  | gewone sectieruimte; de twee personen staan rechts naast de tekst |
+| Tablet (561–900)       | 170%     | `94% 0`  | 45% van de fotohoogte: de personen staan dan boven de tekst |
+| Smartphone (t.e.m. 560)| 260%     | `94% 0`  | idem |
+
+Onder de foto loopt de sectie door in de donkere huiskleur. De sluier eindigt in
+precies diezelfde kleur, dus je ziet nergens een rand waar de foto stopt.
+
+Op een computer is de sluier links donker (tot 47% van de breedte, waar de tekst
+staat) en rechts licht (vanaf 61%, waar de twee personen zitten). Verschuif je
+de uitsnede, dan verschuiven die twee zones mee: controleer dan opnieuw of de
+gezichten in het lichte deel vallen.
+
+De drie kaarten zijn licht doorschijnend met een zachte vervaging erachter. Werkt
+die vervaging niet in een oudere browser, dan blijft de kaart gewoon donkergrijs
+en blijft de tekst leesbaar.
+
+## De actiebadge
+
+De eindejaarsactie staat als een ronde badge in een hoek van de hero-foto
+(`.actie-badge` in `index.html`, opmaak bij `.actie-badge` in `css/style.css`).
+Het is een echte cirkel: `aspect-ratio: 1` houdt breedte en hoogte gelijk, en de
+maat schaalt mee met het scherm.
+
+De vier regels staan los van elkaar, zodat de korting het meest opvalt:
+`.ab-kop` (Eindejaarsactie), `.ab-cijfer` (15%), `.ab-woord` (korting) en
+`.ab-voet` (op alles, t.e.m. 31 dec.). Het percentage is met afstand het
+grootst. Witte tekst op het oranjerood van de huisstijl haalt een contrast van
+1 op 4,6 — ruim boven de norm.
+
+**De plaats.** De badge hangt linksboven in de hero, over de bestelwagen. Op
+tablet en smartphone is ze iets kleiner, zodat ze ook daar links van het eerste
+gezicht blijft. Zet haar niet rechtsboven: daar staat de tweede medewerker.
+
+**Let op bij de opmaak**: de badge hangt vast aan `.hero-photo`, dus dat vak
+moet altijd `position: relative` blijven. Zet de badge niet rechtsboven: daar
+staat het hoofd van de tweede medewerker.
+
+**Na 31 december**: verwijder het hele blok `<p class="actie-badge">` uit
+`index.html`. Er staat een opmerking bij. De actie staat maar op één plaats, dus
+daarmee is ze overal weg.
 
 ## Animaties
 

@@ -101,19 +101,53 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
 
 /* ---------- Actiebalk bovenaan (tijdelijk) ----------
    Hoort bij het blok ACTIEBALK in index.html. Verwijder beide na 31 december. */
-.promo { background: var(--dark); color: #E8E4E0; }
-.promo p {
-  display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
-  gap: 6px 12px; padding-block: 11px; font-size: 15px; line-height: 1.35; text-align: center;
+/* ---------- Ronde actiebadge op de hero-foto ----------
+   Een echte cirkel (gelijke breedte en hoogte via aspect-ratio). Het
+   kortingspercentage is veruit het grootst, zodat dat het eerst opvalt. */
+.actie-badge {
+  position: absolute; z-index: 3;
+  /* Linksboven in de fotoband. Rechtsboven staat het hoofd van de tweede
+     medewerker; daar mag de badge niet voor komen. */
+  top: clamp(10px, 1.6vw, 26px); left: clamp(12px, 2vw, 40px); right: auto;
+  --maat: clamp(136px, 14.6vw, 204px);
+  width: var(--maat); aspect-ratio: 1; margin: 0;
+  /* Alle regels hieronder rekenen in em, dus ze schalen mee met de diameter.
+     Zo blijven de verhoudingen op elk schermformaat precies gelijk. */
+  font-size: calc(var(--maat) * .105);
+  border-radius: 50%; background: var(--accent); color: var(--white);
+  border: 3px solid var(--white);
+  box-shadow: 0 10px 26px rgba(41, 41, 41, .22);
+  display: grid; align-content: center; justify-items: center;
+  text-align: center; line-height: 1.1; padding: .5em;
+  transform: rotate(-8deg);
 }
-.promo b { color: var(--accent-l); font-weight: 800; }
-.promo-tag {
-  font-size: 12px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase;
-  color: var(--dark-d); background: var(--accent-l);
-  padding: 4px 10px; border-radius: 999px; white-space: nowrap;
+.ab-kop {
+  font-size: .6em; font-weight: 800;
+  letter-spacing: .03em; text-transform: uppercase;
+  max-width: 92%;
 }
-@media (max-width: 480px) {
-  .promo p { font-size: 14px; padding-block: 10px; }
+.ab-cijfer {
+  font-size: 2.72em; font-weight: 800;
+  letter-spacing: -.02em; margin-top: 1px;
+}
+.ab-woord { font-size: 1.02em; font-weight: 800; margin-top: -.1em; }
+.ab-voet {
+  font-size: .58em; font-weight: 600;
+  margin-top: .3em; max-width: 82%; line-height: 1.25;
+}
+/* Op een smartphone staat de foto als een eigen blok bovenaan. De badge hangt
+   dan in de bovenhoek daarvan, kleiner, zodat ze niets wegneemt van de
+   medewerkers op de foto en niets buiten het scherm valt. */
+@media (max-width: 900px) {
+  .actie-badge {
+    /* Linksboven op de foto, naast de twee medewerkers: daar staat de
+       bestelwagen. De maat is hier iets kleiner, zodat de badge ook op een
+       smal scherm links van het eerste gezicht blijft. */
+    top: 10px; bottom: auto; left: 10px; right: auto;
+    --maat: clamp(100px, 27vw, 150px);
+    border-width: 2.5px; padding: .55em;
+    transform: rotate(-6deg);
+  }
 }
 
 /* ---------- Menu ---------- */
@@ -175,25 +209,54 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
 }
 
 /* ---------- 1. Opening ---------- */
-.hero { position: relative; overflow: hidden; padding-block: clamp(40px, 7vw, 96px) clamp(56px, 8vw, 110px); background: linear-gradient(180deg, var(--cream), var(--sand)); }
+.hero {
+  position: relative; overflow: hidden;
+  /* --vrij is de hoogte van de vrije strook bovenaan de foto. Daar staan de
+     twee gezichten, en daar komt geen titel, tekst of keuzevak overheen. De
+     bovenruimte van de hero is dus precies die strook plus wat lucht.
+     De gezichten eindigen op ongeveer 22% van de schermbreedte, vandaar 23vw. */
+  --vrij: 23vw;
+  /* --overgang is de hoogte waarover de sluier wordt opgebouwd. De tekst
+     begint daar net onder, zodat er nergens te weinig contrast is. */
+  --overgang: 3.8vw;
+  padding-block: calc(var(--vrij) + var(--overgang) + 1vw) clamp(56px, 8vw, 110px);
+  background: linear-gradient(180deg, var(--cream), var(--sand));
+}
 .hero > .wrap { position: relative; z-index: 1; }
 
-/* Hero-foto als achtergrond, met een crèmekleurige overgang zodat titel,
-   tekst en knoppen leesbaar blijven. */
-.hero-photo { position: absolute; inset: 0; z-index: 0; }
-.hero-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; }
-/* De overgang loopt schuin omhoog: stevig crème linksonder waar de titel, de
-   tekst en de knoppen staan, en opklarend naar rechtsboven zodat de
-   medewerkers op de foto daar goed zichtbaar blijven. */
+/* De foto is de achtergrond van de hele opening: ze loopt over de volledige
+   breedte achter de titel, de tekst, de knoppen en het keuzevak door.
+   z-index: auto (niet 0) zodat de actiebadge erin boven het keuzevak kan. */
+.hero-photo { position: absolute; inset: 0 0 auto 0; z-index: auto; }
+.hero-photo img {
+  display: block; width: 100%; height: auto;
+  /* Schuift het beeld een fractie omhoog: minder lucht boven de hoofden. */
+  margin-top: -2%;
+}
+/* Crèmesluier over de foto: stevig links achter de titel en de tekst, naar
+   rechts opklarend zodat de foto goed zichtbaar blijft, en onderaan vloeiend
+   overgaand in de crèmekleur van de sectie. Het masker houdt de bovenste
+   strook volledig vrij — daar staan de twee gezichten. */
 .hero-photo::after {
-  content: ""; position: absolute; inset: 0;
+  content: ""; position: absolute; pointer-events: none;
+  /* De sluier loopt 7vw door onder de foto. Zo is er onderaan geen zichtbare
+     rand waar de foto stopt: de crèmekleur dooft daar rustig uit. */
+  inset: 0 0 -7vw 0;
   background:
-    linear-gradient(64deg,
-      var(--cream) 0 36%,
-      rgba(250, 248, 245, .95) 54%,
-      rgba(250, 248, 245, .52) 74%,
-      rgba(250, 248, 245, .08) 100%),
-    linear-gradient(180deg, rgba(250, 248, 245, 0) 52%, rgba(241, 235, 228, .5) 100%);
+    linear-gradient(180deg,
+      rgba(250, 248, 245, 0) 0 50%,
+      rgba(250, 248, 245, .42) 74%,
+      var(--cream) 88%),
+    linear-gradient(100deg,
+      rgba(250, 248, 245, .96) 0 41%,
+      rgba(250, 248, 245, .88) 55%,
+      rgba(250, 248, 245, .48) 74%,
+      rgba(250, 248, 245, .12) 100%);
+  /* Bovenaan helemaal vrij (daar staan de gezichten), onderaan uitdovend. */
+  -webkit-mask-image: linear-gradient(180deg, transparent 0 var(--vrij),
+            #000 calc(var(--vrij) + var(--overgang)) calc(100% - 7vw), transparent 100%);
+          mask-image: linear-gradient(180deg, transparent 0 var(--vrij),
+            #000 calc(var(--vrij) + var(--overgang)) calc(100% - 7vw), transparent 100%);
 }
 .hero-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: clamp(32px, 5vw, 72px); align-items: center; }
 .hero-grid > * { min-width: 0; }
@@ -286,20 +349,39 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
 .ic-lg { width: 56px; height: 56px; border-radius: 16px; }
 .ic-lg svg { width: 28px; height: 28px; }
 
+/* Op een smallere computer of een tablet in liggende stand wordt het beeld
+   kleiner mee. De band mag dan iets hoger zijn, anders komen de kinnen te
+   dicht bij de onderrand. */
+/* Op tablet en smartphone blijft de foto de achtergrond van de opening, maar
+   dan ingezoomd. Anders zouden de twee gezichten op een smal scherm veel te
+   klein worden. De inhoud staat er gewoon bovenop. */
 @media (max-width: 900px) {
   .hero-grid { grid-template-columns: 1fr; }
-  /* Op smartphone staat de foto als beeld bovenaan, niet als achtergrond.
-     Zo blijven de verhuizers zichtbaar en de tekst gewoon leesbaar. */
-  .hero { padding-top: clamp(20px, 5vw, 32px); }
-  .hero-photo {
-    position: static; margin: 0 var(--gutter) clamp(26px, 6vw, 36px);
-    border-radius: 22px; overflow: hidden; box-shadow: var(--shadow);
+  .hero {
+    /* Ingezoomd staan de gezichten lager, dus is de vrije strook hoger. De
+       overgang is hier ook langer, anders oogt ze op een klein scherm hard. */
+    --vrij: 32vw;
+    --overgang: 7vw;
+    padding-top: calc(var(--vrij) + var(--overgang) + 2vw);
   }
-  .hero-photo img { aspect-ratio: 4 / 3; height: auto; object-position: 72% 50%; }
-  .hero-photo::after { display: none; }
-}
-@media (max-width: 520px) {
-  .hero-photo img { aspect-ratio: 5 / 4; }
+  .hero-photo {
+    position: absolute; inset: 0 0 auto 0; width: auto;
+    margin: 0; border-radius: 0; box-shadow: none; overflow: hidden;
+  }
+  .hero-photo img {
+    /* 130% breed en 14,5% naar links: zo staan de twee medewerkers samen
+       midden in beeld, rechts van de actiebadge en volledig binnen het
+       scherm. Verander het ene getal niet zonder het andere. */
+    width: 130%; max-width: none; margin-left: -12%; margin-top: 0;
+    height: auto; aspect-ratio: auto;
+  }
+  .hero-photo::after {
+    /* Smal scherm: de tekst loopt over de volle breedte, dus de sluier is hier
+       overal even sterk. Het masker hierboven zorgt voor de opbouw bovenaan. */
+    background: linear-gradient(180deg,
+      rgba(250, 248, 245, .92) 0 70%,
+      var(--cream) 92%);
+  }
 }
 @media (max-width: 520px) {
   .hero-acts .btn { width: 100%; }
@@ -389,6 +471,83 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
 .value .ic { background: var(--accent-l); color: var(--dark-d); }
 .value p { color: #D5CFCA; }
 @media (max-width: 900px) { .values { grid-template-columns: 1fr; } }
+
+/* ---------- De foto achter de sectie "Waarom MTM Solutions?" ----------
+   Drie lagen boven op elkaar:
+     1. ::before  de foto zelf, onbewerkt;
+     2. ::after   een donkere sluier, los van de foto;
+     3. .wrap     de tekst en de drie kaarten.
+   Zo wordt alleen de foto donkerder gemaakt en blijft het bestandje zelf
+   ongewijzigd. --zoom bepaalt hoe groot de foto staat, --fh is de hoogte die ze
+   daardoor inneemt (de foto is 2,5 keer zo breed als hoog). Onder de foto loopt
+   de sectie gewoon door in de donkere huiskleur, en omdat de sluier daar in
+   diezelfde kleur eindigt, zie je de overgang niet. */
+#waarom {
+  position: relative; isolation: isolate; overflow: hidden;
+  --zoom: 118%;
+  --fh: 47.2vw;   /* = 118% / 2,5 */
+}
+#waarom::before,
+#waarom::after { content: ""; position: absolute; inset: 0; pointer-events: none; }
+#waarom::before {
+  z-index: -2;
+  background-image: url("../img/waarom.webp");
+  background-repeat: no-repeat;
+  /* "auto" bij de hoogte: de foto wordt nooit uitgerekt. 70% schuift de
+     uitsnede zo dat de twee personen rechts staan, naast de tekst. */
+  background-size: var(--zoom) auto;
+  background-position: 70% 0;
+}
+#waarom::after {
+  z-index: -1;
+  background:
+    /* onderaan rustig overgaand in de donkere huiskleur */
+    linear-gradient(180deg,
+      rgba(41, 41, 41, 0) 0 calc(var(--fh) * .60),
+      rgba(41, 41, 41, .5) calc(var(--fh) * .86),
+      var(--dark) var(--fh)),
+    /* links donkerder (daar staat de tekst, die loopt tot ongeveer 47%),
+       rechts licht (daar staan de twee personen, vanaf ongeveer 61%);
+       nergens helemaal zwart, de foto blijft overal zichtbaar */
+    linear-gradient(90deg,
+      rgba(41, 41, 41, .86) 0 47%,
+      rgba(41, 41, 41, .55) 55%,
+      rgba(41, 41, 41, .2) 62%,
+      rgba(41, 41, 41, .14) 100%);
+}
+#waarom > .wrap { position: relative; z-index: 1; }
+/* De kop blijft links van de twee personen. */
+#waarom .sec-head { max-width: min(520px, 44%); }
+/* De kaarten worden licht doorschijnend, met een zachte vervaging erachter,
+   zodat je de foto voelt maar de tekst volledig leesbaar blijft. */
+#waarom .value {
+  background: rgba(47, 47, 47, .82);
+  border: 1px solid rgba(255, 255, 255, .09);
+  -webkit-backdrop-filter: blur(14px);
+          backdrop-filter: blur(14px);
+}
+
+@media (max-width: 900px) {
+  /* Smaller scherm: de foto staat verder ingezoomd, want anders worden de twee
+     gezichten te klein. Ze staan dan bovenaan, boven de tekst. */
+  #waarom { --zoom: 170%; --fh: 68vw; padding-top: calc(var(--fh) * .45); }
+  #waarom::before { background-position: 94% 0; }
+  #waarom .sec-head { max-width: none; }
+  #waarom::after {
+    /* Licht tot onder de gezichten (30% van de fotohoogte), daarna snel donker
+       zodat de kop en de tekst eronder goed leesbaar zijn. */
+    background: linear-gradient(180deg,
+      rgba(41, 41, 41, .3) 0 calc(var(--fh) * .30),
+      rgba(41, 41, 41, .86) calc(var(--fh) * .43),
+      var(--dark) calc(var(--fh) * .75));
+  }
+}
+@media (max-width: 700px) {
+  #waarom::before { background-image: url("../img/waarom-small.webp"); }
+}
+@media (max-width: 560px) {
+  #waarom { --zoom: 260%; --fh: 104vw; }
+}
 
 /* ---------- 5. Werkgebied ---------- */
 .area { display: grid; grid-template-columns: minmax(280px, .95fr) 1.05fr; gap: clamp(24px, 4vw, 56px); align-items: center; }
