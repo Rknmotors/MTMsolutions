@@ -9,7 +9,7 @@
 <!-- Icoontje in het browsertabblad: de doos met MTM uit het logo. -->
 <link rel="icon" href="img/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="img/favicon-180.png">
-<link rel="stylesheet" href="css/style.css?v=33">
+<link rel="stylesheet" href="css/style.css?v=34">
 <!-- Zet een merkteken dat JavaScript werkt. Werkt JavaScript niet, dan blijft
      alle inhoud gewoon zichtbaar en staat het menu open uitgeklapt. -->
 <script>document.documentElement.className += ' js';</script>
@@ -30,12 +30,12 @@
 <!-- ============ MENU ============ -->
 <header class="nav" id="nav">
   <div class="wrap nav-in">
-    <!-- Logo. Het beeld staat in img/logo.png (doorzichtige achtergrond), in twee
+    <!-- Logo. Het beeld staat in img/logo.webp (doorzichtige achtergrond), in twee
          groottes zodat het ook op een scherm met hoge resolutie scherp blijft.
          De naam ernaast houdt het merk leesbaar als het beeld klein wordt. -->
     <a class="logo" href="#top" aria-label="MTM Solutions, naar boven">
-      <img class="logo-beeld" src="img/logo.png"
-           srcset="img/logo-small.png 260w, img/logo.png 520w"
+      <img class="logo-beeld" src="img/logo.webp"
+           srcset="img/logo-small.webp 260w, img/logo.webp 520w"
            sizes="(max-width: 420px) 60px, 84px" width="520" height="338" alt="">
       <span class="logo-naam"><b>MTM</b> Solutions</span>
     </a>
@@ -66,8 +66,8 @@
        smartphone staat ze als beeld bovenaan, met de verhuizers in beeld. -->
   <div class="hero-photo">
     <img src="img/hero-1200.webp"
-         srcset="img/hero-760.webp 760w, img/hero-1200.webp 1200w, img/hero-1536.webp 1536w"
-         sizes="100vw" width="1536" height="1024"
+         srcset="img/hero-760.webp 760w, img/hero-1024.webp 1024w, img/hero-1200.webp 1200w, img/hero-1536.webp 1536w"
+         sizes="(max-width: 900px) 130vw, 100vw" width="1536" height="1024"
          fetchpriority="high" decoding="async"
          alt="Twee medewerkers van MTM Solutions dragen samen een verhuisdoos naar een woning, met de open bestelwagen op de achtergrond.">
     <!-- TIJDELIJK: verwijder deze badge na 31 december, anders blijft de actie staan. -->
@@ -150,7 +150,7 @@
              in verhouding 3:2 (bijvoorbeeld 1120 bij 747 pixels). -->
         <div class="service-img">
           <img src="img/verhuizen.webp"
-               srcset="img/verhuizen-small.webp 560w, img/verhuizen.webp 1120w"
+               srcset="img/verhuizen-small.webp 560w, img/verhuizen-mid.webp 800w, img/verhuizen.webp 1120w"
                sizes="(max-width: 700px) 100vw, (max-width: 1100px) 48vw, (max-width: 1399px) 380px, 320px"
                width="1120" height="747" loading="lazy" decoding="async"
                alt="Twee medewerkers dragen een houten kast en een doos uit een woning naar de geladen bestelwagen.">
@@ -163,7 +163,7 @@
       <article class="service reveal" style="--d:120ms">
         <div class="service-img">
           <img src="img/ontruiming.webp"
-               srcset="img/ontruiming-small.webp 560w, img/ontruiming.webp 1120w"
+               srcset="img/ontruiming-small.webp 560w, img/ontruiming-mid.webp 800w, img/ontruiming.webp 1120w"
                sizes="(max-width: 700px) 100vw, (max-width: 1100px) 48vw, (max-width: 1399px) 380px, 320px"
                width="1120" height="747" loading="lazy" decoding="async"
                alt="Twee medewerkers pakken voorzichtig serviesgoed en een ingelijste foto in dozen in, in een woonkamer.">
@@ -176,7 +176,7 @@
       <article class="service reveal" style="--d:240ms">
         <div class="service-img">
           <img src="img/opkuis.webp"
-               srcset="img/opkuis-small.webp 560w, img/opkuis.webp 1120w"
+               srcset="img/opkuis-small.webp 560w, img/opkuis-mid.webp 800w, img/opkuis.webp 1120w"
                sizes="(max-width: 700px) 100vw, (max-width: 1100px) 48vw, (max-width: 1399px) 380px, 320px"
                width="1120" height="747" loading="lazy" decoding="async"
                alt="Een medewerker veegt de vloer van een garage aan terwijl een collega spullen in dozen sorteert.">
@@ -189,7 +189,7 @@
       <article class="service reveal" style="--d:360ms">
         <div class="service-img">
           <img src="img/vervoer.webp"
-               srcset="img/vervoer-small.webp 560w, img/vervoer.webp 1120w"
+               srcset="img/vervoer-small.webp 560w, img/vervoer-mid.webp 800w, img/vervoer.webp 1120w"
                sizes="(max-width: 700px) 100vw, (max-width: 1100px) 48vw, (max-width: 1399px) 380px, 320px"
                width="1120" height="747" loading="lazy" decoding="async"
                alt="Twee medewerkers zetten een zetel met spanbanden vast in de laadruimte van de bestelwagen.">
@@ -202,7 +202,7 @@
       <article class="service reveal" style="--d:480ms">
         <div class="service-img">
           <img src="img/montage.webp"
-               srcset="img/montage-small.webp 560w, img/montage.webp 1120w"
+               srcset="img/montage-small.webp 560w, img/montage-mid.webp 800w, img/montage.webp 1120w"
                sizes="(max-width: 700px) 100vw, (max-width: 1100px) 48vw, (max-width: 1399px) 380px, 320px"
                width="1120" height="747" loading="lazy" decoding="async"
                alt="Een medewerker schroeft een kast in elkaar terwijl een collega een verpakt meubelpakket binnendraagt.">
@@ -215,7 +215,7 @@
       <article class="service reveal" style="--d:600ms">
         <div class="service-img">
           <img src="img/inpakservice.webp"
-               srcset="img/inpakservice-small.webp 560w, img/inpakservice.webp 1120w"
+               srcset="img/inpakservice-small.webp 560w, img/inpakservice-mid.webp 800w, img/inpakservice.webp 1120w"
                sizes="(max-width: 700px) 100vw, (max-width: 1100px) 48vw, 380px"
                width="1120" height="747" loading="lazy" decoding="async"
                alt="Twee medewerkers wikkelen glazen en servies zorgvuldig in papier en pakken ze in verhuisdozen.">
@@ -739,7 +739,7 @@
         <!-- In de footer staat het logo op een wit vlak. De figuren in het logo zijn
              donker en zouden op de donkere footer niet zichtbaar zijn. -->
         <a class="logo logo-licht" href="#top" aria-label="MTM Solutions, naar boven">
-          <span class="logo-vlak"><img src="img/logo.png" srcset="img/logo-small.png 260w, img/logo.png 520w" sizes="86px" width="520" height="338" alt=""></span>
+          <span class="logo-vlak"><img src="img/logo.webp" srcset="img/logo-small.webp 260w, img/logo.webp 520w" sizes="86px" width="520" height="338" alt=""></span>
           <span class="logo-naam"><b>MTM</b> Solutions</span>
         </a>
         <p class="foot-tag">Verhuis &amp; opruiming voor particulieren</p>
@@ -786,6 +786,6 @@
   <a class="btn btn-accent" href="#offerte">Gratis offerte</a>
 </div>
 
-<script src="js/script.js?v=33"></script>
+<script src="js/script.js?v=34"></script>
 </body>
 </html>

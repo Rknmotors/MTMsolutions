@@ -10,11 +10,11 @@ database nodig, en er zijn geen externe koppelingen of betaalde diensten.
 | `index.html`       | Alle teksten van de website, per onderdeel aangeduid                 |
 | `css/style.css`    | De opmaak. Kleuren staan bovenaan bij `:root`                        |
 | `js/script.js`     | Menu, animaties en formulier. WhatsApp-nummer bovenaan                |
-| `img/logo.png`     | Het logo, met doorzichtige achtergrond (ook `logo-small.png`)        |
+| `img/logo.webp`    | Het logo, met doorzichtige achtergrond (ook `logo-small.webp`)       |
 | `img/favicon-*.png`| Het icoontje in het browsertabblad: de doos uit het logo             |
-| `img/hero-*.webp`  | De foto bovenaan, in drie groottes (760, 1200 en 1536 pixels breed)  |
+| `img/hero-*.webp`  | De foto bovenaan, in vier groottes (760, 1024, 1200 en 1536 px breed)|
 | `img/waarom*.webp` | De foto achter de sectie "Waarom MTM Solutions?", in twee groottes   |
-| `img/verhuizen*`, `img/ontruiming*`, `img/opkuis*`, `img/vervoer*`, `img/montage*`, `img/inpakservice*` | De foto's bij de zes diensten, elk in twee groottes |
+| `img/verhuizen*`, `img/ontruiming*`, `img/opkuis*`, `img/vervoer*`, `img/montage*`, `img/inpakservice*` | De foto's bij de zes diensten, elk in drie groottes (560, 800 en 1120 px) |
 
 ## Bekijken op je computer
 
@@ -61,7 +61,15 @@ Dubbelklik op `index.html`. De website opent dan in je browser.
   in WebP-formaat in meerdere groottes; de browser kiest zelf de kleinste die volstaat. De foto's
   bij de diensten laden pas wanneer je ernaartoe scrollt.
   Wil je een foto vervangen? Zet je eigen beeld in `img/` onder dezelfde naam, in verhouding 3:2
-  voor de diensten (bijvoorbeeld 1120 bij 747 pixels). Let op: op de huidige beelden staan mensen
+  voor de diensten (bijvoorbeeld 1120 bij 747 pixels).
+
+  **Over de groottes.** Van elke foto staan er meerdere versies in `img/`. In de
+  `srcset` van elke `<img>` staat hoe breed elke versie is; de browser kiest zelf
+  de kleinste die scherp genoeg is voor het scherm van de bezoeker. Een gsm laadt
+  dus niet de grote versie. Vervang je een foto, maak dan alle maten opnieuw aan,
+  anders blijft er een oude versie rondslingeren. De foto's staan op WebP-kwaliteit
+  82: dat is de laagste waarde waarbij er met het blote oog niets te zien is.
+  Lager zetten maakt de bestanden kleiner, maar dan zie je het wel. Let op: op de huidige beelden staan mensen
   in MTM-kledij. Zijn dat niet jullie eigen mensen of opdrachten, vervang ze dan best door
   echte foto's van jullie werk.
 
