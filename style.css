@@ -1,0 +1,946 @@
+/* MTM Solutions
+   De kleuren komen uit het logo: het oranjerood van de doos en de gebogen lijn,
+   en het donkergrijs van de twee figuren. Daarnaast wit en warme neutrale tinten.
+   Wil je de kleuren aanpassen? Verander dan enkel de waarden hieronder bij :root. */
+:root {
+  /* Donker, uit de figuren in het logo */
+  --dark: #292929;        /* menu, titels, iconen, donkere vlakken */
+  --dark-d: #1C1C1C;      /* nog dieper, voor de footer */
+  --dark-l: #3A3A3A;      /* kaders op de donkere sectie */
+
+  /* Accent, uit de doos en de gebogen lijn in het logo */
+  --accent: #D44122;      /* knoppen: net donker genoeg voor witte tekst */
+  --accent-pure: #DB4626; /* exact de kleur uit het logo: lijnen en accenten */
+  --accent-d: #B3341A;    /* hover, en kleine accenttekst op een lichte ondergrond */
+  --accent-l: #F0A085;    /* accent op een donkere achtergrond */
+  --accent-soft: #FBE8E1; /* heel zachte tint voor meldingen en kaders */
+
+  /* Wit en warme neutrale tinten */
+  --white: #FFFFFF;
+  --cream: #FAF8F5;       /* warm wit: hoofdachtergrond */
+  --sand: #F1EBE4;        /* zacht zand: afwisselende sectie */
+  --line: #E4DCD3;        /* lijnen en randen */
+
+  /* Tekst */
+  --ink: #292929;         /* lopende tekst, zelfde donker als het logo */
+  --ink-2: #5C5753;       /* zachtere tekst, nog goed leesbaar */
+  --error: #A01B1B;       /* foutmeldingen: dieper rood, niet te verwarren met het accent */
+
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --ease: cubic-bezier(.16, 1, .3, 1); /* rustige, vloeiende beweging */
+  --gutter: clamp(16px, 4vw, 48px);
+  --radius: 18px;
+  --shadow: 0 18px 40px rgba(41, 41, 41, .12);
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { scroll-behavior: smooth; scroll-padding-top: 84px; -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; }
+p { margin: 0; }
+h1, h2, h3 { margin: 0; line-height: 1.15; letter-spacing: -.02em; color: var(--dark); text-wrap: balance; }
+h2 { font-size: clamp(28px, 3.4vw, 40px); font-weight: 800; }
+h3 { font-size: 20px; font-weight: 700; }
+:focus-visible { outline: 3px solid var(--accent-d); outline-offset: 3px; border-radius: 6px; }
+
+svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+.wrap { width: 100%; max-width: 1180px; margin-inline: auto; padding-inline: var(--gutter); }
+
+.skip { position: absolute; left: 12px; top: -60px; z-index: 100; background: var(--dark); color: #fff; padding: 10px 16px; border-radius: 10px; text-decoration: none; }
+.skip:focus { top: 12px; }
+
+.eyebrow { font-size: 14px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--accent-d); display: flex; align-items: center; gap: 10px; }
+.eyebrow::before { content: ""; width: 28px; height: 3px; border-radius: 3px; background: currentColor; flex: none; }
+.lede { font-size: clamp(17px, 1.4vw, 19px); color: var(--ink-2); max-width: 60ch; }
+.small { font-size: 14px; color: var(--ink-2); }
+
+/* ---------- Knoppen ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 48px; padding: 12px 22px; border-radius: 999px;
+  font: inherit; font-size: 16px; font-weight: 700; text-decoration: none; text-align: center;
+  border: 2px solid transparent; cursor: pointer;
+  transition: background-color .3s, color .3s, border-color .3s,
+              transform .45s var(--ease), box-shadow .45s var(--ease);
+}
+.btn:hover { transform: translateY(-2px); }
+.btn:active { transform: translateY(0); }
+.btn svg { width: 20px; height: 20px; flex: none; }
+.btn-sm { min-height: 44px; padding: 10px 18px; font-size: 15px; }
+.btn-lg { min-height: 56px; padding: 14px 26px; font-size: 17px; }
+.btn-block { width: 100%; }
+.btn-accent { background: var(--accent); color: #fff; }
+.btn-accent:hover { background: var(--accent-d); box-shadow: 0 12px 26px rgba(212, 65, 34, .32); }
+.btn-dark { background: var(--dark); color: #fff; }
+.btn-dark:hover { background: var(--dark-d); box-shadow: 0 12px 26px rgba(41, 41, 41, .28); }
+.btn-ghost { background: transparent; color: var(--dark); border-color: var(--dark); }
+.btn-ghost:hover { background: var(--dark); color: #fff; box-shadow: 0 12px 26px rgba(41, 41, 41, .22); }
+.btn[disabled] { opacity: .65; cursor: wait; }
+
+/* ---------- Logo (tekstversie) ---------- */
+.logo { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; line-height: 1; color: var(--dark); }
+.logo-beeld { width: 84px; height: auto; flex: none; } /* verhouding blijft behouden */
+.logo-naam { font-size: 19px; font-weight: 600; letter-spacing: .01em; white-space: nowrap; }
+.logo-naam b { font-weight: 800; letter-spacing: -.01em; }
+
+/* In de footer: het logo op een wit vlak, zodat de donkere figuren zichtbaar blijven. */
+.logo-licht { color: #fff; gap: 14px; }
+.logo-vlak { display: grid; place-items: center; background: var(--white); border-radius: 14px; padding: 9px 12px; flex: none; }
+.logo-vlak img { width: 86px; height: auto; display: block; }
+
+/* ---------- Actiebalk bovenaan (tijdelijk) ----------
+   Hoort bij het blok ACTIEBALK in index.html. Verwijder beide na 31 december. */
+/* ---------- Ronde actiebadge op de hero-foto ----------
+   Een echte cirkel (gelijke breedte en hoogte via aspect-ratio). Het
+   kortingspercentage is veruit het grootst, zodat dat het eerst opvalt. */
+.actie-badge {
+  position: absolute; z-index: 3;
+  /* Linksboven in de fotoband. Rechtsboven staat het hoofd van de tweede
+     medewerker; daar mag de badge niet voor komen. */
+  top: clamp(10px, 1.6vw, 26px); left: clamp(12px, 2vw, 40px); right: auto;
+  --maat: clamp(136px, 14.6vw, 204px);
+  width: var(--maat); aspect-ratio: 1; margin: 0;
+  /* Alle regels hieronder rekenen in em, dus ze schalen mee met de diameter.
+     Zo blijven de verhoudingen op elk schermformaat precies gelijk. */
+  font-size: calc(var(--maat) * .105);
+  border-radius: 50%; background: var(--accent); color: var(--white);
+  border: 3px solid var(--white);
+  box-shadow: 0 10px 26px rgba(41, 41, 41, .22);
+  display: grid; align-content: center; justify-items: center;
+  text-align: center; line-height: 1.1; padding: .5em;
+  transform: rotate(-8deg);
+}
+.ab-kop {
+  font-size: .6em; font-weight: 800;
+  letter-spacing: .03em; text-transform: uppercase;
+  max-width: 92%;
+}
+.ab-cijfer {
+  font-size: 2.72em; font-weight: 800;
+  letter-spacing: -.02em; margin-top: 1px;
+}
+.ab-woord { font-size: 1.02em; font-weight: 800; margin-top: -.1em; }
+.ab-voet {
+  font-size: .58em; font-weight: 600;
+  margin-top: .3em; max-width: 82%; line-height: 1.25;
+}
+/* Op een smartphone staat de foto als een eigen blok bovenaan. De badge hangt
+   dan in de bovenhoek daarvan, kleiner, zodat ze niets wegneemt van de
+   medewerkers op de foto en niets buiten het scherm valt. */
+@media (max-width: 900px) {
+  .actie-badge {
+    /* Linksboven op de foto, naast de twee medewerkers: daar staat de
+       bestelwagen. De maat is hier iets kleiner, zodat de badge ook op een
+       smal scherm links van het eerste gezicht blijft. */
+    top: 10px; bottom: auto; left: 10px; right: auto;
+    --maat: clamp(100px, 27vw, 150px);
+    border-width: 2.5px; padding: .55em;
+    transform: rotate(-6deg);
+  }
+}
+
+/* ---------- Menu ---------- */
+.nav { position: sticky; top: 0; z-index: 50; background: rgba(250, 248, 245, .94); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+.nav-in { display: flex; align-items: center; justify-content: space-between; gap: 20px; height: 76px; }
+.nav-list { display: flex; gap: 28px; list-style: none; margin: 0; padding: 0; }
+.nav-list a { position: relative; text-decoration: none; font-weight: 600; font-size: 16px; color: var(--ink); padding-block: 6px; transition: color .3s; }
+/* Fijne oranjerode lijn die bij aanwijzen van links naar rechts verschijnt. */
+.nav-list a::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px;
+  background: var(--accent-pure); border-radius: 2px;
+  transform: scaleX(0); transform-origin: left;
+  transition: transform .45s var(--ease);
+}
+.nav-list a:hover, .nav-list a:focus-visible { color: var(--accent-d); }
+.nav-list a:hover::after, .nav-list a:focus-visible::after { transform: scaleX(1); }
+.nav-r { display: flex; align-items: center; gap: 10px; }
+.menu-btn { display: none; width: 44px; height: 44px; border-radius: 50%; border: 1.5px solid var(--line); background: var(--white); color: var(--dark); cursor: pointer; place-items: center; padding: 0; }
+.menu-btn svg { width: 22px; height: 22px; }
+
+@media (max-width: 900px) {
+  .menu-btn { display: grid; }
+  .nav-list {
+    display: flex; flex-direction: column; gap: 0;
+    position: absolute; left: 0; right: 0; top: 100%;
+    background: var(--cream); border-bottom: 1px solid var(--line);
+    padding: 4px var(--gutter) 12px; box-shadow: 0 16px 24px rgba(41, 41, 41, .10);
+  }
+  .nav-list a { display: block; padding: 14px 0; border-bottom: 1px solid var(--line); font-size: 17px; }
+  .nav-list li:last-child a { border-bottom: 0; }
+  .nav-list a::after { display: none; } /* in het uitklapmenu staan al scheidingslijnen */
+
+  /* Met JavaScript: het menu schuift rustig open en dicht. */
+  .js .nav-list {
+    opacity: 0; visibility: hidden; pointer-events: none;
+    transform: translateY(-8px);
+    transition: opacity .35s var(--ease), transform .35s var(--ease), visibility 0s linear .35s;
+  }
+  .js .nav.open .nav-list {
+    opacity: 1; visibility: visible; pointer-events: auto;
+    transform: none;
+    transition: opacity .35s var(--ease), transform .35s var(--ease), visibility 0s;
+  }
+
+  /* Zonder JavaScript: geen menuknop, de links staan gewoon onder het logo. */
+  html:not(.js) .nav-in { flex-wrap: wrap; height: auto; padding-block: 12px; }
+  html:not(.js) .menu-btn { display: none; }
+  html:not(.js) .nav-list {
+    position: static; flex-direction: row; flex-wrap: wrap; gap: 8px 20px;
+    padding: 6px 0 0; background: none; box-shadow: none; border-bottom: 0;
+  }
+  html:not(.js) .nav-list a { padding: 6px 0; border-bottom: 2px solid transparent; font-size: 16px; }
+}
+@media (max-width: 420px) {
+  .logo-beeld { width: 60px; }
+  .logo-naam { font-size: 16px; }
+  .logo { gap: 9px; }
+  .nav .btn-sm { padding: 10px 14px; font-size: 14px; }
+}
+
+/* ---------- 1. Opening ---------- */
+.hero {
+  position: relative; overflow: hidden;
+  /* --vrij is de hoogte van de vrije strook bovenaan de foto. Daar staan de
+     twee gezichten, en daar komt geen titel, tekst of keuzevak overheen. De
+     bovenruimte van de hero is dus precies die strook plus wat lucht.
+     De gezichten eindigen op ongeveer 22% van de schermbreedte, vandaar 23vw. */
+  --vrij: 23vw;
+  /* --overgang is de hoogte waarover de sluier wordt opgebouwd. De tekst
+     begint daar net onder, zodat er nergens te weinig contrast is. */
+  --overgang: 3.8vw;
+  padding-block: calc(var(--vrij) + var(--overgang) + 1vw) clamp(56px, 8vw, 110px);
+  background: linear-gradient(180deg, var(--cream), var(--sand));
+}
+.hero > .wrap { position: relative; z-index: 1; }
+
+/* De foto is de achtergrond van de hele opening: ze loopt over de volledige
+   breedte achter de titel, de tekst, de knoppen en het keuzevak door.
+   z-index: auto (niet 0) zodat de actiebadge erin boven het keuzevak kan. */
+.hero-photo { position: absolute; inset: 0 0 auto 0; z-index: auto; }
+.hero-photo img {
+  display: block; width: 100%; height: auto;
+  /* Schuift het beeld een fractie omhoog: minder lucht boven de hoofden. */
+  margin-top: -2%;
+}
+/* Crèmesluier over de foto: stevig links achter de titel en de tekst, naar
+   rechts opklarend zodat de foto goed zichtbaar blijft, en onderaan vloeiend
+   overgaand in de crèmekleur van de sectie. Het masker houdt de bovenste
+   strook volledig vrij — daar staan de twee gezichten. */
+.hero-photo::after {
+  content: ""; position: absolute; pointer-events: none;
+  /* De sluier loopt 7vw door onder de foto. Zo is er onderaan geen zichtbare
+     rand waar de foto stopt: de crèmekleur dooft daar rustig uit. */
+  inset: 0 0 -7vw 0;
+  background:
+    linear-gradient(180deg,
+      rgba(250, 248, 245, 0) 0 50%,
+      rgba(250, 248, 245, .42) 74%,
+      var(--cream) 88%),
+    linear-gradient(100deg,
+      rgba(250, 248, 245, .96) 0 41%,
+      rgba(250, 248, 245, .88) 55%,
+      rgba(250, 248, 245, .48) 74%,
+      rgba(250, 248, 245, .12) 100%);
+  /* Bovenaan helemaal vrij (daar staan de gezichten), onderaan uitdovend. */
+  -webkit-mask-image: linear-gradient(180deg, transparent 0 var(--vrij),
+            #000 calc(var(--vrij) + var(--overgang)) calc(100% - 7vw), transparent 100%);
+          mask-image: linear-gradient(180deg, transparent 0 var(--vrij),
+            #000 calc(var(--vrij) + var(--overgang)) calc(100% - 7vw), transparent 100%);
+}
+.hero-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: clamp(32px, 5vw, 72px); align-items: center; }
+.hero-grid > * { min-width: 0; }
+.hero h1 { font-size: clamp(38px, 5.6vw, 66px); font-weight: 900; line-height: 1.05; margin-top: 18px; }
+/* Elke titelregel zit in een .ln. Die snijdt af, zodat de regel van onder
+   omhoog kan schuiven. De beweging zelf staat onderaan bij ANIMATIES. */
+.hero h1 .ln { display: block; overflow: hidden; padding-bottom: .16em; }
+.hero h1 .ln:last-child { padding-bottom: .34em; } /* ruimte voor het oranjerode accent */
+.hero h1 .ln > span { display: inline-block; }
+.hero h1 .ln:last-child > span { line-height: 1.18; } /* ruimte tussen de streep en de regel eronder */
+/* Oranjerood accent: een streep onder de letters, precies zo breed als de tekst.
+   Breekt de titel over twee regels af, dan krijgt elke regel zijn eigen streep
+   (dat regelt box-decoration-break). De streep rolt van links naar rechts uit. */
+.hero h1 .accent {
+  color: var(--accent-d);
+  display: inline;
+  -webkit-box-decoration-break: clone;
+          box-decoration-break: clone;
+  padding-bottom: .1em;
+  background-image: linear-gradient(var(--accent-pure), var(--accent-pure));
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  background-size: 100% .07em;
+}
+.hero .lede { margin-top: 22px; }
+.hero-acts { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+.ticks { list-style: none; padding: 0; margin: 28px 0 0; display: grid; gap: 10px; }
+.ticks li { position: relative; padding-left: 32px; font-weight: 600; }
+.ticks li::before { content: ""; position: absolute; left: 0; top: 3px; width: 22px; height: 22px; border-radius: 50%; background: var(--dark) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center / 13px no-repeat; }
+
+.help-card { background: var(--white); border-radius: 24px; padding: clamp(22px, 3vw, 32px); box-shadow: var(--shadow); border: 1px solid var(--line); border-top: 6px solid var(--accent); }
+.help-card h2 { font-size: clamp(22px, 2.2vw, 26px); }
+.help-card .small { margin-top: 6px; }
+.help-list { list-style: none; padding: 0; margin: 16px 0 0; display: grid; gap: 8px; }
+.help-list a { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 13px; padding: 11px 13px; border-radius: 13px; background: var(--cream); border: 1.5px solid transparent; text-decoration: none; transition: border-color .35s, background-color .35s, transform .45s var(--ease), box-shadow .45s var(--ease); }
+@media (hover: hover) and (pointer: fine) {
+  .help-list a:hover { border-color: var(--accent); background: var(--accent-soft); transform: translateY(-2px); box-shadow: 0 10px 22px rgba(41, 41, 41, .10); }
+  .help-list a:hover .arr { transform: translateX(4px); }
+}
+/* Werkt ook met een vinger: dit is de reactie tijdens het tikken. */
+.help-list a:active { border-color: var(--accent); background: var(--accent-soft); transform: scale(.985); }
+.help-list a:focus-visible { border-color: var(--accent); background: var(--accent-soft); }
+.help-list b { display: block; color: var(--dark); font-size: 17px; line-height: 1.3; }
+.help-list small { display: block; color: var(--ink-2); font-size: 14px; line-height: 1.35; }
+.help-list .arr { width: 20px; height: 20px; color: var(--accent-d); transition: transform .45s var(--ease); }
+
+/* ---------- Gekleurde icoontjes op de kaarten ----------
+   Deze icoontjes hebben hun eigen kleuren (donkere lijn, wit, oranje), dus ze
+   staan op een licht vlak. Op de donkere sectie wordt dat vlak wit. */
+.ic-vlak {
+  width: 64px; height: 64px; border-radius: 18px; background: var(--accent-soft);
+  display: grid; place-items: center; flex: none;
+}
+.ic-vlak svg { width: 40px; height: 40px; }
+.ic-vlak g {
+  fill: none; stroke: var(--dark); stroke-width: 2.6;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+.ic-vlak--licht { background: var(--white); }
+@media (max-width: 700px) {
+  .ic-vlak { width: 58px; height: 58px; border-radius: 16px; }
+  .ic-vlak svg { width: 36px; height: 36px; }
+}
+
+/* Het kleine vlak in de compacte dienstenlijst bovenaan. Daar staan dezelfde
+   gekleurde icoontjes als op de dienstenkaarten, dus het vlak is wit: die
+   icoontjes hebben een donkere lijn en zouden op een donker vlak wegvallen.
+   Het randje houdt het vlak zichtbaar op de lichte rij eronder, ook wanneer die
+   bij aanwijzen zachtoranje kleurt. */
+.ic {
+  width: 48px; height: 48px; border-radius: 13px;
+  background: var(--white); border: 1px solid var(--line);
+  display: grid; place-items: center; flex: none;
+}
+.ic svg { width: 34px; height: 34px; }
+/* Dezelfde icoontjes als op de kaarten, maar kleiner getekend. De lijndikte
+   schaalt mee (2,2 bij 34px tegenover 2,6 bij 40px op de kaarten); anders
+   lopen de fijne details — de borstelharen, de handvatten — dicht. */
+.ic g {
+  fill: none; stroke: var(--dark); stroke-width: 2.2;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+/* Op een smalle telefoon iets kleiner, zodat de tekst ernaast genoeg plaats
+   houdt. De icoontjes blijven daardoor nog altijd groter dan voorheen. */
+@media (max-width: 380px) {
+  .ic { width: 42px; height: 42px; border-radius: 12px; }
+  .ic svg { width: 30px; height: 30px; }
+  .ic g { stroke-width: 2; }
+}
+.ic-lg { width: 56px; height: 56px; border-radius: 16px; }
+.ic-lg svg { width: 28px; height: 28px; }
+
+/* Op een smallere computer of een tablet in liggende stand wordt het beeld
+   kleiner mee. De band mag dan iets hoger zijn, anders komen de kinnen te
+   dicht bij de onderrand. */
+/* Op tablet en smartphone blijft de foto de achtergrond van de opening, maar
+   dan ingezoomd. Anders zouden de twee gezichten op een smal scherm veel te
+   klein worden. De inhoud staat er gewoon bovenop. */
+@media (max-width: 900px) {
+  .hero-grid { grid-template-columns: 1fr; }
+  .hero {
+    /* Ingezoomd staan de gezichten lager, dus is de vrije strook hoger. De
+       overgang is hier ook langer, anders oogt ze op een klein scherm hard. */
+    --vrij: 32vw;
+    --overgang: 7vw;
+    padding-top: calc(var(--vrij) + var(--overgang) + 2vw);
+  }
+  .hero-photo {
+    position: absolute; inset: 0 0 auto 0; width: auto;
+    margin: 0; border-radius: 0; box-shadow: none; overflow: hidden;
+  }
+  .hero-photo img {
+    /* 130% breed en 14,5% naar links: zo staan de twee medewerkers samen
+       midden in beeld, rechts van de actiebadge en volledig binnen het
+       scherm. Verander het ene getal niet zonder het andere. */
+    width: 130%; max-width: none; margin-left: -12%; margin-top: 0;
+    height: auto; aspect-ratio: auto;
+  }
+  .hero-photo::after {
+    /* Smal scherm: de tekst loopt over de volle breedte, dus de sluier is hier
+       overal even sterk. Het masker hierboven zorgt voor de opbouw bovenaan. */
+    background: linear-gradient(180deg,
+      rgba(250, 248, 245, .92) 0 70%,
+      var(--cream) 92%);
+  }
+}
+@media (max-width: 520px) {
+  .hero-acts .btn { width: 100%; }
+}
+
+/* ---------- Secties algemeen ---------- */
+.section { padding-block: clamp(64px, 9vw, 112px); }
+.section-paper { background: var(--sand); }
+.sec-head { display: grid; gap: 14px; max-width: 720px; margin-bottom: clamp(32px, 4vw, 52px); }
+
+/* ---------- 2. Diensten ----------
+   Zes diensten. Het aantal kaarten naast elkaar hangt af van de schermbreedte:
+   drie op een computer (twee rijen van drie), twee op tablet, één op smartphone.
+   --kaart-pad is de binnenmarge van de kaart; de foto gebruikt dezelfde waarde
+   als negatieve marge, zodat ze precies tot de rand loopt. */
+.services { --kaart-pad: clamp(24px, 2.6vw, 32px); display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(16px, 2vw, 24px); grid-auto-rows: 1fr; }
+.service { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); padding: var(--kaart-pad); display: flex; flex-direction: column; gap: 14px; box-shadow: 0 6px 18px rgba(41, 41, 41, .06); }
+@media (hover: hover) and (pointer: fine) {
+  .service:hover { transform: translateY(-4px); box-shadow: 0 18px 34px rgba(41, 41, 41, .14); border-color: #D8CEC4; }
+  .service:hover .more svg { transform: translateX(4px); }
+}
+.more svg { transition: transform .45s var(--ease); }
+/* Foto bovenaan de dienstkaart, van rand tot rand. De hoogte ligt vast
+   (verhouding 3:2), zodat de pagina niet verspringt terwijl de foto laadt. */
+.service-img {
+  margin: calc(-1 * var(--kaart-pad)) calc(-1 * var(--kaart-pad)) 2px;
+  border-radius: calc(var(--radius) - 1px) calc(var(--radius) - 1px) 0 0;
+  overflow: hidden; background: var(--sand);
+}
+.service-img img {
+  width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover;
+  transition: transform 1.2s var(--ease);
+}
+@media (hover: hover) and (pointer: fine) {
+  .service:hover .service-img img { transform: scale(1.04); }
+}
+.service h3 { font-size: 22px; margin-top: 6px; overflow-wrap: break-word; }
+.service p { color: var(--ink-2); overflow-wrap: break-word; }
+.more { margin-top: auto; padding-top: 6px; display: inline-flex; align-items: center; gap: 8px; color: var(--accent-d); font-weight: 700; text-decoration: none; min-height: 44px; }
+.more svg { width: 18px; height: 18px; flex: none; }
+.more:hover { color: var(--dark); text-decoration: underline; text-underline-offset: 4px; }
+
+/* De titel krijgt de hoogte van twee regels, zodat de teksten van alle kaarten
+   in een rij op dezelfde hoogte beginnen — ook naast een titel van één regel. */
+.service h3 { min-height: 2.3em; }
+@media (max-width: 1100px) { .services { grid-template-columns: repeat(2, 1fr); } }
+/* Eén kaart per rij: elke kaart krijgt weer zijn eigen hoogte, anders zou er
+   onder de korte teksten veel lege ruimte komen. */
+@media (max-width: 700px) { .services { grid-template-columns: 1fr; grid-auto-rows: auto; } }
+
+/* Tijdelijke plaatsaanduiding zolang er voor een dienst nog geen foto is. */
+.service-img-leeg {
+  aspect-ratio: 3 / 2; display: grid; place-items: center;
+  background: var(--sand); border-bottom: 1.5px dashed #CFC6BD; text-align: center;
+}
+.service-img-leeg > span { display: grid; justify-items: center; gap: 2px; padding: 16px; }
+.service-img-leeg svg { width: 34px; height: 34px; color: var(--accent-d); margin-bottom: 6px; }
+.service-img-leeg b { color: var(--dark); font-size: 17px; }
+.service-img-leeg small { color: var(--ink-2); font-size: 14px; }
+
+/* ---------- 3. Hoe werkt het? ---------- */
+.steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(16px, 2vw, 24px); counter-reset: none; }
+.steps li { background: var(--white); border-radius: var(--radius); padding: 26px 24px; display: grid; gap: 10px; align-content: start; border: 1px solid var(--line); }
+.steps .n { width: 44px; height: 44px; border-radius: 50%; background: var(--accent-soft); color: var(--accent-d); font-weight: 800; font-size: 20px; display: grid; place-items: center; transition: background-color .4s, color .4s, transform .45s var(--ease); }
+.steps li:last-child .n { background: var(--dark); color: #fff; }
+/* Het nummer kleurt mee wanneer je over een stap beweegt. */
+@media (hover: hover) and (pointer: fine) {
+  .steps li:hover .n { background: var(--accent); color: #fff; transform: translateY(-2px); }
+  .steps li:last-child:hover .n { background: var(--dark-l); }
+}
+.steps p { color: var(--ink-2); font-size: 16px; }
+@media (max-width: 960px) { .steps { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) {
+  .steps { grid-template-columns: 1fr; }
+  .steps li { grid-template-columns: 44px 1fr; column-gap: 16px; padding: 20px; }
+  .steps li > :not(.n) { grid-column: 2; }
+  .steps .n { grid-row: 1 / span 2; }
+}
+
+/* ---------- 4. Waarom ---------- */
+.section-dark { background: var(--dark); color: #E8E4E0; }
+.section-dark h2, .section-dark h3 { color: #fff; }
+.section-dark .eyebrow { color: var(--accent-l); }
+.section-dark .lede { color: #CFC9C4; }
+.values { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(16px, 2vw, 24px); }
+.value { background: var(--dark-l); border-radius: var(--radius); padding: clamp(24px, 2.6vw, 32px); display: grid; gap: 12px; align-content: start; }
+.value .ic { background: var(--accent-l); color: var(--dark-d); }
+.value p { color: #D5CFCA; }
+@media (max-width: 900px) { .values { grid-template-columns: 1fr; } }
+
+/* ---------- De foto achter de sectie "Waarom MTM Solutions?" ----------
+   Drie lagen boven op elkaar:
+     1. ::before  de foto zelf, onbewerkt;
+     2. ::after   een donkere sluier, los van de foto;
+     3. .wrap     de tekst en de drie kaarten.
+   Zo wordt alleen de foto donkerder gemaakt en blijft het bestandje zelf
+   ongewijzigd. --zoom bepaalt hoe groot de foto staat, --fh is de hoogte die ze
+   daardoor inneemt (de foto is 2,5 keer zo breed als hoog). Onder de foto loopt
+   de sectie gewoon door in de donkere huiskleur, en omdat de sluier daar in
+   diezelfde kleur eindigt, zie je de overgang niet. */
+#waarom {
+  position: relative; isolation: isolate; overflow: hidden;
+  --zoom: 118%;
+  --fh: 47.2vw;   /* = 118% / 2,5 */
+}
+#waarom::before,
+#waarom::after { content: ""; position: absolute; inset: 0; pointer-events: none; }
+#waarom::before {
+  z-index: -2;
+  background-image: url("../img/waarom.webp");
+  background-repeat: no-repeat;
+  /* "auto" bij de hoogte: de foto wordt nooit uitgerekt. 70% schuift de
+     uitsnede zo dat de twee personen rechts staan, naast de tekst. */
+  background-size: var(--zoom) auto;
+  background-position: 70% 0;
+}
+#waarom::after {
+  z-index: -1;
+  background:
+    /* onderaan rustig overgaand in de donkere huiskleur */
+    linear-gradient(180deg,
+      rgba(41, 41, 41, 0) 0 calc(var(--fh) * .60),
+      rgba(41, 41, 41, .5) calc(var(--fh) * .86),
+      var(--dark) var(--fh)),
+    /* links donkerder (daar staat de tekst, die loopt tot ongeveer 47%),
+       rechts licht (daar staan de twee personen, vanaf ongeveer 61%);
+       nergens helemaal zwart, de foto blijft overal zichtbaar */
+    linear-gradient(90deg,
+      rgba(41, 41, 41, .86) 0 47%,
+      rgba(41, 41, 41, .55) 55%,
+      rgba(41, 41, 41, .2) 62%,
+      rgba(41, 41, 41, .14) 100%);
+}
+#waarom > .wrap { position: relative; z-index: 1; }
+/* De kop blijft links van de twee personen. */
+#waarom .sec-head { max-width: min(520px, 44%); }
+/* De kaarten worden licht doorschijnend, met een zachte vervaging erachter,
+   zodat je de foto voelt maar de tekst volledig leesbaar blijft. */
+#waarom .value {
+  background: rgba(47, 47, 47, .82);
+  border: 1px solid rgba(255, 255, 255, .09);
+  -webkit-backdrop-filter: blur(14px);
+          backdrop-filter: blur(14px);
+}
+
+@media (max-width: 900px) {
+  /* Smaller scherm: de foto staat verder ingezoomd, want anders worden de twee
+     gezichten te klein. Ze staan dan bovenaan, boven de tekst. */
+  #waarom { --zoom: 170%; --fh: 68vw; padding-top: calc(var(--fh) * .45); }
+  #waarom::before { background-position: 94% 0; }
+  #waarom .sec-head { max-width: none; }
+  #waarom::after {
+    /* Licht tot onder de gezichten (30% van de fotohoogte), daarna snel donker
+       zodat de kop en de tekst eronder goed leesbaar zijn. */
+    background: linear-gradient(180deg,
+      rgba(41, 41, 41, .3) 0 calc(var(--fh) * .30),
+      rgba(41, 41, 41, .86) calc(var(--fh) * .43),
+      var(--dark) calc(var(--fh) * .75));
+  }
+}
+@media (max-width: 700px) {
+  #waarom::before { background-image: url("../img/waarom-small.webp"); }
+}
+@media (max-width: 560px) {
+  #waarom { --zoom: 260%; --fh: 104vw; }
+}
+
+/* ---------- 5. Werkgebied ---------- */
+.area { display: grid; grid-template-columns: minmax(280px, .95fr) 1.05fr; gap: clamp(24px, 4vw, 56px); align-items: center; }
+.area > * { min-width: 0; }
+.area-tekst { display: grid; gap: clamp(22px, 3vw, 32px); }
+.area .sec-head { margin-bottom: 0; }
+.regions { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.regions li { display: flex; align-items: center; gap: 12px; background: var(--white); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; font-weight: 700; font-size: 16px; color: var(--dark); overflow-wrap: break-word; transition: border-color .3s, box-shadow .3s; }
+.regions svg { width: 22px; height: 22px; color: var(--accent-d); flex: none; }
+
+/* ---------- De kaart ----------
+   De provinciegrenzen komen uit Natural Earth (publiek domein). Alles is
+   getekend met SVG: geen kaartdienst, geen extra bestanden, geen vertraging. */
+.kaart { margin: 0; display: grid; gap: 12px; }
+.kaart-doek {
+  position: relative; background: var(--white); border: 1px solid var(--line);
+  border-radius: 22px; padding: clamp(10px, 1.6vw, 18px); box-shadow: var(--shadow);
+  container-type: inline-size;   /* zodat de namen met de kaart meeschalen */
+}
+.kaart-doek svg { display: block; width: 100%; height: auto; }
+.kaart-rest path { fill: #EAE3DB; stroke: var(--white); stroke-width: 2.2; stroke-linejoin: round; }
+.kaart-gebied { fill: var(--accent); stroke: var(--white); stroke-width: 2.6; stroke-linejoin: round; transition: fill .3s var(--ease); }
+/* Brussel ligt midden in Vlaams-Brabant. Een iets dikkere witte rand houdt het
+   herkenbaar als een apart gewest, ook nu beide gebieden oranjerood zijn. */
+.kaart-gebied--brussel { stroke-width: 4; }
+/* De verbindingslijnen: fijn en rustig, ze blijven ook zonder animatie staan.
+   Donker en halfdoorzichtig, zodat ze zowel over de oranje werkgebieden als
+   over de lichtgrijze provincies zichtbaar blijven. */
+.kaart-lijnen path { fill: none; stroke: var(--dark); stroke-opacity: .24; stroke-width: 2.2; stroke-linecap: round; }
+/* De bestemmingen. */
+.kaart-stops circle { fill: var(--white); stroke: var(--accent-d); stroke-width: 3; }
+/* De zachte flits zodra er een wagen aankomt. De begintoestand staat als
+   opacity="0" op het element zelf; zo kan de animatie die overnemen. */
+.kaart-gloed circle { fill: none; stroke: var(--white); stroke-width: 2.6; }
+/* De route licht op terwijl de wagen hem aflegt: een lichte lijn die mee
+   groeit. Wit, want hij loopt grotendeels over de oranjerode gebieden. */
+.kaart-spoor path {
+  fill: none; stroke: var(--white); stroke-width: 3.4;
+  stroke-linecap: round; stroke-opacity: .9;
+}
+
+/* De verhuiswagens: donkergrijs, wit en het oranjerood van de huisstijl.
+   Ze blijven rechtop staan — alleen de kant waar ze naartoe kijken verschilt,
+   zodat de rijrichting meteen duidelijk is. */
+.kaart-wagen-vorm > * { stroke: var(--dark); stroke-width: 2.2; stroke-linejoin: round; }
+.w-bak { fill: var(--white); }
+.w-band { fill: var(--accent); stroke-width: 0; }
+.w-cabine { fill: var(--accent); }
+.w-ruit { fill: var(--white); stroke-width: 1.6; }
+.w-wiel { fill: var(--dark); }
+.w-naaf { fill: var(--white); stroke-width: 0; }
+.kaart-wagen--links .kaart-wagen-vorm { transform: scale(-1, 1); }
+/* Op een smartphone is de kaart klein; daar tekenen we de wagens wat groter,
+   anders zijn ze niet meer als verhuiswagen te herkennen. */
+@media (max-width: 700px) {
+  .kaart-wagen-vorm { transform: scale(1.5); }
+  .kaart-wagen--links .kaart-wagen-vorm { transform: scale(-1.5, 1.5); }
+}
+
+/* Naam van elk werkgebied, als gewone tekst over de kaart. Zo blijft die
+   leesbaar, ook wanneer de kaart klein wordt. */
+.kaart-label {
+  position: absolute; transform: translate(-50%, -50%); line-height: 1.15;
+  font-size: clamp(10.5px, 1.04vw, 14px); font-weight: 800; letter-spacing: .01em;
+  color: var(--white); white-space: nowrap; pointer-events: none; text-align: center;
+  /* Een donkere gloed rond de letters. Op het oranjerood zie je die nauwelijks,
+     maar hij houdt de naam leesbaar op het moment dat er een witte verhuiswagen
+     onderdoor rijdt, en waar de naam een witte provinciegrens kruist. Een
+     achtergrondvlakje zou hier beter werken, maar maakt de namen te groot voor
+     de smalle provincies. */
+  text-shadow:
+    0 0 2px rgba(28, 28, 28, .95), 0 0 4px rgba(28, 28, 28, .85),
+    0 0 7px rgba(28, 28, 28, .6),  0 1px 2px rgba(28, 28, 28, .6);
+}
+/* Brussel is te klein voor een naam erin: die staat er net onder. */
+.kaart-label--buiten {
+  transform: translate(-50%, 0); color: var(--dark); text-shadow: none;
+  background: var(--white); border: 1px solid var(--line);
+  padding: 2px 9px; border-radius: 999px;
+  box-shadow: 0 4px 10px rgba(41, 41, 41, .10);
+}
+/* De naam schaalt mee met de breedte van de kaart zelf, niet met het venster.
+   Zo blijft hij leesbaar als de kaart groot is op tablet. */
+@supports (container-type: inline-size) {
+  .kaart-label { font-size: clamp(10.5px, 2.7cqw, 15px); }
+}
+/* Op de kaart staat de volledige naam. Op een smartphone is de kaart te klein
+   voor zes volledige namen; daar staat een korte vorm. De volledige namen
+   staan dan vlak erboven in de lijst, dus er gaat niets verloren. */
+.kaart-label .lb-kort { display: none; }
+@media (max-width: 520px) {
+  .kaart-label .lb-lang { display: none; }
+  .kaart-label .lb-kort { display: inline; }
+}
+/* Op heel smalle toestellen wordt de kaart klein; dan passen de namen net niet
+   meer naast elkaar. Daar maken we ze een fractie kleiner. */
+@media (max-width: 374px) { .kaart-label { font-size: 9.5px; } }
+@media (max-width: 340px) {
+  .kaart-doek { padding: 5px; }        /* iets meer kaart op heel kleine toestellen */
+  .kaart-label { font-size: 9px; }
+}
+.kaart-voet { font-size: 13px; color: var(--ink-2); text-align: center; }
+
+/* Beweeg je over een gebied of over een naam in de lijst, dan licht het op. */
+@media (hover: hover) and (pointer: fine) {
+  .kaart-gebied:hover { fill: var(--accent-d); }
+  .area:has(.regions li[data-gebied="oost"]:hover) .kaart-gebied--oost,
+  .area:has(.regions li[data-gebied="west"]:hover) .kaart-gebied--west,
+  .area:has(.regions li[data-gebied="brussel"]:hover) .kaart-gebied--brussel,
+  .area:has(.regions li[data-gebied="limburg"]:hover) .kaart-gebied--limburg,
+  .area:has(.regions li[data-gebied="vlbrabant"]:hover) .kaart-gebied--vlbrabant,
+  .area:has(.regions li[data-gebied="antwerpen"]:hover) .kaart-gebied--antwerpen { fill: var(--accent-d); }
+  .regions li:hover { border-color: var(--accent); box-shadow: 0 8px 18px rgba(41, 41, 41, .08); }
+}
+
+/* De beweging zit in de SVG zelf (animateMotion), dus er is geen JavaScript
+   voor nodig en het kost vrijwel niets: zes kleine puntjes op de kaart. */
+
+@media (max-width: 860px) {
+  .area { grid-template-columns: 1fr; }
+  .area-tekst { order: 1; }
+  .kaart { order: 2; }
+}
+@media (max-width: 460px) { .regions { grid-template-columns: 1fr; } }
+
+/* ---------- 6. Offerte ---------- */
+.quote-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: clamp(28px, 5vw, 72px); align-items: start; }
+.quote-grid > * { min-width: 0; }
+.quote-side { display: grid; gap: 16px; position: sticky; top: 100px; }
+.side-contact { margin-top: 8px; display: grid; gap: 10px; justify-items: start; padding-top: 20px; border-top: 1px solid var(--line); }
+.side-contact p { font-weight: 600; }
+@media (max-width: 900px) {
+  .quote-grid { grid-template-columns: 1fr; }
+  .quote-side { position: static; }
+}
+
+.form-card { background: var(--white); border-radius: 24px; padding: clamp(20px, 3vw, 36px); box-shadow: var(--shadow); border: 1px solid var(--line); }
+/* ---------- Het blokje boven het formulier ----------
+   Dit is geen waarschuwing maar een rustige uitleg, dus geen harde balk aan de
+   zijkant. Het vak staat in de kleuren van WhatsApp zelf, zodat meteen duidelijk
+   is langs welke weg de aanvraag vertrekt. */
+.notice {
+  background: #EFFBF3;
+  border: 1px solid #BDEBCC;
+  border-radius: 14px; padding: 16px 18px; margin-bottom: 20px;
+  font-size: 15px; line-height: 1.55; color: var(--ink);
+}
+.notice-wa { display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: start; }
+.notice-tekst p { margin: 0; }
+.notice-tekst .notice-titel {
+  font-weight: 800; font-size: 17px; line-height: 1.25;
+  color: var(--dark); margin-bottom: 5px; letter-spacing: -.005em;
+}
+/* Het rondje in de eigen groene kleur van WhatsApp, met een wit logo. */
+.wa-ic {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: #25D366; color: #fff;
+  display: grid; place-items: center; flex: none;
+}
+.wa-ic svg { width: 25px; height: 25px; }
+/* Op een smalle telefoon houdt de tekst zo meer plaats over. */
+@media (max-width: 480px) {
+  .notice { padding: 14px 15px; }
+  .notice-wa { gap: 12px; }
+  .wa-ic { width: 40px; height: 40px; }
+  .wa-ic svg { width: 23px; height: 23px; }
+  .notice-titel { font-size: 16px; }
+}
+.photo-tip { display: flex; gap: 12px; align-items: flex-start; background: var(--cream); border: 1.5px dashed #CFC6BD; border-radius: 12px; padding: 14px 16px; font-size: 15px; color: var(--ink-2); }
+.photo-tip svg { width: 24px; height: 24px; color: var(--accent-d); flex: none; margin-top: 1px; }
+.photo-tip b { color: var(--dark); }
+.req-legend { font-size: 14px; color: var(--ink-2); margin-bottom: 14px; }
+.req { color: var(--error); font-weight: 700; }
+.opt { font-weight: 400; color: var(--ink-2); font-size: 14px; }
+.fields { display: grid; gap: 16px; }
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.row2 > * { min-width: 0; }
+@media (max-width: 560px) { .row2 { grid-template-columns: 1fr; } }
+.field { display: grid; gap: 6px; }
+.field label { font-weight: 700; font-size: 15px; color: var(--dark); transition: color .2s ease; }
+.field:focus-within label { color: var(--accent-d); }
+.field input, .field select, .field textarea {
+  width: 100%; min-height: 50px; padding: 12px 14px;
+  font: inherit; font-size: 16px; color: var(--ink);
+  background: var(--white); border: 1.5px solid #CFC6BD; border-radius: 12px;
+  transition: border-color .2s, box-shadow .2s;
+}
+.field textarea { resize: vertical; min-height: 130px; }
+.field select { appearance: none; -webkit-appearance: none; padding-right: 44px; background: var(--white) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23292929' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") right 14px center / 18px no-repeat; }
+.field input::placeholder, .field textarea::placeholder { color: #7A736D; }
+.field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--dark); box-shadow: 0 0 0 4px rgba(41, 41, 41, .16); }
+.field [aria-invalid="true"] { border-color: var(--error); }
+.hint { font-size: 14px; color: var(--ink-2); }
+.field-err { color: var(--error); font-size: 14px; font-weight: 600; }
+
+/* ---------- Vragen waarbij je meerdere antwoorden mag aanvinken ----------
+   Elk antwoord is een aanklikbaar vlakje: dat is op een smartphone veel
+   makkelijker te raken dan een los vinkje naast tekst. */
+.keuzegroep, .adresgroep { border: 0; padding: 0; margin: 0; min-width: 0; display: grid; gap: 9px; }
+.keuzegroep legend, .adresgroep legend {
+  font-weight: 700; font-size: 15px; color: var(--dark); padding: 0; float: left; width: 100%;
+}
+.keuzegroep legend + .hint, .adresgroep legend + .hint { clear: both; margin-top: -1px; }
+.keuzes { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+/* Een ja/nee-vraag heeft maar twee korte antwoorden: die hoeven niet de hele
+   breedte in te nemen. */
+.keuzes--kort { grid-template-columns: repeat(2, minmax(0, 150px)); }
+.keuze {
+  display: flex; align-items: center; gap: 10px; min-width: 0;
+  padding: 11px 13px; border-radius: 12px; font-size: 15px; color: var(--ink);
+  background: var(--cream); border: 1.5px solid transparent; cursor: pointer;
+  transition: border-color .3s, background-color .3s;
+}
+.keuze input { width: 20px; height: 20px; flex: none; margin: 0; accent-color: var(--accent); cursor: pointer; }
+.keuze span { min-width: 0; }
+.keuze:has(input:checked) { border-color: var(--accent); background: var(--accent-soft); }
+.keuze:has(input:focus-visible) { outline: 3px solid rgba(41, 41, 41, .35); outline-offset: 2px; }
+@media (hover: hover) and (pointer: fine) { .keuze:hover { border-color: var(--accent-l); } }
+/* Staat de melding "kies er minstens één", dan krijgt de hele groep een rand. */
+.groep-fout .keuzes {
+  outline: 1.5px solid var(--error); outline-offset: 6px; border-radius: 4px;
+}
+.keuzegroep.just-set .keuzes { animation: mtm-ring 1s var(--ease); border-radius: 4px; }
+
+/* ---------- Adres ----------
+   Straat en nummer naast elkaar, postcode en gemeente eronder. */
+.adres { display: grid; gap: 12px; }
+.adres-rij { display: grid; gap: 12px; min-width: 0; }
+.adres-rij--straat { grid-template-columns: 2.2fr 1fr; }
+.adres-rij--plaats { grid-template-columns: 1fr 1.9fr; }
+
+/* ---------- Datum ---------- */
+.datum-rij { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; align-items: end; }
+.datum-rij .keuze { align-self: end; height: 52px; }
+.field input[type="date"] { min-height: 52px; }
+.field input:disabled { background: var(--sand); color: var(--ink-2); cursor: not-allowed; }
+
+@media (max-width: 560px) {
+  .keuzes { grid-template-columns: 1fr; }
+  .datum-rij { grid-template-columns: 1fr; align-items: stretch; }
+  .datum-rij .keuze { height: auto; }
+}
+@media (max-width: 380px) {
+  .adres-rij--plaats { grid-template-columns: 1fr; }
+  /* Op een heel smal scherm krijgt het nummervak wat meer ruimte, anders past
+     het voorbeeld ("bv. 12") er net niet meer in. */
+  .adres-rij--straat { grid-template-columns: 1.7fr 1fr; }
+}
+.form-foot { display: grid; gap: 12px; margin-top: 22px; }
+
+.result { display: grid; gap: 14px; }
+.result:focus { outline: none; }
+.result h3 { font-size: 24px; }
+.result p { color: var(--ink-2); }
+.result a:not(.btn) { font-weight: 700; color: var(--dark); }
+
+/* ---------- 7. Contact en footer ---------- */
+.footer { background: var(--dark-d); color: #CFC9C4; padding-block: clamp(56px, 8vw, 88px) 28px; }
+.footer h2 { color: #fff; margin-top: 12px; }
+.footer .eyebrow { color: var(--accent-l); }
+.foot-top { display: grid; grid-template-columns: 1fr auto; gap: 28px; align-items: end; padding-bottom: 40px; border-bottom: 1px solid rgba(255, 255, 255, .14); }
+.contact-btns { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.cbtn { display: flex; align-items: center; gap: 14px; padding: 12px 22px 12px 12px; border-radius: 16px; background: var(--dark); border: 1px solid var(--dark-l); color: #fff; text-decoration: none; font-weight: 700; font-size: 18px; min-height: 68px; transition: border-color .2s, background-color .2s; }
+.cbtn:hover { border-color: var(--accent-l); background: var(--dark-l); }
+.cbtn > span:last-child { display: flex; flex-direction: column; line-height: 1.3; min-width: 0; overflow-wrap: anywhere; }
+.cbtn small { font-size: 13px; font-weight: 600; color: var(--accent-l); }
+.ci { width: 44px; height: 44px; border-radius: 12px; background: var(--accent-l); color: var(--dark-d); display: grid; place-items: center; flex: none; }
+.ci svg { width: 22px; height: 22px; }
+.foot-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 28px; padding-top: 40px; }
+.foot-grid h3 { color: #fff; font-size: 15px; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 12px; }
+.foot-grid ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.foot-grid a { text-decoration: none; }
+.foot-grid a:hover { color: #fff; text-decoration: underline; }
+.foot-tag { margin-top: 14px; font-size: 15px; }
+.legal { margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, .14); font-size: 14px; color: #908A85; }
+@media (max-width: 900px) {
+  .foot-top { grid-template-columns: 1fr; align-items: start; }
+  .foot-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 560px) {
+  .contact-btns { grid-template-columns: 1fr; }
+  .foot-grid { grid-template-columns: 1fr; }
+}
+
+/* ---------- Vaste balk onderaan (smartphone) ---------- */
+.mobile-bar { display: none; }
+@media (max-width: 700px) {
+  .mobile-bar {
+    display: grid; grid-template-columns: 1fr 1.4fr; gap: 10px;
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
+    padding: 10px 16px calc(10px + env(safe-area-inset-bottom, 0px));
+    background: rgba(250, 248, 245, .97); border-top: 1px solid var(--line);
+    box-shadow: 0 -8px 20px rgba(41, 41, 41, .10);
+  }
+  .mobile-bar .btn { min-height: 50px; }
+  .nav .btn-sm { display: none; } /* de offerteknop staat dan al in de balk onderaan */
+  body { padding-bottom: 76px; }
+}
+
+
+/* =====================================================================
+   ANIMATIES
+   Alles hieronder is versiering. Werkt JavaScript niet, dan ontbreekt de
+   class "js" op <html> en blijft alle inhoud gewoon zichtbaar.
+   De beweging gebruikt overal dezelfde easing (--ease) en hetzelfde tempo.
+   Onderaan staat de regel voor bezoekers die minder beweging willen.
+   ===================================================================== */
+
+/* ---------- Onderdelen die bij het scrollen in beeld komen ----------
+   Een onderdeel met class="reveal" staat standaard gewoon zichtbaar.
+   Pas wanneer het bij het openen nog ónder het scherm ligt, geeft het
+   JavaScript het de class "pre" en schuift het zacht omhoog in beeld.
+   Zo wordt wat je meteen ziet nooit onnodig verborgen. */
+.reveal { transition: opacity .9s var(--ease), transform .9s var(--ease); transition-delay: var(--d, 0ms); }
+.js .reveal.pre { opacity: .001; transform: translateY(24px); }
+
+/* ---------- Opening ----------
+   De titelregels schuiven van onder omhoog, het oranjerode accent rolt
+   daarna van links naar rechts uit, en de rest volgt rustig. */
+.js .hero h1 .ln > span { animation: mtm-rise 1s var(--ease) both; }
+.js .hero h1 .ln:nth-child(2) > span { animation-delay: .12s; }
+@keyframes mtm-rise { from { transform: translateY(105%); } to { transform: none; } }
+
+.js .hero h1 .accent { animation: mtm-accent .9s .85s var(--ease) both; }
+@keyframes mtm-accent {
+  from { background-size: 0 .07em; }
+  to   { background-size: 100% .07em; }
+}
+
+.js .hero .eyebrow { animation: mtm-up .9s .05s var(--ease) both; }
+.js .hero .lede { animation: mtm-up .9s .35s var(--ease) both; }
+.js .hero-acts { animation: mtm-up .9s .5s var(--ease) both; }
+.js .hero .ticks { animation: mtm-up .9s .62s var(--ease) both; }
+@keyframes mtm-up { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+
+/* De hero-foto zoomt heel traag een klein beetje uit bij het openen. */
+.js .hero-photo img { animation: mtm-settle 2.4s .2s var(--ease) both; }
+@keyframes mtm-settle { from { transform: scale(1.06); } to { transform: none; } }
+
+/* Het keuzevak komt zacht omhoog met een kleine schaalverandering. */
+.js .help-card { animation: mtm-float-in 1.1s .3s var(--ease) both; }
+@keyframes mtm-float-in {
+  from { opacity: 0; transform: translateY(30px) scale(.98); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ---------- Vier stappen ----------
+   Het streepje tussen de stappen bouwt mee op zodra een stap in beeld komt.
+   Alleen op een breed scherm, want daar staan de stappen naast elkaar. */
+@media (min-width: 961px) {
+  .steps li { position: relative; }
+  .steps li:not(:last-child)::after {
+    content: ""; position: absolute; top: 48px;
+    right: calc(-1 * clamp(16px, 2vw, 24px) - 1px);
+    width: clamp(16px, 2vw, 24px); height: 2px;
+    background: var(--accent-l); border-radius: 2px;
+    transform-origin: left center;
+    transition: transform .9s var(--ease); transition-delay: var(--d, 0ms);
+  }
+  .js .steps li.pre:not(:last-child)::after { transform: scaleX(0); }
+}
+
+/* ---------- Vaste balk onderaan (smartphone) ---------- */
+.js .mobile-bar { animation: mtm-bar .6s .4s var(--ease) both; }
+@keyframes mtm-bar {
+  from { opacity: 0; transform: translateY(100%); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ---------- Kleine reacties bij gebruik ---------- */
+/* De dienstkeuze licht even op nadat je bij een dienst op de offerteknop
+   klikt, zodat je ziet dat die dienst al voor je aangevinkt is. */
+@keyframes mtm-ring {
+  0%   { box-shadow: 0 0 0 0 rgba(212, 65, 34, .45); border-color: var(--accent); }
+  70%  { box-shadow: 0 0 0 6px rgba(212, 65, 34, 0); border-color: var(--accent); }
+  100% { box-shadow: 0 0 0 0 rgba(212, 65, 34, 0); }
+}
+/* Foutmeldingen en het vervolgscherm verschijnen zacht. */
+.js .field-err:not([hidden]) { animation: mtm-up .35s var(--ease); }
+.js .result:not([hidden]) { animation: mtm-float-in .7s var(--ease); }
+
+/* ---------- Minder beweging ---------- */
+/* Zet de bezoeker in zijn toestel "verminder beweging" aan, dan valt alle
+   beweging weg en blijft de volledige inhoud meteen zichtbaar. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .js .reveal, .js .reveal.pre { opacity: 1; transform: none; }
+  .js .steps li.pre:not(:last-child)::after { transform: none; }
+  /* De wagens op de kaart bewegen via de SVG zelf; CSS kan dat niet stoppen,
+     dus verbergen we ze, samen met het oplichtende spoor en de gloed bij
+     aankomst. De gebieden, de lijnen, de bestemmingen en de namen blijven
+     staan, dus de kaart blijft volledig duidelijk.
+     js/script.js zet de beweging daarnaast ook echt stil. */
+  .kaart-wagens, .kaart-spoor, .kaart-gloed { display: none; }
+}

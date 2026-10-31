@@ -792,6 +792,9 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
 }
 @media (max-width: 380px) {
   .adres-rij--plaats { grid-template-columns: 1fr; }
+  /* Op een heel smal scherm krijgt het nummervak wat meer ruimte, anders past
+     het voorbeeld ("bv. 12") er net niet meer in. */
+  .adres-rij--straat { grid-template-columns: 1.7fr 1fr; }
 }
 .form-foot { display: grid; gap: 12px; margin-top: 22px; }
 
