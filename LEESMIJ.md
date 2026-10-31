@@ -78,8 +78,8 @@ Dubbelklik op `index.html`. De website opent dan in je browser.
 - **Teksten**: open `index.html` in een teksteditor en pas de tekst aan tussen de tags.
   Elk onderdeel begint met een kader zoals `<!-- ============ 2. ONZE DIENSTEN ============ -->`.
 - **Telefoon en e-mail**: zoek en vervang in `index.html`:
-  - `0486 58 45 07` (zichtbaar nummer)
-  - `+32486584507` (het nummer achter de belknoppen)
+  - `0492 05 15 70` (zichtbaar nummer)
+  - `+32492051570` (het nummer achter de belknoppen)
   - `info@mtm.be`
 
   Pas het WhatsApp-nummer daarna ook aan bovenaan `js/script.js` (bij `INSTELLINGEN`).
@@ -262,7 +262,7 @@ een wit logo. Zo is meteen duidelijk langs welke weg de aanvraag vertrekt. Tekst
 `.notice`.
 
 **Nummer wijzigen**: pas `whatsapp` aan bovenaan `js/script.js` (internationaal formaat,
-enkel cijfers: `32486584507`). Pas daarna ook het zichtbare nummer en de belknoppen aan in
+enkel cijfers: `32492051570`). Pas daarna ook het zichtbare nummer en de belknoppen aan in
 `index.html`. Hoe je dat doet, lees je hierboven.
 
 ## Voor de website online gaat

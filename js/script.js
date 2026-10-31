@@ -4,8 +4,8 @@
 var INSTELLINGEN = {
   // WhatsApp-nummer waar offerteaanvragen naartoe gaan:
   // internationaal formaat, enkel cijfers, zonder + en zonder 0 vooraan.
-  // 0486 58 45 07 wordt dus 32486584507.
-  whatsapp: '32486584507'
+  // 0492 05 15 70 wordt dus 32492051570.
+  whatsapp: '32492051570'
 };
 
 (function () {
