@@ -1,13 +1,23 @@
 # MTM Solutions – website
 
-Eén eenvoudige pagina (HTML, CSS en een beetje JavaScript). Er is geen bouwstap of
-database nodig, en er zijn geen externe koppelingen of betaalde diensten.
+Een homepage met daarnaast aparte pagina's per dienst, per regio en in het Frans
+(HTML, CSS en een beetje JavaScript). Er is geen database nodig, en er zijn geen externe
+koppelingen of betaalde diensten. De site staat online op https://www.mtmsolutions.be
+via GitHub Pages.
 
 ## Inhoud van de map
 
 | Bestand            | Wat staat erin                                                      |
 |--------------------|---------------------------------------------------------------------|
-| `index.html`       | Alle teksten van de website, per onderdeel aangeduid                 |
+| `index.html`       | De homepage, per onderdeel aangeduid                                 |
+| `verhuizen/`, `woningontruiming/` … | De pagina's per dienst (8)                          |
+| `verhuis-ontruiming-<stad>/` | De pagina's per regio (10)                                 |
+| `fr/`              | De Franstalige pagina's (onthaal, déménagement, débarras)            |
+| `privacy/`, `404.html` | Het privacybeleid en de pagina voor een onbestaand adres         |
+| `robots.txt`, `sitemap.xml` | Voor Google: welke pagina's er zijn                         |
+| `_bouw/`           | De teksten van alle subpagina's en het script dat ze opbouwt (zie hieronder). Wordt niet online gezet |
+| `CNAME`            | De domeinnaam voor GitHub Pages. Niet verwijderen                    |
+| `img/og-image.jpg` | Het beeld dat verschijnt als je een link deelt (WhatsApp, Facebook)  |
 | `css/style.css`    | De opmaak. Kleuren staan bovenaan bij `:root`                        |
 | `js/script.js`     | Menu, animaties en formulier. WhatsApp-nummer bovenaan                |
 | `img/logo.webp`    | Het logo, met doorzichtige achtergrond (ook `logo-small.webp`)       |
@@ -18,7 +28,38 @@ database nodig, en er zijn geen externe koppelingen of betaalde diensten.
 
 ## Bekijken op je computer
 
-Dubbelklik op `index.html`. De website opent dan in je browser.
+De links tussen de pagina's beginnen met `/`, dus dubbelklikken op `index.html` werkt
+maar half. Start liever de kleine webserver vanuit de hoofdmap:
+
+    powershell -NoProfile -ExecutionPolicy Bypass -File _bouw\server.ps1
+
+en open daarna http://localhost:8137/ in je browser.
+
+## Subpagina's aanpassen of toevoegen
+
+De dienst-, regio- en Franse pagina's en de footer worden **niet** met de hand
+geschreven, maar opgebouwd door `_bouw/bouw.ps1`:
+
+1. De tekst van elke pagina staat in `_bouw/paginas/<naam>.html`. Bovenaan staat een
+   kader met de gegevens (titel voor Google, beschrijving, kop, foto ...), daaronder
+   de tekst in HTML. Pas de tekst daar aan, niet in de gemaakte pagina zelf.
+2. Een nieuwe pagina? Kopieer een bestaand bestand, geef het een nieuwe naam en
+   `slug`, en voeg het voor de footer en de tegels toe aan de lijst bovenaan
+   `_bouw/bouw.ps1` (`$dienstenNl` of `$regiosNl`).
+3. Voer vanuit de hoofdmap uit:
+
+       powershell -NoProfile -ExecutionPolicy Bypass -File _bouw\bouw.ps1
+
+   Het script maakt alle pagina's opnieuw, vernieuwt `sitemap.xml` en zet de footer
+   ook op de homepage (tussen `FOOTER:START` en `FOOTER:END`).
+4. Upload of commit alles naar GitHub.
+
+**Bedrijfsgegevens** (adres, BTW-nummer, openingsuren) staan op drie plaatsen: in de
+footer (`_bouw/bouw.ps1`, functie `Footer`), in het blok `application/ld+json` bovenaan
+`index.html` (voor Google) en in `_bouw/paginas/privacy.html`.
+
+**Op tijd bijwerken:** de pagina over Gent vermeldt dat de stad vanaf 1 januari 2027 zelf
+de parkeerverbodsborden plaatst. Pas die zin na die datum aan.
 
 ## Indeling en stijl
 
@@ -80,13 +121,16 @@ Dubbelklik op `index.html`. De website opent dan in je browser.
 - **Telefoon en e-mail**: zoek en vervang in `index.html`:
   - `0492 05 15 70` (zichtbaar nummer)
   - `+32492051570` (het nummer achter de belknoppen)
-  - `info@mtm.be`
+  - `info@mtmsolutions.be`
 
-  Pas het WhatsApp-nummer daarna ook aan bovenaan `js/script.js` (bij `INSTELLINGEN`).
+  Doe hetzelfde in `_bouw/bouw.ps1` en in de bestanden in `_bouw/paginas/`, en bouw de
+  pagina's opnieuw. Pas het WhatsApp-nummer daarna ook aan bovenaan `js/script.js`
+  (bij `INSTELLINGEN`).
 - **Kleuren**: pas de waarden bovenaan `css/style.css` aan, bij `:root`.
-- Pas je CSS of JavaScript aan nadat de site online staat? Verhoog dan in `index.html` het
-  nummer in `style.css?v=2` en `script.js?v=2` (naar `v=3` enzovoort). Zo krijgen bezoekers
-  meteen de nieuwe versie te zien. (Nu staat overal `v=15`.)
+- Pas je CSS of JavaScript aan nadat de site online staat? Verhoog dan het nummer in
+  `style.css?v=37` en `script.js?v=37` (naar `v=38` enzovoort), zowel in `index.html` als
+  in `_bouw/bouw.ps1`, en bouw de pagina's opnieuw. Zo krijgen bezoekers meteen de nieuwe
+  versie te zien.
 
 ## De foto bovenaan
 
@@ -265,12 +309,13 @@ een wit logo. Zo is meteen duidelijk langs welke weg de aanvraag vertrekt. Tekst
 enkel cijfers: `32492051570`). Pas daarna ook het zichtbare nummer en de belknoppen aan in
 `index.html`. Hoe je dat doet, lees je hierboven.
 
-## Voor de website online gaat
+## Online zetten
 
-- Zelf een testaanvraag doen vanaf een smartphone en vanaf een computer.
-- Kijk deze zin onder het formulier na: *"Je gegevens worden enkel gebruikt om je aanvraag te
-  beantwoorden."* Voeg ook best een privacyverklaring toe, want het formulier verzamelt
-  persoonsgegevens.
-- Indien gewenst: logo en echte foto's toevoegen.
-- Online zetten: upload de volledige inhoud van deze map (met `css/`, `js/` en `img/`) naar
-  je hosting. De site staat nog **nergens** online.
+De site staat op GitHub Pages: alles wat in de branch `main` van deze repository staat,
+komt na een minuut of twee online. Laat het bestand `CNAME` altijd staan; het koppelt de
+site aan www.mtmsolutions.be.
+
+- Doe na een grote wijziging zelf een testaanvraag vanaf een smartphone en een computer.
+- Het privacybeleid staat op `/privacy/` (tekst in `_bouw/paginas/privacy.html`).
+- Echte foto's van jullie eigen team en opdrachten wekken meer vertrouwen dan
+  voorbeeldbeelden.

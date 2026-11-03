@@ -65,6 +65,8 @@ var INSTELLINGEN = {
 
   /* ---------- Offerteformulier via WhatsApp ---------- */
   var form = document.getElementById('quoteForm');
+  // Het formulier staat alleen op de homepage. Op de subpagina's stopt het script hier.
+  if (!form) return;
   var submitBtn = document.getElementById('submitBtn');
   var resultWa = document.getElementById('resultWa');
   var waLink = document.getElementById('waLink');
@@ -154,6 +156,15 @@ var INSTELLINGEN = {
       window.setTimeout(function () { dienstenGroep.classList.remove('just-set'); }, 1100);
     });
   });
+
+  // Komt iemand via de offerteknop van een dienstpagina (bv. /?dienst=Verhuizen#offerte),
+  // dan staat die dienst al aangevinkt in het formulier.
+  var gevraagd = window.URLSearchParams ? new URLSearchParams(location.search).get('dienst') : '';
+  if (gevraagd) {
+    form.querySelectorAll('input[name="diensten"]').forEach(function (vak) {
+      if (vak.value === gevraagd) { vak.checked = true; toonEindadres(); }
+    });
+  }
 
   function showError(field, msg) {
     field.setAttribute('aria-invalid', 'true');

@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /_bouw/
+
+Sitemap: https://www.mtmsolutions.be/sitemap.xml

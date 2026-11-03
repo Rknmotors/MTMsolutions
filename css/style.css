@@ -944,3 +944,132 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
      js/script.js zet de beweging daarnaast ook echt stil. */
   .kaart-wagens, .kaart-spoor, .kaart-gloed { display: none; }
 }
+
+/* =====================================================================
+   SUBPAGINA'S — diensten, regio's, privacy en de Franse pagina's.
+   Ze gebruiken dezelfde kleuren en bouwstenen als de homepage; hieronder
+   staan enkel de onderdelen die alleen op die pagina's voorkomen.
+   ===================================================================== */
+
+/* Taalknop in het menu (NL / FR) */
+.taal {
+  display: inline-grid; place-items: center; min-width: 44px; min-height: 44px; padding: 0 12px;
+  border: 1.5px solid var(--line); border-radius: 999px; background: var(--white);
+  color: var(--dark); font-weight: 700; font-size: 14px; letter-spacing: .04em; text-decoration: none;
+  transition: border-color .3s, color .3s;
+}
+.taal:hover { border-color: var(--accent); color: var(--accent-d); }
+
+/* Kruimelpad bovenaan een subpagina */
+.kruimel { font-size: 14px; color: var(--ink-2); }
+.kruimel ol { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.kruimel li + li::before { content: "›"; margin-right: 6px; color: var(--accent-d); }
+.kruimel a { text-decoration: none; font-weight: 600; }
+.kruimel a:hover { color: var(--accent-d); text-decoration: underline; text-underline-offset: 3px; }
+
+/* Kop van een subpagina: tekst links, foto rechts (op smartphone eronder) */
+.pagina-kop { padding-block: clamp(28px, 5vw, 56px) clamp(40px, 6vw, 72px); border-bottom: 1px solid var(--line); }
+.pagina-kop-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: clamp(28px, 5vw, 64px); align-items: center; }
+.pagina-kop-grid > * { min-width: 0; }
+.pagina-kop-tekst { display: grid; gap: 16px; justify-items: start; }
+.pagina-kop h1 { font-size: clamp(34px, 4.6vw, 54px); font-weight: 900; line-height: 1.08; overflow-wrap: break-word; }
+.pagina-kop .hero-acts { margin-top: 10px; }
+.pagina-kop .ticks { margin-top: 6px; }
+.pagina-kop-foto { margin: 0; border-radius: 24px; overflow: hidden; background: var(--sand); box-shadow: var(--shadow); }
+.pagina-kop-foto img { width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; }
+@media (max-width: 900px) { .pagina-kop-grid { grid-template-columns: 1fr; } }
+
+/* Lopende tekst met een vaste offertekaart ernaast */
+.pagina-grid { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: clamp(32px, 5vw, 72px); align-items: start; }
+.tekst { max-width: 72ch; min-width: 0; }
+.tekst > * + * { margin-top: 18px; }
+.tekst h2 { font-size: clamp(26px, 2.8vw, 34px); margin-top: 52px; }
+.tekst h2:first-child { margin-top: 0; }
+.tekst h3 { margin-top: 32px; }
+.tekst h2 + *, .tekst h3 + * { margin-top: 12px; }
+.tekst ul, .tekst ol { padding-left: 22px; margin-bottom: 0; }
+.tekst li + li { margin-top: 8px; }
+.tekst li::marker { color: var(--accent-d); }
+.tekst .ticks { padding-left: 0; margin-top: 18px; }
+.tekst a:not(.btn) { color: var(--accent-d); font-weight: 600; text-underline-offset: 3px; }
+.tekst a:not(.btn):hover { color: var(--dark); }
+.tekst strong { color: var(--dark); }
+.kader { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); padding: clamp(20px, 3vw, 28px); }
+.kader > * + * { margin-top: 12px; }
+.kader-zacht { background: var(--accent-soft); border-color: transparent; }
+
+.zijkaart {
+  position: sticky; top: 100px; display: grid; gap: 14px; justify-items: start;
+  background: var(--white); border: 1px solid var(--line); border-radius: 24px;
+  padding: clamp(22px, 3vw, 28px); box-shadow: var(--shadow);
+}
+.zijkaart h2 { font-size: 22px; }
+.zijkaart .ticks { margin-top: 0; }
+.zijkaart .btn { width: 100%; }
+@media (max-width: 960px) {
+  .pagina-grid { grid-template-columns: 1fr; }
+  .zijkaart { position: static; }
+}
+
+/* Veelgestelde vragen: klikken om het antwoord te openen */
+.vragen { display: grid; gap: 10px; }
+.vragen details { background: var(--white); border: 1px solid var(--line); border-radius: 14px; transition: border-color .3s; }
+.vragen details[open] { border-color: #D8CEC4; }
+.vragen summary {
+  position: relative; cursor: pointer; list-style: none; min-height: 44px;
+  padding: 16px 52px 16px 20px; font-weight: 700; color: var(--dark); line-height: 1.4;
+}
+.vragen summary::-webkit-details-marker { display: none; }
+.vragen summary::after {
+  content: "+"; position: absolute; right: 20px; top: 50%; transform: translateY(-50%);
+  font-size: 26px; font-weight: 400; line-height: 1; color: var(--accent-d);
+}
+.vragen details[open] summary::after { content: "\2013"; }
+.vragen summary:hover { color: var(--accent-d); }
+.vragen details > :not(summary) { padding: 0 20px 18px; color: var(--ink-2); }
+.vragen details > :not(summary) + :not(summary) { margin-top: -6px; }
+.section .vragen { max-width: 860px; }
+
+/* Tegels met links naar de andere diensten en regio's */
+.tegels-blok + .tegels-blok { margin-top: clamp(40px, 5vw, 56px); }
+.tegels-blok h2 { font-size: clamp(24px, 2.6vw, 30px); margin-bottom: 18px; }
+.tegels { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+.tegels a {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 56px;
+  background: var(--white); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px;
+  font-weight: 700; color: var(--dark); text-decoration: none;
+  transition: border-color .3s, box-shadow .3s, transform .3s var(--ease);
+}
+.tegels a svg { width: 18px; height: 18px; flex: none; color: var(--accent-d); }
+.tegels a:hover { border-color: var(--accent); box-shadow: 0 10px 22px rgba(41, 41, 41, .10); transform: translateY(-2px); }
+.tegels a[aria-current="page"] { border-color: var(--accent); background: var(--accent-soft); }
+
+/* Donkere band met de offerteknoppen onderaan een subpagina */
+.cta-band { background: var(--dark); color: #E8E4E0; }
+.cta-band .wrap { display: grid; grid-template-columns: 1fr auto; gap: 24px 40px; align-items: center; padding-block: clamp(44px, 6vw, 72px); }
+.cta-band h2 { color: #fff; }
+.cta-band p { color: #CFC9C4; margin-top: 10px; max-width: 60ch; }
+.cta-band .hero-acts { margin-top: 0; }
+.cta-band .btn-ghost { color: #fff; border-color: rgba(255, 255, 255, .7); }
+.cta-band .btn-ghost:hover { background: #fff; color: var(--dark); }
+@media (max-width: 820px) { .cta-band .wrap { grid-template-columns: 1fr; } }
+
+/* Homepage: link onder elke dienstkaart en de steden onder het werkgebied */
+.service h3 a { text-decoration: none; }
+.service h3 a:hover { color: var(--accent-d); text-decoration: underline; text-underline-offset: 4px; }
+.meer-info { color: var(--dark); font-weight: 600; font-size: 15px; text-underline-offset: 3px; }
+.meer-info:hover { color: var(--accent-d); }
+.steden h3 { font-size: 17px; margin-bottom: 12px; }
+.steden .tegels { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
+.steden .tegels a { min-height: 48px; padding: 10px 14px; font-size: 15px; }
+.foot-gegevens { margin-top: 14px; font-size: 14px; line-height: 1.7; }
+.legal a { color: inherit; }
+/* Met de taalknop erbij wordt het menu op een kleine laptop krap: iets minder ruimte tussen de links. */
+@media (min-width: 901px) {
+  .nav-list a { white-space: nowrap; }
+}
+@media (min-width: 901px) and (max-width: 1140px) {
+  .nav-list { gap: 18px; }
+  .nav-list a { font-size: 15px; }
+  .nav-in { gap: 14px; }
+}
