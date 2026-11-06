@@ -70,7 +70,7 @@
 <!-- Icoontje in het browsertabblad: de doos met MTM uit het logo. -->
 <link rel="icon" href="img/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="img/favicon-180.png">
-<link rel="stylesheet" href="css/style.css?v=37">
+<link rel="stylesheet" href="css/style.css?v=38">
 <!-- Zet een merkteken dat JavaScript werkt. Werkt JavaScript niet, dan blijft
      alle inhoud gewoon zichtbaar en staat het menu open uitgeklapt. -->
 <script>document.documentElement.className += ' js';</script>
@@ -635,143 +635,64 @@
         <div class="fields">
           <div class="row2">
             <div class="field">
-              <label for="naam">Naam <span class="req" aria-hidden="true">*</span></label>
-              <input id="naam" name="naam" autocomplete="name" aria-describedby="naam-err">
+              <label for="dienst">Type dienst <span class="req" aria-hidden="true">*</span></label>
+              <select id="dienst" name="dienst" aria-describedby="dienst-err">
+                <option value="" selected>Selecteer een dienst</option>
+                <option>Verhuizen</option>
+                <option>Ontruiming</option>
+                <option>Opkuis</option>
+                <option>Vervoer van inboedel</option>
+                <option>Meubelmontage</option>
+                <option>Inpakservice</option>
+                <option>Meerdere diensten</option>
+                <option>Iets anders</option>
+              </select>
+              <p class="field-err" id="dienst-err" hidden></p>
+            </div>
+            <div class="field">
+              <label for="beschrijving">Korte beschrijving <span class="req" aria-hidden="true">*</span></label>
+              <input id="beschrijving" name="beschrijving" maxlength="200" placeholder="Waar kunnen we je mee helpen?" aria-describedby="beschrijving-err">
+              <p class="field-err" id="beschrijving-err" hidden></p>
+            </div>
+          </div>
+          <div class="row2">
+            <div class="field">
+              <label for="naam">Volledige naam <span class="req" aria-hidden="true">*</span></label>
+              <input id="naam" name="naam" autocomplete="name" placeholder="bv. Willem Vanderbruggen" aria-describedby="naam-err">
               <p class="field-err" id="naam-err" hidden></p>
             </div>
             <div class="field">
+              <label for="postcode">Postcode <span class="req" aria-hidden="true">*</span></label>
+              <input id="postcode" name="postcode" inputmode="numeric" autocomplete="postal-code" maxlength="4" placeholder="bv. 9250" aria-describedby="postcode-err">
+              <p class="field-err" id="postcode-err" hidden></p>
+            </div>
+          </div>
+          <div class="row2">
+            <div class="field">
               <label for="telefoon">Telefoonnummer <span class="req" aria-hidden="true">*</span></label>
-              <input id="telefoon" name="telefoon" type="tel" inputmode="tel" autocomplete="tel" required placeholder="bv. 0470 12 34 56" aria-describedby="telefoon-err">
+              <input id="telefoon" name="telefoon" type="tel" inputmode="tel" autocomplete="tel" placeholder="bv. 0470 12 34 56" aria-describedby="telefoon-err">
               <p class="field-err" id="telefoon-err" hidden></p>
             </div>
+            <div class="field">
+              <label for="email">E-mailadres <span class="req" aria-hidden="true">*</span></label>
+              <input id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="bv. naam@voorbeeld.be" aria-describedby="email-err">
+              <p class="field-err" id="email-err" hidden></p>
+            </div>
           </div>
-          <div class="field">
-            <label for="email">E-mailadres <span class="req" aria-hidden="true">*</span></label>
-            <input id="email" name="email" type="email" inputmode="email" autocomplete="email" required placeholder="bv. naam@voorbeeld.be" aria-describedby="email-err">
-            <p class="field-err" id="email-err" hidden></p>
-          </div>
 
-          <!-- Meerdere diensten tegelijk kunnen aanvinken: een ontruiming én een
-               verhuis is een veelvoorkomende combinatie. -->
-          <fieldset class="keuzegroep" id="dienstenGroep">
-            <legend>Welke diensten heb je nodig? <span class="req" aria-hidden="true">*</span></legend>
-            <p class="hint">Je mag er meerdere aanvinken.</p>
+          <fieldset class="keuzegroep" id="termijnGroep">
+            <legend>Wanneer moeten we komen? <span class="req" aria-hidden="true">*</span></legend>
             <div class="keuzes">
-            <label class="keuze" for="dienst1"><input type="checkbox" id="dienst1" name="diensten" value="Verhuizen"><span>Verhuizen</span></label>
-            <label class="keuze" for="dienst2"><input type="checkbox" id="dienst2" name="diensten" value="Ontruiming"><span>Ontruiming</span></label>
-            <label class="keuze" for="dienst3"><input type="checkbox" id="dienst3" name="diensten" value="Opkuis"><span>Opkuis</span></label>
-            <label class="keuze" for="dienst4"><input type="checkbox" id="dienst4" name="diensten" value="Vervoer van inboedel"><span>Vervoer van inboedel</span></label>
-            <label class="keuze" for="dienst5"><input type="checkbox" id="dienst5" name="diensten" value="Meubelmontage"><span>Meubelmontage</span></label>
-            <label class="keuze" for="dienst6"><input type="checkbox" id="dienst6" name="diensten" value="Inpakservice"><span>Inpakservice</span></label>
-            <label class="keuze" for="dienst7"><input type="checkbox" id="dienst7" name="diensten" value="Iets anders"><span>Iets anders</span></label>
-            </div>
-            <p class="field-err" id="diensten-err" hidden></p>
-          </fieldset>
-
-          <fieldset class="keuzegroep" id="ruimteGroep">
-            <legend>Welk type woning of ruimte? <span class="req" aria-hidden="true">*</span></legend>
-            <p class="hint">Je mag er meerdere aanvinken.</p>
-            <div class="keuzes">
-            <label class="keuze" for="ruimte1"><input type="checkbox" id="ruimte1" name="ruimte" value="Appartement"><span>Appartement</span></label>
-            <label class="keuze" for="ruimte2"><input type="checkbox" id="ruimte2" name="ruimte" value="Woning"><span>Woning</span></label>
-            <label class="keuze" for="ruimte3"><input type="checkbox" id="ruimte3" name="ruimte" value="Garage"><span>Garage</span></label>
-            <label class="keuze" for="ruimte4"><input type="checkbox" id="ruimte4" name="ruimte" value="Handelspand of magazijn"><span>Handelspand of magazijn</span></label>
-            <label class="keuze" for="ruimte5"><input type="checkbox" id="ruimte5" name="ruimte" value="Iets anders"><span>Iets anders</span></label>
-            </div>
-            <p class="field-err" id="ruimte-err" hidden></p>
-          </fieldset>
-
-          <fieldset class="adresgroep" id="startGroep">
-            <legend>Beginadres / adres van de opdracht <span class="req" aria-hidden="true">*</span></legend>
-            <p class="hint">Waar moeten we zijn?</p>
-            <div class="adres">
-              <div class="adres-rij adres-rij--straat">
-            <div class="field adres-straat">
-              <label for="startStraat">Straat <span class="req" aria-hidden="true">*</span></label>
-              <input id="startStraat" name="startStraat" autocomplete="address-line1" placeholder="bv. Kerkstraat" aria-describedby="startStraat-err">
-              <p class="field-err" id="startStraat-err" hidden></p>
-            </div>
-            <div class="field adres-nr">
-              <label for="startNummer">Nummer <span class="req" aria-hidden="true">*</span></label>
-              <input id="startNummer" name="startNummer" autocomplete="address-line2" placeholder="bv. 12" aria-describedby="startNummer-err">
-              <p class="field-err" id="startNummer-err" hidden></p>
-            </div>
-              </div>
-              <div class="adres-rij adres-rij--plaats">
-            <div class="field adres-post">
-              <label for="startPostcode">Postcode <span class="req" aria-hidden="true">*</span></label>
-              <input id="startPostcode" name="startPostcode" autocomplete="postal-code" placeholder="bv. 9000" aria-describedby="startPostcode-err">
-              <p class="field-err" id="startPostcode-err" hidden></p>
-            </div>
-            <div class="field adres-gem">
-              <label for="startGemeente">Gemeente <span class="req" aria-hidden="true">*</span></label>
-              <input id="startGemeente" name="startGemeente" autocomplete="address-level2" placeholder="bv. Gent" aria-describedby="startGemeente-err">
-              <p class="field-err" id="startGemeente-err" hidden></p>
-            </div>
-              </div>
-            </div>
-          </fieldset>
-
-          <!-- Bij een verhuis of bij vervoer van inboedel verschijnt het
-               bestemmingsadres vanzelf. Bij de andere diensten vragen we eerst
-               of er iets naar een ander adres moet. -->
-          <fieldset class="keuzegroep" id="vervoerGroep" hidden>
-            <legend>Moeten er spullen van of naar een ander adres worden vervoerd?</legend>
-            <div class="keuzes keuzes--kort">
-              <label class="keuze" for="anders1"><input type="radio" id="anders1" name="andersAdres" value="Ja"><span>Ja</span></label>
-              <label class="keuze" for="anders2"><input type="radio" id="anders2" name="andersAdres" value="Nee"><span>Nee</span></label>
-            </div>
-          </fieldset>
-
-          <fieldset class="adresgroep" id="eindGroep" hidden>
-            <legend>Bestemmingsadres <span class="req" aria-hidden="true">*</span></legend>
-            <p class="hint">Alleen van toepassing bij een verhuis of wanneer spullen naar een ander adres moeten worden vervoerd.</p>
-            <div class="adres">
-              <div class="adres-rij adres-rij--straat">
-            <div class="field adres-straat">
-              <label for="eindStraat">Straat <span class="req" aria-hidden="true">*</span></label>
-              <input id="eindStraat" name="eindStraat" autocomplete="address-line1" placeholder="bv. Kerkstraat" aria-describedby="eindStraat-err">
-              <p class="field-err" id="eindStraat-err" hidden></p>
-            </div>
-            <div class="field adres-nr">
-              <label for="eindNummer">Nummer <span class="req" aria-hidden="true">*</span></label>
-              <input id="eindNummer" name="eindNummer" autocomplete="address-line2" placeholder="bv. 12" aria-describedby="eindNummer-err">
-              <p class="field-err" id="eindNummer-err" hidden></p>
-            </div>
-              </div>
-              <div class="adres-rij adres-rij--plaats">
-            <div class="field adres-post">
-              <label for="eindPostcode">Postcode <span class="req" aria-hidden="true">*</span></label>
-              <input id="eindPostcode" name="eindPostcode" autocomplete="postal-code" placeholder="bv. 9000" aria-describedby="eindPostcode-err">
-              <p class="field-err" id="eindPostcode-err" hidden></p>
-            </div>
-            <div class="field adres-gem">
-              <label for="eindGemeente">Gemeente <span class="req" aria-hidden="true">*</span></label>
-              <input id="eindGemeente" name="eindGemeente" autocomplete="address-level2" placeholder="bv. Gent" aria-describedby="eindGemeente-err">
-              <p class="field-err" id="eindGemeente-err" hidden></p>
-            </div>
-              </div>
-            </div>
-          </fieldset>
-
-          <fieldset class="keuzegroep" id="datumGroep">
-            <legend>Wanneer heb je hulp nodig? <span class="req" aria-hidden="true">*</span></legend>
-            <div class="datum-rij">
-              <div class="field">
-                <label for="datum">Gewenste datum</label>
-                <input id="datum" name="datum" type="date" aria-describedby="datum-err">
-              </div>
-              <label class="keuze" for="datumOpen"><input type="checkbox" id="datumOpen" name="datumOpen" value="ja"><span>Datum nog te bespreken</span></label>
+              <label class="keuze" for="termijn1"><input type="radio" id="termijn1" name="termijn" value="Zo snel mogelijk"><span>Zo snel mogelijk</span></label>
+              <label class="keuze" for="termijn2"><input type="radio" id="termijn2" name="termijn" value="Binnen een week"><span>Binnen een week</span></label>
+              <label class="keuze" for="termijn3"><input type="radio" id="termijn3" name="termijn" value="1 tot 2 weken"><span>1 tot 2 weken</span></label>
+              <label class="keuze" for="termijn4"><input type="radio" id="termijn4" name="termijn" value="3 tot 4 weken"><span>3 tot 4 weken</span></label>
+              <label class="keuze" for="termijn5"><input type="radio" id="termijn5" name="termijn" value="Over een maand"><span>Over een maand</span></label>
+              <label class="keuze" for="termijn6"><input type="radio" id="termijn6" name="termijn" value="Nog niet geweten"><span>Ik weet het nog niet</span></label>
             </div>
             <p class="hint">Dit is een voorkeur, nog geen afspraak. We bevestigen de datum altijd eerst samen met jou.</p>
-            <p class="field-err" id="datum-err" hidden></p>
+            <p class="field-err" id="termijn-err" hidden></p>
           </fieldset>
-
-          <div class="field">
-            <label for="omschrijving">Korte omschrijving van de opdracht <span class="opt">(niet verplicht)</span></label>
-            <textarea id="omschrijving" name="omschrijving" rows="5" maxlength="1500" aria-describedby="omschrijving-hint" placeholder="bv. Appartement op de 2de verdieping, geen lift, ongeveer 20 dozen en een zetel."></textarea>
-            <p class="hint" id="omschrijving-hint">Vertel kort hoeveel spullen of dozen er zijn, op welke verdieping ze staan en of er een lift is. Zijn er nog bijzonderheden? Laat het ons weten, dan houden we daar rekening mee.</p>
-          </div>
 
           <div class="photo-tip">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>
@@ -878,6 +799,6 @@
   <a class="btn btn-accent" href="#offerte">Gratis offerte</a>
 </div>
 
-<script src="js/script.js?v=37"></script>
+<script src="js/script.js?v=38"></script>
 </body>
 </html>

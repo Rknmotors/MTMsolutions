@@ -71,100 +71,36 @@ var INSTELLINGEN = {
   var resultWa = document.getElementById('resultWa');
   var waLink = document.getElementById('waLink');
 
-  var dienstenGroep = document.getElementById('dienstenGroep');
-  var ruimteGroep = document.getElementById('ruimteGroep');
-  var datumGroep = document.getElementById('datumGroep');
-  var vervoerGroep = document.getElementById('vervoerGroep');
-  var eindGroep = document.getElementById('eindGroep');
-  var datum = document.getElementById('datum');
-  var datumOpen = document.getElementById('datumOpen');
-
-  // De diensten waarbij er ook een eindadres nodig is: er moet dan iets
-  // van de ene plek naar de andere.
-  var MET_EINDADRES = ['Verhuizen', 'Vervoer van inboedel'];
-
-  var START_VELDEN = ['startStraat', 'startNummer', 'startPostcode', 'startGemeente'];
-  var EIND_VELDEN = ['eindStraat', 'eindNummer', 'eindPostcode', 'eindGemeente'];
+  var termijnGroep = document.getElementById('termijnGroep');
+  var dienstVeld = document.getElementById('dienst');
 
   // Kort hulpje om een invulveld op te halen via zijn naam.
   function veld(naam) { return form.elements[naam]; }
 
-  // Alle aangevinkte waarden van een groep selectievakjes.
-  function aangevinkt(naam) {
-    return [].slice.call(form.querySelectorAll('input[name="' + naam + '"]:checked'))
-      .map(function (el) { return el.value; });
-  }
-
-  /* ---------- Het bestemmingsadres tonen of verbergen ----------
-     Bij een verhuis of bij vervoer van inboedel is er altijd een tweede adres,
-     dus dan verschijnt het meteen. Bij de andere diensten vragen we eerst of er
-     iets naar een ander adres moet; pas bij "Ja" verschijnt het blok. */
+  // De gekozen waarde van een groep keuzerondjes.
   function gekozenRadio(naam) {
     var el = form.querySelector('input[name="' + naam + '"]:checked');
     return el ? el.value : '';
   }
 
-  function toonEindadres() {
-    var gekozen = aangevinkt('diensten');
-    var viaDienst = gekozen.some(function (d) { return MET_EINDADRES.indexOf(d) >= 0; });
-
-    // De ja/nee-vraag hoort alleen bij de overige diensten.
-    var vraagTonen = gekozen.length > 0 && !viaDienst;
-    vervoerGroep.hidden = !vraagTonen;
-    if (!vraagTonen) {
-      // Een eerder gegeven antwoord wissen, zodat een oude "Ja" niet blijft hangen.
-      form.querySelectorAll('input[name="andersAdres"]').forEach(function (el) { el.checked = false; });
-    }
-
-    var nodig = viaDienst || (vraagTonen && gekozenRadio('andersAdres') === 'Ja');
-    eindGroep.hidden = !nodig;
-    if (!nodig) EIND_VELDEN.forEach(function (n) { clearError(veld(n)); });
-    return nodig;
+  /* ---------- De dienst vooraf instellen ----------
+     Zet de keuzelijst op een dienst, maar alleen als die er ook echt in staat. */
+  function kiesDienst(naam) {
+    var bestaat = [].slice.call(dienstVeld.options).some(function (o) { return o.value === naam; });
+    if (!bestaat) return;
+    dienstVeld.value = naam;
+    clearError(dienstVeld);
   }
 
-  form.querySelectorAll('input[name="diensten"], input[name="andersAdres"]').forEach(function (el) {
-    el.addEventListener('change', toonEindadres);
-  });
-
-  /* ---------- Datum ----------
-     Je kiest een dag, of je vinkt aan dat de datum nog besproken moet worden.
-     Het ene sluit het andere uit, dus we zetten het datumvak dan uit. */
-  var vandaag = new Date();
-  datum.min = [vandaag.getFullYear(),
-    ('0' + (vandaag.getMonth() + 1)).slice(-2),
-    ('0' + vandaag.getDate()).slice(-2)].join('-');
-
-  datumOpen.addEventListener('change', function () {
-    datum.disabled = datumOpen.checked;
-    if (datumOpen.checked) datum.value = '';
-    clearGroepFout(datumGroep, 'datum-err');
-  });
-
-  // Knoppen bij een dienst vinken die dienst alvast aan. Wat al aangevinkt
-  // stond, blijft staan: zo kun je er nog diensten bij kiezen.
+  // De offerteknoppen bij elke dienst zetten die dienst alvast klaar.
   document.querySelectorAll('[data-dienst]').forEach(function (link) {
-    link.addEventListener('click', function () {
-      var naam = link.getAttribute('data-dienst');
-      var vak = form.querySelector('input[name="diensten"][value="' + naam + '"]');
-      if (!vak) return;
-      vak.checked = true;
-      toonEindadres();
-      clearGroepFout(dienstenGroep, 'diensten-err');
-      dienstenGroep.classList.remove('just-set');
-      void dienstenGroep.offsetWidth; // zet de markering opnieuw klaar
-      dienstenGroep.classList.add('just-set');
-      window.setTimeout(function () { dienstenGroep.classList.remove('just-set'); }, 1100);
-    });
+    link.addEventListener('click', function () { kiesDienst(link.getAttribute('data-dienst')); });
   });
 
   // Komt iemand via de offerteknop van een dienstpagina (bv. /?dienst=Verhuizen#offerte),
-  // dan staat die dienst al aangevinkt in het formulier.
+  // dan staat die dienst al gekozen in het formulier.
   var gevraagd = window.URLSearchParams ? new URLSearchParams(location.search).get('dienst') : '';
-  if (gevraagd) {
-    form.querySelectorAll('input[name="diensten"]').forEach(function (vak) {
-      if (vak.value === gevraagd) { vak.checked = true; toonEindadres(); }
-    });
-  }
+  if (gevraagd) kiesDienst(gevraagd);
 
   function showError(field, msg) {
     field.setAttribute('aria-invalid', 'true');
@@ -197,8 +133,16 @@ var INSTELLINGEN = {
   function telefoonFout(waarde) {
     if (!waarde.trim()) return 'Vul je telefoonnummer in.';
     // Spaties, streepjes, haakjes, punten en het plusteken tellen niet mee.
+    // Negen cijfers, want een Belgisch vast nummer heeft er net zoveel
+    // (bv. 09 123 45 67). Op tien zetten sluit die mensen uit.
     var cijfers = waarde.replace(/\D/g, '');
-    if (cijfers.length < 10) return 'Je telefoonnummer moet minimaal 10 cijfers bevatten.';
+    if (cijfers.length < 9) return 'Je telefoonnummer moet minstens 9 cijfers bevatten.';
+    return '';
+  }
+  function postcodeFout(waarde) {
+    var w = waarde.trim();
+    if (!w) return 'Vul je postcode in.';
+    if (!/^[1-9][0-9]{3}$/.test(w)) return 'Een Belgische postcode bestaat uit vier cijfers, bv. 9250.';
     return '';
   }
   function emailFout(waarde) {
@@ -214,7 +158,7 @@ var INSTELLINGEN = {
   // Telefoon en e-mail krijgen hieronder een eigen behandeling: daar moet de
   // melding pas weg als de invoer ook echt klopt.
   form.querySelectorAll('input, select, textarea').forEach(function (el) {
-    if (el.id === 'telefoon' || el.id === 'email') return;
+    if (el.id === 'telefoon' || el.id === 'email' || el.id === 'postcode') return;
     function opruimen() { if (el.getAttribute('aria-invalid')) clearError(el); }
     el.addEventListener('input', opruimen);
     el.addEventListener('change', opruimen);
@@ -223,7 +167,7 @@ var INSTELLINGEN = {
   // Staat er een melding bij telefoon of e-mail, dan kijken we bij elke
   // toetsaanslag opnieuw: zodra de invoer klopt, verdwijnt ze. Klopt ze nog
   // niet, dan blijft de juiste melding staan.
-  [['telefoon', telefoonFout], ['email', emailFout]].forEach(function (paar) {
+  [['telefoon', telefoonFout], ['email', emailFout], ['postcode', postcodeFout]].forEach(function (paar) {
     var el = veld(paar[0]), keur = paar[1];
     function herkeuren() {
       if (!el.getAttribute('aria-invalid')) return;
@@ -233,13 +177,9 @@ var INSTELLINGEN = {
     el.addEventListener('input', herkeuren);
     el.addEventListener('change', herkeuren);
   });
-  form.querySelectorAll('input[name="diensten"]').forEach(function (el) {
-    el.addEventListener('change', function () { clearGroepFout(dienstenGroep, 'diensten-err'); });
+  form.querySelectorAll('input[name="termijn"]').forEach(function (el) {
+    el.addEventListener('change', function () { clearGroepFout(termijnGroep, 'termijn-err'); });
   });
-  form.querySelectorAll('input[name="ruimte"]').forEach(function (el) {
-    el.addEventListener('change', function () { clearGroepFout(ruimteGroep, 'ruimte-err'); });
-  });
-  datum.addEventListener('change', function () { clearGroepFout(datumGroep, 'datum-err'); });
 
   function validate() {
     var first = null;
@@ -249,95 +189,41 @@ var INSTELLINGEN = {
       if (!first) first = focusEl;
     }
 
-    var naam = veld('naam'), tel = veld('telefoon'), mail = veld('email');
-    [naam, tel, mail].forEach(clearError);
-    START_VELDEN.concat(EIND_VELDEN).forEach(function (n) { clearError(veld(n)); });
-    clearGroepFout(dienstenGroep, 'diensten-err');
-    clearGroepFout(ruimteGroep, 'ruimte-err');
-    clearGroepFout(datumGroep, 'datum-err');
+    var dienst = veld('dienst'), oms = veld('beschrijving'), naam = veld('naam');
+    var post = veld('postcode'), tel = veld('telefoon'), mail = veld('email');
+    [dienst, oms, naam, post, tel, mail].forEach(clearError);
+    clearGroepFout(termijnGroep, 'termijn-err');
 
+    if (!dienst.value) fail(dienst, 'Kies het type dienst.');
+    if (!oms.value.trim()) fail(oms, 'Vertel kort waar we je mee kunnen helpen.');
     if (!naam.value.trim()) fail(naam, 'Vul je naam in.');
+    if (postcodeFout(post.value)) fail(post, postcodeFout(post.value));
     if (telefoonFout(tel.value)) fail(tel, telefoonFout(tel.value));
     if (emailFout(mail.value)) fail(mail, emailFout(mail.value));
 
-    if (!aangevinkt('diensten').length)
-      failGroep(dienstenGroep, 'diensten-err', 'Kies minstens één dienst.',
-        form.querySelector('input[name="diensten"]'));
-    if (!aangevinkt('ruimte').length)
-      failGroep(ruimteGroep, 'ruimte-err', 'Kies minstens één type woning of ruimte.',
-        form.querySelector('input[name="ruimte"]'));
-
-    var LABELS = {
-      Straat: 'Vul de straat in.', Nummer: 'Vul het huisnummer in.',
-      Postcode: 'Vul de postcode in.', Gemeente: 'Vul de gemeente in.'
-    };
-    function keurAdres(namen) {
-      namen.forEach(function (n) {
-        var el = veld(n);
-        if (!el.value.trim()) fail(el, LABELS[n.replace(/^(start|eind)/, '')]);
-      });
-    }
-    keurAdres(START_VELDEN);
-    if (toonEindadres()) keurAdres(EIND_VELDEN);
-
-    if (!datumOpen.checked && !datum.value)
-      failGroep(datumGroep, 'datum-err',
-        'Kies een gewenste datum, of vink aan dat de datum nog te bespreken is.', datum);
+    if (!gekozenRadio('termijn'))
+      failGroep(termijnGroep, 'termijn-err', 'Kies wanneer we mogen komen.',
+        form.querySelector('input[name="termijn"]'));
 
     if (first) first.focus();
     return !first;
   }
 
-  // Een adres op twee regels, zoals je het op een envelop zou schrijven.
-  function adresRegels(namen) {
-    var w = namen.map(function (n) { return veld(n).value.trim(); });
-    return [(w[0] + ' ' + w[1]).trim(), (w[2] + ' ' + w[3]).trim()];
-  }
-
-  // De datum in gewone taal, bv. "15 november 2026".
-  var MAANDEN = ['januari', 'februari', 'maart', 'april', 'mei', 'juni',
-    'juli', 'augustus', 'september', 'oktober', 'november', 'december'];
-  function datumInWoorden(waarde) {
-    var d = waarde.split('-');
-    if (d.length !== 3) return waarde;
-    return Number(d[2]) + ' ' + MAANDEN[Number(d[1]) - 1] + ' ' + d[0];
-  }
-
   // Het bericht dat vooraf ingevuld in WhatsApp verschijnt (*tekst* = vet in WhatsApp).
   function whatsappBericht() {
-    var naam = veld('naam').value.trim();
-    var tel = veld('telefoon').value.trim();
-    var mail = veld('email').value.trim();
-    var oms = veld('omschrijving').value.trim();
-
     var regels = [
       'Hallo MTM Solutions,',
       'Ik wil graag een gratis, vrijblijvende offerte aanvragen.',
       '',
-      '*Diensten:* ' + aangevinkt('diensten').join(', '),
-      '*Type woning of ruimte:* ' + aangevinkt('ruimte').join(', '),
+      '*Dienst:* ' + veld('dienst').value,
+      '*Opdracht:* ' + veld('beschrijving').value.trim(),
+      '*Wanneer:* ' + gekozenRadio('termijn'),
       '',
-      '*Naam:* ' + naam,
-      '*Telefoon:* ' + tel
+      '*Naam:* ' + veld('naam').value.trim(),
+      '*Postcode:* ' + veld('postcode').value.trim(),
+      '*Telefoon:* ' + veld('telefoon').value.trim(),
+      '*E-mail:* ' + veld('email').value.trim()
     ];
-    if (mail) regels.push('*E-mail:* ' + mail);
-
-    var start = adresRegels(START_VELDEN);
-    regels.push('', '*Beginadres / adres van de opdracht:*', start[0], start[1]);
-
-    // Het bestemmingsadres staat er alleen bij als het blok ook echt getoond
-    // wordt. Heeft de klant het eerder ingevuld en daarna weer verborgen, dan
-    // gaat het dus niet mee.
-    if (!eindGroep.hidden) {
-      var eind = adresRegels(EIND_VELDEN);
-      regels.push('', '*Bestemmingsadres:*', eind[0], eind[1]);
-    }
-
-    regels.push('', '*Gewenste datum:* ' + (datumOpen.checked
-      ? 'nog te bespreken'
-      : datumInWoorden(datum.value) + ' (onder voorbehoud)'));
-
-    if (oms) regels.push('', '*Extra info:*', oms);
     return regels.join('\n');
   }
 

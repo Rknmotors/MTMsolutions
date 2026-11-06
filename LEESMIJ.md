@@ -248,51 +248,39 @@ easing `cubic-bezier(.16, 1, .3, 1)` (bovenaan ingesteld als `--ease`), hetzelfd
 
 **De velden**
 
+Het formulier telt bewust weinig velden. Bezoekers haken af op lange formulieren,
+en het volledige adres, het type woning en een exacte datum zijn in een eerste
+contact niet nodig: die vraag je in het gesprek dat erop volgt. De postcode
+volstaat om te zien of de opdracht binnen het werkgebied valt.
+
 | Vraag | Verplicht | Opmerking |
 |-------|-----------|-----------|
-| Naam | ja | |
-| Telefoonnummer | ja | minimaal 10 cijfers; spaties, streepjes, haakjes, punten en + tellen niet mee |
+| Type dienst | ja | keuzelijst, één keuze; met "Meerdere diensten" en "Iets anders" onderaan |
+| Korte beschrijving | ja | één regel, maximaal 200 tekens |
+| Volledige naam | ja | |
+| Postcode | ja | vier cijfers, niet beginnend met 0 |
+| Telefoonnummer | ja | minstens 9 cijfers, zodat ook een vast nummer (bv. 09 123 45 67) past; spaties, streepjes, haakjes, punten en + tellen niet mee |
 | E-mailadres | ja | moet de vorm naam@voorbeeld.be hebben |
-| Welke diensten heb je nodig? | minstens één | aankruisvakjes, meerdere tegelijk mogelijk |
-| Welk type woning of ruimte? | minstens één | aankruisvakjes, meerdere tegelijk mogelijk |
-| Beginadres / adres van de opdracht | ja | straat, nummer, postcode en gemeente |
-| Moeten er spullen van of naar een ander adres worden vervoerd? | nee | enkel zichtbaar bij de overige diensten |
-| Bestemmingsadres | enkel indien zichtbaar | straat, nummer, postcode en gemeente |
-| Wanneer heb je hulp nodig? | ja | een datum kiezen **of** "Datum nog te bespreken" aanvinken |
-| Korte omschrijving | nee | |
+| Wanneer moeten we komen? | ja | keuzerondjes: zo snel mogelijk, binnen een week, 1 tot 2 weken, 3 tot 4 weken, over een maand, of nog niet geweten |
 
-**Telefoon en e-mail** worden apart nagekeken door `telefoonFout()` en `emailFout()` in
-`js/script.js`. Die geven de foutmelding terug, of niets als alles klopt, en worden gebruikt
-bij het verzenden én tijdens het typen. Daardoor blijft de melding staan zolang de invoer
-nog niet deugt, en verdwijnt ze zodra ze wel deugt — bij de andere velden verdwijnt ze al
-zodra je begint te typen. Let op: de grens van tien cijfers sluit Belgische vaste nummers
-uit, want die hebben er negen (bv. 09 123 45 67).
+**Voeg je een veld toe?** Doe dat alleen als je het antwoord echt nodig hebt
+vóór het eerste gesprek. Elk extra verplicht veld kost aanvragen.
 
-**Het bestemmingsadres** verschijnt op twee manieren:
+**Telefoon, e-mail en postcode** worden apart nagekeken door `telefoonFout()`,
+`emailFout()` en `postcodeFout()` in `js/script.js`. Die geven de foutmelding terug, of
+niets als alles klopt, en worden gebruikt bij het verzenden én tijdens het typen. Daardoor
+blijft de melding staan zolang de invoer nog niet deugt, en verdwijnt ze zodra ze wel
+deugt — bij de andere velden verdwijnt ze al zodra je begint te typen.
 
-- Kiest de klant **Verhuizen** of **Vervoer van inboedel**, dan is er sowieso een tweede
-  adres. Het blok verschijnt meteen en is verplicht; de ja/nee-vraag blijft dan weg. Dat
-  geldt ook in combinatie met andere diensten, bijvoorbeeld ontruiming én verhuis.
-- Kiest de klant alleen andere diensten, dan verschijnt eerst de vraag **"Moeten er spullen
-  van of naar een ander adres worden vervoerd?"**. Pas bij **Ja** komt het blok tevoorschijn en is
-  het verplicht; bij **Nee** blijft het verborgen en vrijblijvend.
+**De termijn** is een rij keuzerondjes in plaats van een kalender. Eén tik volstaat, en op
+een smartphone scheelt dat het openklappen en scrollen van een datumkiezer. Bij het
+formulier staat uitdrukkelijk dat het een voorkeur is en nog bevestigd wordt. Wil je een
+andere reeks termijnen? Pas de zes `<label class="keuze">` aan in `index.html`; het script
+leest gewoon de waarde die aanstaat en hoeft niet mee aangepast te worden.
 
-Verdwijnt het blok weer — bijvoorbeeld omdat de verhuis wordt uitgevinkt — dan vervallen de
-verplichtingen en gaat het bestemmingsadres **niet** mee in het WhatsApp-bericht, ook niet
-als de klant het eerder al had ingevuld. De ingevulde tekst blijft wel in de velden staan,
-zodat er niets verloren gaat als de klant van gedacht verandert. Een eerder gegeven "Ja"
-wordt wel gewist zodra de vraag zelf verdwijnt. De lijst met diensten die altijd een tweede
-adres hebben staat in `js/script.js` bij `MET_EINDADRES`; de hele regeling zit in
-`toonEindadres()`.
-
-**De datum** is een gewone kalender (`<input type="date">`) die niet verder teruggaat dan
-vandaag. Vinkt de klant "Datum nog te bespreken" aan, dan gaat het datumvak uit en wordt
-het leeggemaakt. Bij het formulier staat uitdrukkelijk dat de datum een voorkeur is en nog
-bevestigd wordt; in het bericht komt er "(onder voorbehoud)" achter.
-
-**De offerteknoppen** bij elke dienst (in de lijst bovenaan en op de dienstkaarten) vinken
-die ene dienst alvast aan. Wat de klant zelf al aanvinkte blijft staan, dus een combinatie
-als ontruiming én verhuis kan gewoon.
+**De offerteknoppen** bij elke dienst (in de lijst bovenaan en op de dienstkaarten) zetten
+de keuzelijst alvast op die dienst (`kiesDienst()` in `js/script.js`). Een waarde die niet
+in de lijst staat, wordt genegeerd. Dat geldt ook voor `/?dienst=Verhuizen#offerte`.
 
 De website toont bewust **geen** melding "aanvraag verstuurd", want ze kan niet zien of de
 klant het bericht echt verstuurt.
