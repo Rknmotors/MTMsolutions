@@ -226,7 +226,7 @@ foreach ($p in $paginas) {
   $foto = ''
   if ($p.foto) {
     $fa = Enc $p.fotoalt
-    $foto = "<figure class=""pagina-kop-foto""><img src=""/img/$($p.foto).webp"" srcset=""/img/$($p.foto)-small.webp 560w, /img/$($p.foto)-mid.webp 800w, /img/$($p.foto).webp 1120w"" sizes=""(max-width: 900px) 100vw, 45vw"" width=""1120"" height=""747"" fetchpriority=""high"" decoding=""async"" alt=""$fa""></figure>"
+    $foto = "<figure class=""pagina-kop-foto""><img src=""/img/$($p.foto).webp"" srcset=""/img/$($p.foto)-small.webp 560w, /img/$($p.foto)-mid.webp 800w, /img/$($p.foto).webp 1120w"" sizes=""(max-width: 900px) calc(100vw / 1.5), 45vw"" width=""1120"" height=""747"" fetchpriority=""high"" decoding=""async"" alt=""$fa""></figure>"
   }
   $kruimelHtml = ''
   if ($p.slug -ne 'fr' -and -not $is404) {
@@ -316,7 +316,7 @@ $hreflang
 <meta name="theme-color" content="#292929">
 <link rel="icon" href="/img/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="/img/favicon-180.png">
-<link rel="stylesheet" href="/css/style.css?v=38">
+<link rel="stylesheet" href="/css/style.css?v=39">
 <script>document.documentElement.className += ' js';</script>
 $schemaTag
 </head>
@@ -354,7 +354,7 @@ $(Footer $p.taal)
   <a class="btn btn-accent" href="$offerte"$doel>$($t.offerteKort)</a>
 </div>
 
-<script src="/js/script.js?v=38"></script>
+<script src="/js/script.js?v=39"></script>
 </body>
 </html>
 "@
