@@ -74,12 +74,11 @@ $Talen = @{
     logoLabel = 'MTM Solutions, naar de homepage'
     nav = '<li><a href="/#diensten">Diensten</a></li><li><a href="/#werkwijze">Hoe werkt het</a></li><li><a href="/#waarom">Waarom MTM</a></li><li><a href="/#werkgebied">Werkgebied</a></li><li><a href="#contact">Contact</a></li>'
     taalLabel = 'FR'; taalLang = 'fr'; taalTitel = 'Version fran&ccedil;aise'; taalStandaard = '/fr/'
-    offerteKort = 'Gratis offerte'; offerteLang = 'Vraag je gratis offerte aan'; bel = 'Bel 0492 05 15 70'; bellen = 'Bellen'
+    offerteKort = 'Offerte binnen 2u'; offerteLang = 'Offerte binnen 2u'; bel = 'Bel 0492 05 15 70'; bellen = 'Bellen'
     kruimel = 'Kruimelpad'
-    zkTitel = 'Gratis offerte binnen 2u'
+    zkTitel = 'Offerte binnen 2u'
     zkTicks = '<li>Gratis en vrijblijvend</li><li>Persoonlijk contact, geen callcenter</li><li>Vanuit Waasmunster actief in heel Vlaanderen en Brussel</li>'
-    zkKnop = 'Offerte aanvragen'; zkUren = 'Bereikbaar van 8 tot 20 uur.'
-    belofte = 'Offerte binnen 2u'
+    zkKnop = 'Offerte binnen 2u'; zkUren = 'Bereikbaar van 8 tot 20 uur.'
     diensten = 'Onze diensten'; regios = 'Hier zijn we actief'
     ctaTekst = 'Vertel ons kort wat je nodig hebt. Je krijgt binnen 2u een offerte op maat, gratis en vrijblijvend.'
   }
@@ -88,12 +87,11 @@ $Talen = @{
     logoLabel = 'MTM Solutions, vers la page d&#39;accueil'
     nav = '<li><a href="/fr/#services">Services</a></li><li><a href="/fr/demenagement/">D&eacute;m&eacute;nagement</a></li><li><a href="/fr/debarras/">D&eacute;barras</a></li><li><a href="#contact">Contact</a></li>'
     taalLabel = 'NL'; taalLang = 'nl'; taalTitel = 'Nederlandstalige versie'; taalStandaard = '/'
-    offerteKort = 'Devis gratuit'; offerteLang = 'Demandez votre devis gratuit'; bel = 'Appelez le 0492 05 15 70'; bellen = 'Appeler'
+    offerteKort = 'Devis sous 2 h'; offerteLang = 'Devis sous 2 h'; bel = 'Appelez le 0492 05 15 70'; bellen = 'Appeler'
     kruimel = "Fil d'Ariane"
-    zkTitel = 'Devis gratuit sous 2 h'
+    zkTitel = 'Devis sous 2 h'
     zkTicks = '<li>Gratuit et sans engagement</li><li>Contact personnel, pas de call center</li><li>Bruxelles et toute la Flandre</li>'
-    zkKnop = 'Demander un devis'; zkUren = 'Joignables de 8 h &agrave; 20 h.'
-    belofte = 'Devis sous 2 h'
+    zkKnop = 'Devis sous 2 h'; zkUren = 'Joignables de 8 h &agrave; 20 h.'
     diensten = 'Nos services'; regios = ''
     ctaTekst = 'D&eacute;crivez-nous bri&egrave;vement votre projet. Vous recevez un devis sur mesure sous 2 h, gratuit et sans engagement.'
   }
@@ -237,11 +235,7 @@ foreach ($p in $paginas) {
   }
   $bovenkop = ''; if ($p.bovenkop) { $bovenkop = "<p class=""eyebrow"">$(Enc $p.bovenkop)</p>" }
   $intro = ''; if ($p.intro) { $intro = "<p class=""lede"">$(Enc $p.intro)</p>" }
-  # De belofte-pill hangt onder de knoppen. Verdwijnen de knoppen (info-pagina's),
-  # dan verdwijnt de pill mee: zonder offerteknop ernaast heeft ze geen zin.
-  $svgKlok = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>'
-  $beloftePill = "<p class=""belofte"">$svgKlok$($t.belofte)</p>"
-  $knoppen = "<div class=""hero-acts""><a class=""btn btn-accent btn-lg"" href=""$offerte""$doel>$($t.offerteLang) $svgPijl</a><a class=""btn btn-ghost btn-lg"" href=""tel:+32492051570"">$svgTel $($t.bel)</a></div>`n      $beloftePill"
+  $knoppen = "<div class=""hero-acts""><a class=""btn btn-accent btn-lg"" href=""$offerte""$doel>$($t.offerteLang) $svgPijl</a><a class=""btn btn-ghost btn-lg"" href=""tel:+32492051570"">$svgTel $($t.bel)</a></div>"
   if ($p.soort -eq 'info') { $knoppen = '' }
 
   $kopGrid = 'wrap pagina-kop-grid'; if (-not $p.foto) { $kopGrid = 'wrap' }
@@ -322,7 +316,7 @@ $hreflang
 <meta name="theme-color" content="#292929">
 <link rel="icon" href="/img/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="/img/favicon-180.png">
-<link rel="stylesheet" href="/css/style.css?v=40">
+<link rel="stylesheet" href="/css/style.css?v=41">
 <script>document.documentElement.className += ' js';</script>
 $schemaTag
 </head>
@@ -360,7 +354,7 @@ $(Footer $p.taal)
   <a class="btn btn-accent" href="$offerte"$doel>$($t.offerteKort)</a>
 </div>
 
-<script src="/js/script.js?v=40"></script>
+<script src="/js/script.js?v=41"></script>
 </body>
 </html>
 "@

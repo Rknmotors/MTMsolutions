@@ -229,15 +229,25 @@ daarmee is ze overal weg.
 
 ## De belofte "Offerte binnen 2u"
 
-Onder de knoppen in de kop van elke pagina staat een pill met een klokje:
-*Offerte binnen 2u* (`Devis sous 2 h` op de Franse pagina's). De opmaak staat bij
-`.belofte` in `css/style.css`; de tekst komt uit `$t.belofte` bovenaan
-`_bouw/bouw.ps1`, per taal. Op de homepage staat de pill rechtstreeks in
-`index.html`, net onder `.hero-acts`.
+*Offerte binnen 2u* (`Devis sous 2 h` op de Franse pagina's) is de tekst van elke
+offerteknop op de site: in het menu, in de kop van elke pagina, op de
+dienstkaarten, in de CTA-balk onderaan en in de vaste balk op smartphone. De
+teksten komen uit `offerteKort`, `offerteLang`, `zkTitel` en `zkKnop` bovenaan
+`_bouw/bouw.ps1`, per taal. Op de homepage staan ze rechtstreeks in `index.html`.
 
-Dezelfde belofte staat ook in de zijkaart van elke dienst- en regiopagina
-(`zkTitel`), in de CTA-balk onderaan (`ctaTekst`), in de veelgestelde vragen en
-in de meta-beschrijvingen die Google toont.
+Dezelfde belofte staat ook in de kop van de zijkaart, in de tekst van de
+CTA-balk (`ctaTekst`), in de veelgestelde vragen en in de meta-beschrijvingen
+die Google toont.
+
+**"Gratis" is niet verdwenen**, alleen verhuisd: het staat nu in de lopende
+tekst, in de veelgestelde vragen, in de meta-beschrijvingen en als eerste punt
+in de zijkaart ("Gratis en vrijblijvend"). De knop zelf draagt de termijn, want
+dat is wat een bezoeker nog niet wist.
+
+Er heeft korte tijd ook een pill met een klokje onder de knoppen gestaan
+(`.belofte` in `css/style.css`). Die is weg omdat ze woord voor woord hetzelfde
+zei als de knop er vlak boven. De opmaak staat nog in de stylesheet, dus je kunt
+ze terugzetten als de knoptekst ooit weer verandert.
 
 **Verander je de termijn?** Dan moet hij op al die plaatsen mee. Zoek op
 `binnen 2u` en op `sous 2 h`, in `index.html`, in `_bouw/bouw.ps1` en in
