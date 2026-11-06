@@ -841,6 +841,35 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
 .foot-grid ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
 .foot-grid a { text-decoration: none; }
 .foot-grid a:hover { color: #fff; text-decoration: underline; }
+/* ---------- 24/7-blok in de footer ----------
+   Staat tussen de contactknoppen en de kolommen. Het WhatsApp-rondje houdt
+   de eigen groene kleur van WhatsApp, zodat meteen duidelijk is langs welke
+   weg je altijd terechtkunt. */
+.foot-247 {
+  display: flex; align-items: flex-start; gap: 18px;
+  margin: 28px 0 0; padding: 22px 24px;
+  background: var(--dark); border: 1px solid var(--dark-l); border-radius: 16px;
+}
+.foot-247 .ci-wa {
+  flex: none; width: 44px; height: 44px; border-radius: 50%;
+  background: #25D366; display: grid; place-items: center;
+}
+.foot-247 .ci-wa svg {
+  width: 24px; height: 24px; fill: none; stroke: #fff;
+  stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round;
+}
+.foot-247 h3 { font-size: 19px; margin: 0 0 6px; color: #fff; }
+.foot-247 p { margin: 0; font-size: 15px; line-height: 1.6; max-width: 62ch; }
+.foot-247 .wa-knop {
+  display: inline-block; margin-top: 14px; font-weight: 700;
+  color: var(--accent-l); text-decoration: none;
+  border-bottom: 2px solid currentColor; padding-bottom: 1px;
+}
+.foot-247 .wa-knop:hover { color: #fff; }
+@media (max-width: 560px) {
+  .foot-247 { flex-direction: column; gap: 14px; padding: 20px; }
+}
+
 .foot-tag { margin-top: 14px; font-size: 15px; }
 .legal { margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, .14); font-size: 14px; color: #908A85; }
 @media (max-width: 900px) {

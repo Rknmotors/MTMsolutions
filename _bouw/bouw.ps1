@@ -117,8 +117,11 @@ function Footer([string]$taal) {
     $kop = '<p class="eyebrow">Contact</p><h2>Une question&#160;? Contactez-nous.</h2>'
     $belK = 'Appelez-nous'; $mailK = 'Envoyez un e-mail'; $mailOnd = 'Question%20via%20le%20site'
     $tag = 'D&eacute;m&eacute;nagement &amp; d&eacute;barras pour particuliers'
-    $geg = 'MTM Solutions<br>9250 Waasmunster (Pays de Waes)<br>TVA BE 1006.001.549<br>Joignables de 8 h &agrave; 20 h'
+    $geg = 'MTM Solutions<br>9250 Waasmunster (Pays de Waes)<br>TVA BE 1006.001.549<br>Joignables par t&eacute;l&eacute;phone de 8 h &agrave; 20 h<br>WhatsApp 24 h/24'
     $legal = '&copy; <span id="jaar">2026</span> MTM Solutions &middot; TVA BE 1006.001.549'
+    $k247 = 'Joignables 24 h/24 sur WhatsApp'
+    $t247 = 'Envoyez votre message quand cela vous arrange, m&ecirc;me la nuit, le week-end ou un jour f&eacute;ri&eacute;. Vous recevez une r&eacute;ponse &agrave; toute heure. En dehors de nos heures de t&eacute;l&eacute;phone, c&rsquo;est un assistant IA&#160;: il prend votre demande, r&eacute;pond &agrave; ce qu&rsquo;il peut et la transmet. Pour le devis et le rendez-vous, un collaborateur vous recontacte.'
+    $w247 = 'Envoyez-nous un message WhatsApp'
     $logoLabel = $Talen.fr.logoLabel; $thuis = '/fr/'
   } else {
     $kolom2 = '<h3>Diensten</h3><ul>' + (($dienstenNl | ForEach-Object { "<li><a href=""$(Pad $_.slug)"">$($_.label)</a></li>" }) -join '') + '</ul>'
@@ -127,8 +130,11 @@ function Footer([string]$taal) {
     $kop = '<p class="eyebrow">Contact</p><h2>Vragen? Neem gerust contact op.</h2>'
     $belK = 'Bel ons'; $mailK = 'Stuur een e-mail'; $mailOnd = 'Vraag%20via%20de%20website'
     $tag = 'Verhuis &amp; ontruiming voor particulieren'
-    $geg = 'MTM Solutions<br>9250 Waasmunster (Waasland)<br>BTW BE 1006.001.549<br>Bereikbaar van 8 tot 20 uur'
+    $geg = 'MTM Solutions<br>9250 Waasmunster (Waasland)<br>BTW BE 1006.001.549<br>Telefonisch bereikbaar van 8 tot 20 uur<br>WhatsApp 24/7'
     $legal = '&copy; <span id="jaar">2026</span> MTM Solutions &middot; BTW BE 1006.001.549 &middot; <a href="/privacy/">Privacybeleid</a>'
+    $k247 = '24/7 bereikbaar via WhatsApp'
+    $t247 = 'Stuur je bericht wanneer het jou uitkomt, ook &rsquo;s nachts, in het weekend of op een feestdag. Je krijgt op elk moment van de dag antwoord. Buiten onze telefoonuren is dat een AI-assistent: die neemt je vraag op, beantwoordt wat hij kan en zorgt dat je aanvraag bij ons terechtkomt. Voor de offerte zelf en voor de afspraak neemt een medewerker contact met je op.'
+    $w247 = 'Stuur ons een WhatsApp-bericht'
     $logoLabel = $Talen.nl.logoLabel; $thuis = '/'
   }
   return @"
@@ -140,6 +146,14 @@ function Footer([string]$taal) {
       <div class="contact-btns">
         <a class="cbtn" href="tel:+32492051570"><span class="ci">$svgTel</span><span><small>$belK</small>0492 05 15 70</span></a>
         <a class="cbtn" href="mailto:info@mtmsolutions.be?subject=$mailOnd"><span class="ci">$svgMail</span><span><small>$mailK</small>info@mtmsolutions.be</span></a>
+      </div>
+    </div>
+    <div class="foot-247">
+      <span class="ci-wa">$svgWa</span>
+      <div>
+        <h3>$k247</h3>
+        <p>$t247</p>
+        <a class="wa-knop" href="https://wa.me/32492051570" target="_blank" rel="noopener">$w247</a>
       </div>
     </div>
     <div class="foot-grid">
@@ -316,7 +330,7 @@ $hreflang
 <meta name="theme-color" content="#292929">
 <link rel="icon" href="/img/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="/img/favicon-180.png">
-<link rel="stylesheet" href="/css/style.css?v=41">
+<link rel="stylesheet" href="/css/style.css?v=42">
 <script>document.documentElement.className += ' js';</script>
 $schemaTag
 </head>
@@ -354,7 +368,7 @@ $(Footer $p.taal)
   <a class="btn btn-accent" href="$offerte"$doel>$($t.offerteKort)</a>
 </div>
 
-<script src="/js/script.js?v=41"></script>
+<script src="/js/script.js?v=42"></script>
 </body>
 </html>
 "@

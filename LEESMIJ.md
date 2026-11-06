@@ -261,6 +261,24 @@ praktijk vanaf de ochtend. Lukt twee uur niet meer, pas de termijn dan aan in
 plaats van hem te laten staan: een belofte die je niet haalt, kost meer
 vertrouwen dan een ruimere termijn die je wel haalt.
 
+## Het 24/7-blok in de footer
+
+Onderaan elke pagina, tussen de contactknoppen en de kolommen, staat een blok
+met het WhatsApp-rondje: *24/7 bereikbaar via WhatsApp*. Het legt uit dat er op
+elk moment van de dag antwoord komt en dat dat buiten de telefoonuren een
+AI-assistent is. De opmaak staat bij `.foot-247` in `css/style.css`, de teksten
+bij `$k247`, `$t247` en `$w247` in de functie `Footer` van `_bouw/bouw.ps1`, per
+taal.
+
+**Zeg erbij dat het een AI is.** Dat staat er nu met zoveel woorden. Haal die
+zin er niet uit: een bezoeker die denkt dat hij met een medewerker schrijft en
+daar later achterkomt, vertrouwt de rest ook niet meer. Sinds de Europese
+AI-verordening is die duidelijkheid trouwens ook een verplichting.
+
+De openingsuren in de footergegevens staan daarom nu op twee regels:
+telefonisch van 8 tot 20 uur, WhatsApp 24/7. Verandert een van beide, pas dan
+`$geg` aan in dezelfde functie, in beide talen.
+
 ## Animaties
 
 Alle animaties zitten onderaan in `css/style.css`, onder het kader `ANIMATIES`. Er zijn geen
