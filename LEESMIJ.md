@@ -227,6 +227,30 @@ staat het hoofd van de tweede medewerker.
 `index.html`. Er staat een opmerking bij. De actie staat maar op één plaats, dus
 daarmee is ze overal weg.
 
+## De belofte "Offerte binnen 2u"
+
+Onder de knoppen in de kop van elke pagina staat een pill met een klokje:
+*Offerte binnen 2u* (`Devis sous 2 h` op de Franse pagina's). De opmaak staat bij
+`.belofte` in `css/style.css`; de tekst komt uit `$t.belofte` bovenaan
+`_bouw/bouw.ps1`, per taal. Op de homepage staat de pill rechtstreeks in
+`index.html`, net onder `.hero-acts`.
+
+Dezelfde belofte staat ook in de zijkaart van elke dienst- en regiopagina
+(`zkTitel`), in de CTA-balk onderaan (`ctaTekst`), in de veelgestelde vragen en
+in de meta-beschrijvingen die Google toont.
+
+**Verander je de termijn?** Dan moet hij op al die plaatsen mee. Zoek op
+`binnen 2u` en op `sous 2 h`, in `index.html`, in `_bouw/bouw.ps1` en in
+`_bouw/paginas/`, en bouw daarna de pagina's opnieuw. Let op: de zin over de
+parkeerverbodsborden ("minstens 24 uur op voorhand") gaat **niet** over de
+offerte en moet blijven staan.
+
+**Houd de belofte haalbaar.** Jullie zijn bereikbaar van 8 tot 20 uur, en dat
+staat er ook bij. Komt een aanvraag 's nachts binnen, dan telt die termijn in de
+praktijk vanaf de ochtend. Lukt twee uur niet meer, pas de termijn dan aan in
+plaats van hem te laten staan: een belofte die je niet haalt, kost meer
+vertrouwen dan een ruimere termijn die je wel haalt.
+
 ## Animaties
 
 Alle animaties zitten onderaan in `css/style.css`, onder het kader `ANIMATIES`. Er zijn geen
