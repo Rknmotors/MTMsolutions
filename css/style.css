@@ -705,40 +705,6 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
 }
 
 .form-card { background: var(--white); border-radius: 24px; padding: clamp(20px, 3vw, 36px); box-shadow: var(--shadow); border: 1px solid var(--line); }
-/* ---------- Het blokje boven het formulier ----------
-   Dit is geen waarschuwing maar een rustige uitleg, dus geen harde balk aan de
-   zijkant. Het vak staat in de kleuren van WhatsApp zelf, zodat meteen duidelijk
-   is langs welke weg de aanvraag vertrekt. */
-.notice {
-  background: #EFFBF3;
-  border: 1px solid #BDEBCC;
-  border-radius: 14px; padding: 16px 18px; margin-bottom: 20px;
-  font-size: 15px; line-height: 1.55; color: var(--ink);
-}
-.notice-wa { display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: start; }
-.notice-tekst p { margin: 0; }
-.notice-tekst .notice-titel {
-  font-weight: 800; font-size: 17px; line-height: 1.25;
-  color: var(--dark); margin-bottom: 5px; letter-spacing: -.005em;
-}
-/* Het rondje in de eigen groene kleur van WhatsApp, met een wit logo. */
-.wa-ic {
-  width: 44px; height: 44px; border-radius: 50%;
-  background: #25D366; color: #fff;
-  display: grid; place-items: center; flex: none;
-}
-.wa-ic svg { width: 25px; height: 25px; }
-/* Op een smalle telefoon houdt de tekst zo meer plaats over. */
-@media (max-width: 480px) {
-  .notice { padding: 14px 15px; }
-  .notice-wa { gap: 12px; }
-  .wa-ic { width: 40px; height: 40px; }
-  .wa-ic svg { width: 23px; height: 23px; }
-  .notice-titel { font-size: 16px; }
-}
-.photo-tip { display: flex; gap: 12px; align-items: flex-start; background: var(--cream); border: 1.5px dashed #CFC6BD; border-radius: 12px; padding: 14px 16px; font-size: 15px; color: var(--ink-2); }
-.photo-tip svg { width: 24px; height: 24px; color: var(--accent-d); flex: none; margin-top: 1px; }
-.photo-tip b { color: var(--dark); }
 .req-legend { font-size: 14px; color: var(--ink-2); margin-bottom: 14px; }
 .req { color: var(--error); font-weight: 700; }
 .opt { font-weight: 400; color: var(--ink-2); font-size: 14px; }
