@@ -699,6 +699,12 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
 .quote-side { display: grid; gap: 16px; position: sticky; top: 100px; }
 .side-contact { margin-top: 8px; display: grid; gap: 10px; justify-items: start; padding-top: 20px; border-top: 1px solid var(--line); }
 .side-contact p { font-weight: 600; }
+/* Bellen, WhatsApp en mailen naast elkaar; op een smal scherm onder elkaar. */
+.side-knoppen { display: flex; flex-wrap: wrap; gap: 10px; }
+@media (max-width: 420px) {
+  .side-knoppen { flex-direction: column; align-items: stretch; }
+  .side-knoppen .btn { justify-content: center; }
+}
 @media (max-width: 900px) {
   .quote-grid { grid-template-columns: 1fr; }
   .quote-side { position: static; }
