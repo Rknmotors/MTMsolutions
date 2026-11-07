@@ -311,9 +311,17 @@ komt alsnog ergens terecht. In je meting zie je dat als `verzenden_mislukt`.
 stylesheet). Mensen zien het niet; vult een spamrobot het in, dan weigert de
 dienst de aanvraag. Niet verwijderen.
 
-**Privacy.** Zodra je de sleutel invult, passeren de gegevens van je klanten
-langs Web3Forms. Zet dat bij in `_bouw/paginas/privacy.html`: welke gegevens je
-doorgeeft en aan wie. Dat is een verplichting, geen formaliteit.
+**Privacy.** De gegevens van je klanten passeren nu langs Web3Forms. Dat staat
+in `_bouw/paginas/privacy.html`, bij *Welke gegevens verzamelen we?* en bij
+*Wie krijgt je gegevens te zien?*. Verander je ooit van formulierdienst, pas die
+twee stukken dan mee aan.
+
+**De sleutel staat gewoon in het JavaScript, en dat hoort zo.** Een
+Web3Forms-sleutel is bedoeld om in de pagina te staan; hij geeft niemand
+toegang tot je mailbox of tot eerdere aanvragen. Het enige wat iemand ermee kan,
+is zelf aanvragen naar jouw mailbox sturen. Daar staat het lokaasveld tegen.
+Krijg je ooit spam via het formulier, vraag dan een nieuwe sleutel aan op
+web3forms.com en plak die hier; de oude werkt dan niet meer.
 
 ## Meting: wie klikt, wie begint, wie haakt af
 
@@ -357,6 +365,16 @@ van via WhatsApp, en daarvoor heb je een formulierdienst nodig.
 **Mislukt de meting, dan merkt de bezoeker daar niets van.** Elke verzending zit
 in een `try`, dus een geblokkeerde pixel of een adblocker houdt het formulier
 nooit tegen.
+
+**Let op voor je `ga4` of `chatgptPixel` invult.** Zolang die leeg staan, gaat
+er niets naar buiten en klopt de zin in het privacybeleid dat de site geen
+cookies gebruikt en je surfgedrag niet volgt. Vul je er een in, dan klopt die
+zin niet meer: Google Analytics en de ChatGPT-pixel zetten allebei cookies.
+Dan heb je twee dingen nodig die er nu niet zijn — een cookiebanner die vooraf
+toestemming vraagt, en een aangepast stuk *Cookies* in
+`_bouw/paginas/privacy.html`. In België mogen die scripts pas laden nadat de
+bezoeker ja heeft gezegd. De meting in de console werkt ondertussen gewoon en
+heeft daar niets van nodig.
 
 ## Animaties
 

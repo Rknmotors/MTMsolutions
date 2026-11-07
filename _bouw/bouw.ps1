@@ -330,7 +330,7 @@ $hreflang
 <meta name="theme-color" content="#292929">
 <link rel="icon" href="/img/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="/img/favicon-180.png">
-<link rel="stylesheet" href="/css/style.css?v=45">
+<link rel="stylesheet" href="/css/style.css?v=46">
 <script>document.documentElement.className += ' js';</script>
 $schemaTag
 </head>
@@ -368,7 +368,7 @@ $(Footer $p.taal)
   <a class="btn btn-accent" href="$offerte"$doel>$($t.offerteKort)</a>
 </div>
 
-<script src="/js/script.js?v=45"></script>
+<script src="/js/script.js?v=46"></script>
 </body>
 </html>
 "@

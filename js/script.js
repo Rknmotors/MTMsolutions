@@ -38,7 +38,7 @@ var INSTELLINGEN = {
        3. De sleutel komt in je mailbox. Plak ze hieronder.
        4. De eerste aanvraag die binnenkomt moet je in je mailbox
           bevestigen. Doe dus zelf een testaanvraag. */
-  formulierSleutel: '',
+  formulierSleutel: '87139047-e16d-494a-b626-3738e9a3dce1',
   formulierEndpoint: 'https://api.web3forms.com/submit'
 };
 
