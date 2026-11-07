@@ -5,11 +5,98 @@ var INSTELLINGEN = {
   // WhatsApp-nummer waar offerteaanvragen naartoe gaan:
   // internationaal formaat, enkel cijfers, zonder + en zonder 0 vooraan.
   // 0492 05 15 70 wordt dus 32492051570.
-  whatsapp: '32492051570'
+  whatsapp: '32492051570',
+
+  /* ---------- Meting ----------
+     Vul in wat je hebt, laat leeg wat je niet hebt. Staat alles leeg, dan
+     wordt er niets naar buiten gestuurd en zie je de gebeurtenissen alleen
+     in de browserconsole (F12 → Console). Zo kun je eerst zelf testen. */
+
+  // Google Analytics 4. Het meet-ID staat in Analytics bij
+  // Beheer → Datastreams → je website. Het begint met G-.
+  ga4: '',
+
+  // ChatGPT Ads. Het pixel-ID staat in Ads Manager op het tabblad Conversies.
+  chatgptPixel: '',
+
+  // Elke gebeurtenis in de console tonen. Handig zolang je test.
+  // Zet op false als alles werkt.
+  metingInConsole: true
 };
 
 (function () {
   'use strict';
+
+  /* ---------- Meting ----------
+     Eén functie voor alle gebeurtenissen: meet('naam'). Die stuurt ze naar
+     wat er is ingevuld bovenaan dit bestand. Is er niets ingevuld, dan
+     gebeurt er niets, en de rest van de website werkt gewoon door.
+
+     De gebeurtenissen die we tellen:
+       offerte_klik        iemand klikt op een offerteknop
+       bel_klik            iemand klikt op een telefoonnummer
+       whatsapp_klik       iemand klikt op een WhatsApp-link
+       mail_klik           iemand klikt op een e-mailadres
+       formulier_start     iemand vult het eerste veld in
+       formulier_fout      het formulier werd geweigerd, met het veld erbij
+       aanvraag_verstuurd  het formulier was volledig en WhatsApp ging open
+
+     formulier_start tegenover aanvraag_verstuurd laat zien hoeveel mensen
+     beginnen en afhaken. formulier_fout zegt op welk veld dat gebeurt. */
+
+  function laadScript(bron) {
+    var s = document.createElement('script');
+    s.async = true; s.src = bron;
+    document.head.appendChild(s);
+  }
+
+  // Google Analytics 4
+  if (INSTELLINGEN.ga4) {
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function () { window.dataLayer.push(arguments); };
+    window.gtag('js', new Date());
+    window.gtag('config', INSTELLINGEN.ga4);
+    laadScript('https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(INSTELLINGEN.ga4));
+  }
+
+  // ChatGPT Ads. De wachtrij vangt de gebeurtenissen op tot het script geladen is.
+  if (INSTELLINGEN.chatgptPixel && !window.oaiq) {
+    var rij = function () { rij.q.push(arguments); };
+    rij.q = [];
+    window.oaiq = rij;
+    laadScript('https://bzrcdn.openai.com/sdk/oaiq.min.js');
+    window.oaiq('init', { pixelId: INSTELLINGEN.chatgptPixel });
+  }
+
+  function meet(naam, extra) {
+    var gegevens = { pagina: location.pathname };
+    if (extra) { for (var k in extra) { if (extra.hasOwnProperty(k)) gegevens[k] = extra[k]; } }
+
+    if (INSTELLINGEN.metingInConsole && window.console) {
+      console.log('[meting] ' + naam, gegevens);
+    }
+    try {
+      if (INSTELLINGEN.ga4 && window.gtag) window.gtag('event', naam, gegevens);
+    } catch (e) { /* meting mag de website nooit tegenhouden */ }
+    try {
+      if (INSTELLINGEN.chatgptPixel && window.oaiq) {
+        window.oaiq('measure', 'custom', { type: 'custom' }, { custom_event_name: naam });
+      }
+    } catch (e) { /* idem */ }
+  }
+
+  /* Klikken op knoppen en contactgegevens, op élke pagina. Via één
+     luisteraar op het document, zodat knoppen die later verschijnen
+     ook meetellen. */
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest ? e.target.closest('a') : null;
+    if (!a) return;
+    var href = a.getAttribute('href') || '';
+    if (href.indexOf('#offerte') >= 0) meet('offerte_klik', { knop: (a.textContent || '').trim().slice(0, 40) });
+    else if (href.indexOf('wa.me') >= 0) meet('whatsapp_klik');
+    else if (href.indexOf('tel:') === 0) meet('bel_klik');
+    else if (href.indexOf('mailto:') === 0) meet('mail_klik');
+  }, true);
 
   /* ---------- Onderdelen zacht in beeld laten komen ----------
      Onderdelen met class="reveal" staan standaard gewoon zichtbaar. Enkel wat
@@ -181,6 +268,19 @@ var INSTELLINGEN = {
     el.addEventListener('change', function () { clearGroepFout(termijnGroep, 'termijn-err'); });
   });
 
+  /* Het eerste veld dat iemand aanraakt telt als "formulier gestart".
+     Daarna niet meer: we willen weten hoeveel mensen beginnen, niet
+     hoeveel toetsen ze indrukken. */
+  var gestart = false;
+  form.addEventListener('input', function () {
+    if (gestart) return;
+    gestart = true;
+    meet('formulier_start');
+  }, true);
+
+  // Welk veld de aanvraag tegenhield, zodat je ziet waar mensen stranden.
+  var laatsteFout = '';
+
   function validate() {
     var first = null;
     function fail(field, msg) { showError(field, msg); if (!first) first = field; }
@@ -205,6 +305,7 @@ var INSTELLINGEN = {
       failGroep(termijnGroep, 'termijn-err', 'Kies wanneer we mogen komen.',
         form.querySelector('input[name="termijn"]'));
 
+    laatsteFout = first ? (first.id || first.name || 'onbekend') : '';
     if (first) first.focus();
     return !first;
   }
@@ -235,7 +336,15 @@ var INSTELLINGEN = {
 
   form.addEventListener('submit', function (e) {
     e.preventDefault();
-    if (!validate()) return;
+    if (!validate()) {
+      meet('formulier_fout', { veld: laatsteFout });
+      return;
+    }
+
+    meet('aanvraag_verstuurd', {
+      dienst: veld('dienst').value,
+      termijn: gekozenRadio('termijn')
+    });
 
     var url = 'https://wa.me/' + INSTELLINGEN.whatsapp + '?text=' + encodeURIComponent(whatsappBericht());
     waLink.href = url;

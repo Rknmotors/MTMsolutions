@@ -279,6 +279,49 @@ De openingsuren in de footergegevens staan daarom nu op twee regels:
 telefonisch van 8 tot 20 uur, WhatsApp 24/7. Verandert een van beide, pas dan
 `$geg` aan in dezelfde functie, in beide talen.
 
+## Meting: wie klikt, wie begint, wie haakt af
+
+Bovenaan `js/script.js` staan drie instellingen. Vul in wat je hebt, laat leeg
+wat je niet hebt:
+
+| Instelling | Wat erin hoort | Waar je het vindt |
+|------------|----------------|-------------------|
+| `ga4` | Meet-ID dat met `G-` begint | Google Analytics → Beheer → Datastreams → je website |
+| `chatgptPixel` | Pixel-ID van ChatGPT Ads | Ads Manager → tabblad Conversies |
+| `metingInConsole` | `true` zolang je test, daarna `false` | — |
+
+Staat alles leeg, dan wordt er niets naar buiten gestuurd en gebeurt er verder
+niets. De website werkt gewoon door. Met `metingInConsole: true` zie je elke
+gebeurtenis in je eigen browser: druk op F12, ga naar **Console** en doorloop
+het formulier. Zo controleer je of het werkt vóór je een ID invult.
+
+**De gebeurtenissen**
+
+| Naam | Wanneer | Wat je eruit leert |
+|------|---------|--------------------|
+| `offerte_klik` | iemand klikt op een offerteknop | welke knop werkt (de naam staat erbij) |
+| `bel_klik` | iemand klikt op het telefoonnummer | hoeveel mensen liever bellen |
+| `whatsapp_klik` | iemand klikt op een WhatsApp-link | |
+| `mail_klik` | iemand klikt op het e-mailadres | |
+| `formulier_start` | iemand vult het eerste veld in | hoeveel bezoekers echt beginnen |
+| `formulier_fout` | het formulier werd geweigerd | **op welk veld mensen stranden** |
+| `aanvraag_verstuurd` | alles was ingevuld, WhatsApp ging open | je eigenlijke conversie |
+
+`formulier_start` tegenover `aanvraag_verstuurd` is het getal dat telt: daartussen
+zit iedereen die begon en het opgaf. `formulier_fout` zegt bij welk veld dat
+gebeurde. Zie je daar steeds hetzelfde veld terugkomen, dan ligt het aan dat
+veld en niet aan de bezoeker.
+
+**Wat deze meting niet kan.** Ze stopt bij het moment dat WhatsApp opengaat. Of
+de klant het bericht daar ook echt verstuurt, kan een website niet zien. Het
+echte aantal aanvragen ligt dus altijd iets lager dan `aanvraag_verstuurd`. Wil
+je dat wel exact weten, dan moet het formulier rechtstreeks verzenden in plaats
+van via WhatsApp, en daarvoor heb je een formulierdienst nodig.
+
+**Mislukt de meting, dan merkt de bezoeker daar niets van.** Elke verzending zit
+in een `try`, dus een geblokkeerde pixel of een adblocker houdt het formulier
+nooit tegen.
+
 ## Animaties
 
 Alle animaties zitten onderaan in `css/style.css`, onder het kader `ANIMATIES`. Er zijn geen
