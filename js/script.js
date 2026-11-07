@@ -382,7 +382,7 @@ var INSTELLINGEN = {
     // aanhalingstekens is vaste tekst, alles met veld(...) komt van de klant.
     // Wil je er nog iets bij? Plak het erachter met +, bijvoorbeeld
     // + ' - ' + veld('naam').value.trim() of + ' - ' + gekozenRadio('termijn')
-    fd.append('subject', 'Offerteaanvraag: ' + veld('dienst').value + ' (' + veld('postcode').value.trim() + ')');
+    fd.append('subject', veld('dienst').value + ' (' + veld('postcode').value.trim() + ')');
     fd.append('from_name', 'MTM Solutions website');
     fd.append('Dienst', veld('dienst').value);
     fd.append('Opdracht', veld('beschrijving').value.trim());
