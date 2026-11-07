@@ -378,7 +378,10 @@ var INSTELLINGEN = {
   function aanvraagGegevens() {
     var fd = new FormData();
     fd.append('access_key', INSTELLINGEN.formulierSleutel);
-    fd.append('subject', 'Offerteaanvraag: ' + veld('dienst').value + ' (' + veld('postcode').value.trim() + ')');
+    // De onderwerpregel van de mail die bij ons binnenkomt. Wil je er gegevens
+    // van de klant in? Plak ze erachter met +, bijvoorbeeld:
+    //   'Nieuwe aanvraag via MTM Solutions - ' + veld('dienst').value
+    fd.append('subject', 'Nieuwe aanvraag via MTM Solutions');
     fd.append('from_name', 'MTM Solutions website');
     fd.append('Dienst', veld('dienst').value);
     fd.append('Opdracht', veld('beschrijving').value.trim());
