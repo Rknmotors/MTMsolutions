@@ -70,7 +70,7 @@
 <!-- Icoontje in het browsertabblad: de doos met MTM uit het logo. -->
 <link rel="icon" href="img/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="img/favicon-180.png">
-<link rel="stylesheet" href="css/style.css?v=44">
+<link rel="stylesheet" href="css/style.css?v=45">
 <!-- Zet een merkteken dat JavaScript werkt. Werkt JavaScript niet, dan blijft
      alle inhoud gewoon zichtbaar en staat het menu open uitgeklapt. -->
 <script>document.documentElement.className += ' js';</script>
@@ -687,16 +687,30 @@
           </fieldset>
         </div>
 
+        <!-- Lokaas voor spamrobots. Mensen zien dit niet; een robot vult het
+             wel in en dan weigert de formulierdienst de aanvraag. -->
+        <input type="checkbox" name="botcheck" id="botcheck" class="bot-val" tabindex="-1" autocomplete="off">
+
         <div class="form-foot">
-          <button class="btn btn-accent btn-lg btn-block" type="submit" id="submitBtn">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 20.5l1.3-4.2A8.5 8.5 0 1 1 8 19.4z"/><path d="M9 8.5c0 3.3 3.2 6.5 6.5 6.5l1-1.6-2-1-1 .9a5 5 0 0 1-2.3-2.3l.9-1-1-2z"/></svg>
-            Open WhatsApp met mijn aanvraag</button>
+          <button class="btn btn-accent btn-lg btn-block" type="submit" id="submitBtn">Verstuur mijn aanvraag</button>
           <p class="small">Je gegevens worden enkel gebruikt om je aanvraag te beantwoorden. Lees ons <a href="/privacy/">privacybeleid</a>.</p>
         </div>
       </form>
 
-      <!-- Getoond nadat WhatsApp geopend werd. Bewust GEEN "verstuurd"-melding:
-           de website kan niet zien of de klant het bericht echt verstuurt. -->
+      <!-- Getoond zodra de aanvraag echt bij ons binnen is. -->
+      <div class="result" id="resultOk" hidden tabindex="-1">
+        <h3>We hebben je aanvraag</h3>
+        <p>Bedankt. Je krijgt binnen 2 uur een offerte op maat. Heb je foto&rsquo;s van de ruimte of de spullen? Stuur ze erbij via WhatsApp, dan kunnen we veel preciezer inschatten.</p>
+        <a class="btn btn-accent btn-block" id="fotoLink" href="https://wa.me/32492051570" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 20.5l1.3-4.2A8.5 8.5 0 1 1 8 19.4z"/><path d="M9 8.5c0 3.3 3.2 6.5 6.5 6.5l1-1.6-2-1-1 .9a5 5 0 0 1-2.3-2.3l.9-1-1-2z"/></svg>
+          Stuur er foto&rsquo;s bij via WhatsApp</a>
+        <p class="small">Liever bellen? <a href="tel:+32492051570">0492 05 15 70</a>, van 8 tot 20 uur.</p>
+      </div>
+
+      <!-- Reserveweg: alleen getoond als er nog geen formulierdienst is
+           ingesteld, of als het versturen mislukt. Bewust GEEN
+           "verstuurd"-melding: de website kan niet zien of de klant het
+           WhatsApp-bericht echt verstuurt. -->
       <div class="result" id="resultWa" hidden tabindex="-1">
         <h3>Nog één stap: druk in WhatsApp op verzenden</h3>
         <p>WhatsApp is geopend met je aanvraag al ingevuld. Je aanvraag komt pas bij ons aan als je het bericht daar zelf verstuurt. Foto's kun je in hetzelfde gesprek toevoegen.</p>
@@ -792,6 +806,6 @@
   <a class="btn btn-accent" href="#offerte">Offerte binnen 2u</a>
 </div>
 
-<script src="js/script.js?v=44"></script>
+<script src="js/script.js?v=45"></script>
 </body>
 </html>

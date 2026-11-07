@@ -705,6 +705,10 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
 }
 
 .form-card { background: var(--white); border-radius: 24px; padding: clamp(20px, 3vw, 36px); box-shadow: var(--shadow); border: 1px solid var(--line); }
+/* Het lokaasveld voor spamrobots. Weg van het scherm in plaats van
+   display:none, want sommige robots slaan verborgen velden over. */
+.bot-val { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+
 .req-legend { font-size: 14px; color: var(--ink-2); margin-bottom: 14px; }
 .req { color: var(--error); font-weight: 700; }
 .opt { font-weight: 400; color: var(--ink-2); font-size: 14px; }

@@ -279,6 +279,42 @@ De openingsuren in de footergegevens staan daarom nu op twee regels:
 telefonisch van 8 tot 20 uur, WhatsApp 24/7. Verandert een van beide, pas dan
 `$geg` aan in dezelfde functie, in beide talen.
 
+## Waar de aanvraag naartoe gaat
+
+Bovenaan `js/script.js` staat `formulierSleutel`. Die beslist alles:
+
+- **Leeg** (zo staat het nu): het formulier opent WhatsApp met het bericht al
+  ingevuld. De klant moet daar zelf nog op verzenden drukken, en de website kan
+  niet zien of dat gebeurt.
+- **Ingevuld**: de aanvraag gaat rechtstreeks naar je mailbox. De klant krijgt
+  meteen *We hebben je aanvraag* te zien, met een WhatsApp-knop om er foto's bij
+  te sturen. Die knop opent een gesprek met het bericht al ingevuld, inclusief
+  de naam van de klant, zodat je weet bij welke aanvraag de foto's horen.
+
+**Een sleutel halen** (gratis, 250 aanvragen per maand, geen account nodig):
+
+1. Ga naar https://web3forms.com
+2. Vul `info@mtmsolutions.be` in en vraag een Access Key
+3. De sleutel komt in je mailbox. Plak ze bij `formulierSleutel`.
+4. Doe zelf een testaanvraag. De eerste aanvraag moet je in je mailbox
+   bevestigen, anders komt er niets door.
+
+Zit je boven de 250 per maand, dan kan er een andere dienst achter. Pas dan
+`formulierEndpoint` aan; het formulier verstuurt gewone formuliervelden, dus de
+meeste diensten (Formspree, FormSubmit) werken zonder verdere aanpassing.
+
+**Als het versturen mislukt** — dienst plat, adblocker, geen internet — valt het
+formulier vanzelf terug op WhatsApp. De klant merkt er niets van en de aanvraag
+komt alsnog ergens terecht. In je meting zie je dat als `verzenden_mislukt`.
+
+**In het formulier zit een lokaasveld** (`botcheck`, zie `.bot-val` in de
+stylesheet). Mensen zien het niet; vult een spamrobot het in, dan weigert de
+dienst de aanvraag. Niet verwijderen.
+
+**Privacy.** Zodra je de sleutel invult, passeren de gegevens van je klanten
+langs Web3Forms. Zet dat bij in `_bouw/paginas/privacy.html`: welke gegevens je
+doorgeeft en aan wie. Dat is een verplichting, geen formaliteit.
+
 ## Meting: wie klikt, wie begint, wie haakt af
 
 Bovenaan `js/script.js` staan drie instellingen. Vul in wat je hebt, laat leeg

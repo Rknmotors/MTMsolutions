@@ -21,7 +21,25 @@ var INSTELLINGEN = {
 
   // Elke gebeurtenis in de console tonen. Handig zolang je test.
   // Zet op false als alles werkt.
-  metingInConsole: true
+  metingInConsole: true,
+
+  /* ---------- Waar de aanvraag naartoe gaat ----------
+     Vul hieronder je sleutel in en de aanvraag komt rechtstreeks in je
+     mailbox. Daarna krijgt de klant een bevestiging te zien, met een
+     WhatsApp-knop om er foto's bij te sturen.
+
+     Laat je de sleutel leeg, dan werkt alles zoals vroeger: het formulier
+     opent WhatsApp met het bericht al ingevuld. De website blijft dus
+     gewoon werken tot je dit invult.
+
+     Een sleutel halen (gratis, 250 aanvragen per maand, geen account):
+       1. Ga naar https://web3forms.com
+       2. Vul info@mtmsolutions.be in en vraag een Access Key
+       3. De sleutel komt in je mailbox. Plak ze hieronder.
+       4. De eerste aanvraag die binnenkomt moet je in je mailbox
+          bevestigen. Doe dus zelf een testaanvraag. */
+  formulierSleutel: '',
+  formulierEndpoint: 'https://api.web3forms.com/submit'
 };
 
 (function () {
@@ -156,7 +174,9 @@ var INSTELLINGEN = {
   if (!form) return;
   var submitBtn = document.getElementById('submitBtn');
   var resultWa = document.getElementById('resultWa');
+  var resultOk = document.getElementById('resultOk');
   var waLink = document.getElementById('waLink');
+  var fotoLink = document.getElementById('fotoLink');
 
   var termijnGroep = document.getElementById('termijnGroep');
   var dienstVeld = document.getElementById('dienst');
@@ -334,6 +354,45 @@ var INSTELLINGEN = {
     submitBtn.focus();
   });
 
+  function toonResultaat(vak) {
+    form.hidden = true;
+    vak.hidden = false;
+    vak.focus();
+    if (vak.scrollIntoView) vak.scrollIntoView({ block: 'center', behavior: minderBeweging ? 'auto' : 'smooth' });
+  }
+
+  /* ---------- Reserveweg: via WhatsApp ----------
+     Gebruikt zolang er geen formulierdienst is ingesteld, en als terugval
+     wanneer het versturen mislukt. De klant moet in WhatsApp zelf nog op
+     verzenden drukken, dus hier staat bewust geen "verstuurd"-melding. */
+  function viaWhatsApp() {
+    var url = 'https://wa.me/' + INSTELLINGEN.whatsapp + '?text=' + encodeURIComponent(whatsappBericht());
+    waLink.href = url;
+    var w = window.open(url, '_blank');
+    if (w) w.opener = null;
+    toonResultaat(resultWa);
+  }
+
+  /* De aanvraag zoals ze in de mailbox terechtkomt. De veldnamen worden de
+     regels in de e-mail, dus ze staan hier in gewone taal. */
+  function aanvraagGegevens() {
+    var fd = new FormData();
+    fd.append('access_key', INSTELLINGEN.formulierSleutel);
+    fd.append('subject', 'Offerteaanvraag: ' + veld('dienst').value + ' (' + veld('postcode').value.trim() + ')');
+    fd.append('from_name', 'MTM Solutions website');
+    fd.append('Dienst', veld('dienst').value);
+    fd.append('Opdracht', veld('beschrijving').value.trim());
+    fd.append('Wanneer', gekozenRadio('termijn'));
+    fd.append('Naam', veld('naam').value.trim());
+    fd.append('Postcode', veld('postcode').value.trim());
+    fd.append('Telefoon', veld('telefoon').value.trim());
+    // 'email' is het antwoordadres: klik je in je mailbox op Beantwoorden,
+    // dan gaat je antwoord rechtstreeks naar de klant.
+    fd.append('email', veld('email').value.trim());
+    fd.append('botcheck', veld('botcheck').checked ? 'true' : '');
+    return fd;
+  }
+
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     if (!validate()) {
@@ -346,18 +405,38 @@ var INSTELLINGEN = {
       termijn: gekozenRadio('termijn')
     });
 
-    var url = 'https://wa.me/' + INSTELLINGEN.whatsapp + '?text=' + encodeURIComponent(whatsappBericht());
-    waLink.href = url;
+    // Nog geen sleutel ingevuld? Dan de oude weg: WhatsApp.
+    if (!INSTELLINGEN.formulierSleutel || !window.fetch) {
+      viaWhatsApp();
+      return;
+    }
 
-    // WhatsApp openen in een nieuw tabblad (op smartphone opent de app).
-    // Wordt dat geblokkeerd, dan staat de knop "WhatsApp niet geopend? Klik hier" klaar.
-    var w = window.open(url, '_blank');
-    if (w) w.opener = null;
+    var oudeTekst = submitBtn.textContent;
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Bezig met versturen…';
 
-    // Geen "verstuurd"-melding: we weten niet of de klant op verzenden drukt.
-    form.hidden = true;
-    resultWa.hidden = false;
-    resultWa.focus();
-    if (resultWa.scrollIntoView) resultWa.scrollIntoView({ block: 'center', behavior: minderBeweging ? 'auto' : 'smooth' });
+    function herstelKnop() {
+      submitBtn.disabled = false;
+      submitBtn.textContent = oudeTekst;
+    }
+
+    window.fetch(INSTELLINGEN.formulierEndpoint, { method: 'POST', body: aanvraagGegevens() })
+      .then(function (r) { return r.json().catch(function () { return { success: r.ok }; }); })
+      .then(function (d) {
+        if (!d || !d.success) throw new Error(d && d.message ? d.message : 'verzenden mislukt');
+        herstelKnop();
+        meet('aanvraag_ontvangen', { dienst: veld('dienst').value });
+        fotoLink.href = 'https://wa.me/' + INSTELLINGEN.whatsapp + '?text=' +
+          encodeURIComponent('Hallo MTM Solutions, ik heb net een offerte aangevraagd op naam van ' +
+            veld('naam').value.trim() + '. Hier zijn enkele foto’s:');
+        toonResultaat(resultOk);
+      })
+      .catch(function (fout) {
+        // De klant mag hier niets van merken: we vallen terug op WhatsApp,
+        // zodat de aanvraag alsnog ergens terechtkomt.
+        herstelKnop();
+        meet('verzenden_mislukt', { reden: String(fout && fout.message).slice(0, 80) });
+        viaWhatsApp();
+      });
   });
 })();
